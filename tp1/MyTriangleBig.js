@@ -1,6 +1,6 @@
 import {CGFobject} from '../lib/CGF.js';
 /**
- * MyDiamond
+ * MyTriangle
  * @constructor
  * @param scene - Reference to MyScene object
  */
@@ -12,14 +12,14 @@ export class MyTriangleBig extends CGFobject {
 	
 	initBuffers() {
 		this.vertices = [
-			-2, 0, 0,
-            0, 2, 0,
-            2, 0, 0 
-		];
+            -2, 0, 0,    //0: origin point
+            2, 0, 0,    //1: right point
+            0, 2, 0     //2: top point
+        ];
 
 		//Counter-clockwise reference of vertices
 		this.indices = [
-			0, 2, 1
+			0, 1, 2
 		];
 
 		//The defined indices (and corresponding vertices)

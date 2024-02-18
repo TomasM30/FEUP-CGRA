@@ -106,11 +106,26 @@ export class MyScene extends CGFscene {
 
     // ---- BEGIN Primitive drawing section
 
-    if (this.displayDiamond) this.diamond.display();
-    if (this.displayTriangle) this.triangle.display();
-    if (this.displayParallelogram) this.parallelogram.display();
-    if (this.displayTriangleSmall) this.triangleSmall.display();
-    if (this.displayTriangleBig) this.triangleBig.display()
+    if (this.displayDiamond) {
+      this.diamond.display();
+  }
+
+    if (this.displayTriangle) {
+      this.triangle.display();
+  }
+
+    if (this.displayParallelogram) {
+      this.parallelogram.display();
+    }
+
+    if (this.displayTriangleSmall) {
+      this.triangleSmall.display();
+    }
+
+    if (this.displayTriangleBig) {
+      this.triangleBig.display();
+    }
+    
 
     // ---- END Primitive drawing section
   }
