@@ -22,7 +22,7 @@ To do this we had to:
 
 Since the triangle is the simplest object, it was the perfect object to understand the process of organizing the vertexes and the indexes of the object. 
 First we had to create the vertexes of the object, simply by creating a list of points.
-But the indexes were a bit more complicated. And have became the main challenge of the TP. Simply putting the vertexes in a random order would not work. We had to understand how to create the indexes in a way that would create the triangles in the correct order. For this we had to understand the concept of the winding order, who is the order in which the vertexes are connected to create the triangles. Since the professor explained it in class, it was not that hard to understand how to create the indexes of the object, but it was also a necessary step to understand how to create the other objects. This order just says that the vertexes of the triangles must be in a clockwise order, so that we can see the front of the object.
+But the indexes were a bit more complicated. And have became the main challenge of the TP. Simply putting the vertexes in a random order would not work. We had to understand how to create the indexes in a way that would create the triangles in the correct order. For this we had to understand the concept of the winding order, which refers to the sequence in which vertices are linked to form triangles. Since the professor explained it in class, it was not that hard to understand how to create the indexes of the object, but it was also a necessary step to understand how to create the other objects. This order just says that the vertexes of the triangles must be in a clockwise order, so that we can see the front of the object.
 After ordering the vertexes and the indexes, we had the triangle.
 
 #### Object 2 - Double-sided Parallelogram
@@ -38,7 +38,7 @@ This two objects were easy to create, since we already knew how to create the in
 ### Modifying the interface
 
 It was also necessary to modify the interface, so that we could change what objects were being displayed. First we had to create the objects in the `init` function, that would simply be a boolean that would be true if the object was being displayed, and false if it was not. Then we had to add a new button in `MyInterface.js` that would change the value of the boolean. 
-HAving this buttons, we just added a new `if` statement in the `display` function, that would call the `display` method of the object if the boolean was true.
+Having this buttons, we just added a new `if` statement in the `display` function, that would call the `display` method of the object if the boolean was true.
 
 ### Conclusion
 
@@ -46,4 +46,4 @@ This TP was a good introduction to the course, since it was a good way to unders
 
 ### Screenshots
 
-![Screenshot 1](./screenshots/CG-t07g3-tp1-1.png)
+![Both Triangles](screenshots/CG-t07g3-tp1-3.png)
