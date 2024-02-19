@@ -1,6 +1,6 @@
 # CG 2023/2024
 
-## Group T0xG0y
+## Group T7xG03
 | Name             | Number    | E-Mail                   |
 | ---------------- | --------- | ------------------------ |
 | José Martins     | 202108794 | up202108794@edu.fe.up.pt |
