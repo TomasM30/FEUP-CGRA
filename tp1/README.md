@@ -46,4 +46,4 @@ This TP was a good introduction to the course, since it was a good way to unders
 
 ### Screenshots
 
-![Both Triangles](screenshots/CG-t07g3-tp1-3.png)
+![Both Triangles](./screenshots/CG-t07g3-tp1-1.png)
