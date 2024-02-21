@@ -174,7 +174,7 @@ export class MyScene extends CGFscene {
       cos_a, -sin_a, 0, 0,
       sin_a, cos_a, 0, 0,
       0, 0, 1, 0,
-      0, 0, 0, 1
+      0, -3, 0, 1
     ]);
 
     
@@ -227,7 +227,15 @@ export class MyScene extends CGFscene {
       this.blueMaterial.apply();
       this.scale(-1,-1,1);
       this.triangleBlue.display();
+    }
 
+    if(this.displayParallelogram){
+      this.yellowMaterial.apply();
+      this.popMatrix();
+      this.scale(-1,1,1);
+      this.translate(9.2,0,0);
+      this.rotate(-20.0*deg2rad, 0, 0, 1);
+      this.parallelogram.display();
     }
 
     
