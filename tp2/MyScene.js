@@ -1,5 +1,6 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance } from "../lib/CGF.js";
 import { MyTangram } from "./MyTangram.js";
+import { MyUniteCube } from "./MyUniteCube.js";
 
 /**
  * MyScene
@@ -14,6 +15,7 @@ export class MyScene extends CGFscene {
     
     this.initCameras();
     this.initLights();
+    this.initMaterials();
 
     //Background color
     this.gl.clearColor(0.0, 0.0, 0.0, 1.0);
@@ -26,6 +28,7 @@ export class MyScene extends CGFscene {
     //Initialize scene objects
     this.axis = new CGFaxis(this);
     this.tangram = new MyTangram(this);
+    this.uniteCube = new MyUniteCube(this);
 
 
     //Objects connected to MyInterface
@@ -40,6 +43,15 @@ export class MyScene extends CGFscene {
     this.lights[0].setDiffuse(1.0, 1.0, 1.0, 1.0);
     this.lights[0].enable();
     this.lights[0].update();
+  }
+
+  initMaterials() {
+    // Red Material
+    this.redMaterial = new CGFappearance(this);
+    this.redMaterial.setAmbient(1, 0, 0, 1);
+    this.redMaterial.setDiffuse(1, 0, 0, 1);
+    this.redMaterial.setSpecular(1, 0, 0, 1);
+    this.redMaterial.setShininess(10.0);
   }
 
   initCameras() {
@@ -99,8 +111,21 @@ export class MyScene extends CGFscene {
 
     // ---- BEGIN Primitive drawing section
 
+    this.pushMatrix();
+    this.rotate(-Math.PI / 2, 1, 0, 0); // Rotate 90 degrees around the X-axis
+    this.translate(5, -5, 0); // Translate to place the upper left vertex at the origin
+
+    this.pushMatrix();
+    this.translate(0, 0, -2.5); // Adjust the z value as needed
+    this.scale(10, 10, 10); // Adjust the values as needed
+    this.translate(0,0,-0.25);
+    this.uniteCube.display();
+    this.popMatrix();
+
     if(this.displayTangram){
+      this.redMaterial.apply();
       this.tangram.display();
     }
+
   }
 }

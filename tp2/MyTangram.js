@@ -21,57 +21,6 @@ export class MyTangram extends CGFobject {
     this.triangleBlue = new MyTriangleBig(this.scene);
   }
 
-  initMaterials() {
-    // Red Material
-    this.redMaterial = new CGFappearance(this.scene);
-    this.redMaterial.setAmbient(1, 0, 0, 1);
-    this.redMaterial.setDiffuse(1, 0, 0, 1);
-    this.redMaterial.setSpecular(1, 0, 0, 1);
-    this.redMaterial.setShininess(10.0);
-
-    // Green Material
-    this.greenMaterial = new CGFappearance(this.scene);
-    this.greenMaterial.setAmbient(0, 1, 0, 1);
-    this.greenMaterial.setDiffuse(0, 1, 0, 1);
-    this.greenMaterial.setSpecular(0, 1, 0, 1);
-    this.greenMaterial.setShininess(10.0);
-
-    // Blue Material
-    this.blueMaterial = new CGFappearance(this.scene);
-    this.blueMaterial.setAmbient(0, 0, 1, 1);
-    this.blueMaterial.setDiffuse(0, 0, 1, 1);
-    this.blueMaterial.setSpecular(0, 0, 1, 1);
-    this.blueMaterial.setShininess(10.0);
-
-    // Yellow Material
-    this.yellowMaterial = new CGFappearance(this.scene);
-    this.yellowMaterial.setAmbient(1, 1, 0, 1);
-    this.yellowMaterial.setDiffuse(1, 1, 0, 1);
-    this.yellowMaterial.setSpecular(1, 1, 0, 1);
-    this.yellowMaterial.setShininess(10.0);
-
-    // Orange Material
-    this.orangeMaterial = new CGFappearance(this.scene);
-    this.orangeMaterial.setAmbient(1, 0.5, 0, 1);
-    this.orangeMaterial.setDiffuse(1, 0.5, 0, 1);
-    this.orangeMaterial.setSpecular(1, 0.5, 0, 1);
-    this.orangeMaterial.setShininess(10.0);
-
-    // Purple Material
-    this.purpleMaterial = new CGFappearance(this.scene);
-    this.purpleMaterial.setAmbient(0.5, 0, 0.5, 1);
-    this.purpleMaterial.setDiffuse(0.5, 0, 0.5, 1);
-    this.purpleMaterial.setSpecular(0.5, 0, 0.5, 1);
-    this.purpleMaterial.setShininess(10.0);
-
-    // Rose Material
-    this.roseMaterial = new CGFappearance(this.scene);
-    this.roseMaterial.setAmbient(1, 0, 0.5, 1);
-    this.roseMaterial.setDiffuse(1, 0, 0.5, 1);
-    this.roseMaterial.setSpecular(1, 0, 0.5, 1);
-    this.roseMaterial.setShininess(10.0);
-  }
-
   display() {
     const deg2rad = Math.PI / 180;    
   
@@ -84,7 +33,7 @@ export class MyTangram extends CGFobject {
       cos_a, -sin_a, 0, 0,
       sin_a, cos_a, 0, 0,
       0, 0, 1, 0,
-      0, -3, 0, 1
+      0, -4, 0, 1
     ]);
     
     this.diamond.display();
@@ -119,5 +68,7 @@ export class MyTangram extends CGFobject {
     this.scene.translate(9.2,0,0);
     this.scene.rotate(-20.0*deg2rad, 0, 0, 1);
     this.parallelogram.display();
+    this.scene.popMatrix();
+    this.scene.popMatrix();
   }
 }

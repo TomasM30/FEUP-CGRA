@@ -56,10 +56,21 @@ this.scene.scale(1/Math.sqrt(2), 1/Math.sqrt(2),1);
 
 After building the Tangram, we created a class to encapsulate the Tangram's objects and transformations. This class was designed to facilitate the creation and display of the Tangram within the scene. The class contained methods to create and display each object, as well as methods to apply the necessary transformations to position and orient the Tangram within the scene. This approach provided a modular and organized way to manage the Tangram, allowing for easy integration and manipulation within the scene.
 
+### Screenshots
+
+![Tangram](screenshots/CG-t07g3-tp2-1.png)
+
+### Exercice 2
+#### Using the cube as the tangram base
+
+In this exercice we built a cube centered at the origin, by indicating the 8 vertexes of the cube and corresponding indices to form the faces. We then applied some transformations to the cube in order to put it besides the tangram to use it as a 'base'. After that a `rotation` and `translation` were applied to the cube to position the set (cube and tangram) parallel to the XZ plane with the upper left vertex of the base cube at the origin.
+
+### Screenshots
+
+![Cube with tangram](screenshots/CG-t07g3-tp2-2.png)
+
 ### Conclusion
 
 This TP was a good introduction to the course, since it was a good way to understand how to create the objects and how to add them to the scene. We didn't have much trouble doing it, and we were able to understand the concepts that were being taught in class.
 
-### Screenshots
 
-![Tangram](screenshots/CG-t07g3-tp2-1.png)
