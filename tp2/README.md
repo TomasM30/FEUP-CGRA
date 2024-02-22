@@ -72,5 +72,3 @@ In this exercice we built a cube centered at the origin, by indicating the 8 ver
 ### Conclusion
 
 This TP was a good introduction to the course, since it was a good way to understand how to create the objects and how to add them to the scene. We didn't have much trouble doing it, and we were able to understand the concepts that were being taught in class.
-
-
