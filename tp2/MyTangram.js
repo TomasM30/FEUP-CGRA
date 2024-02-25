@@ -35,7 +35,6 @@ export class MyTangram extends CGFobject {
         const sin_a = Math.sin(45.0*deg2rad);
         const Ty = - (3 + Math.sqrt(8) + Math.sqrt(2)*2 + Math.sqrt(2)/2 )/2 + Math.sqrt(2)/2;
 
-        this.scene.pushMatrix();
 
         this.scene.multMatrix([
         cos_a, sin_a, 0, 0,
@@ -45,11 +44,11 @@ export class MyTangram extends CGFobject {
         ]);
         
         
-        //this.greenMaterial.apply();
+        this.scene.greenMaterial.apply();
         this.diamond.display();
         
         //Small triangle side has the same length has the diamond -> sqrt(2)
-        //this.purpleMaterial.apply();
+        this.scene.purpleMaterial.apply();
         this.scene.rotate(-45.0*deg2rad, 0, 0, 1);
         this.scene.pushMatrix();
         this.scene.translate(0,Math.sqrt(2),0);
@@ -57,21 +56,21 @@ export class MyTangram extends CGFobject {
         this.trianglePurple.display();
         this.scene.popMatrix();
         
-        //this.roseMaterial.apply();
+        this.scene.roseMaterial.apply();
         this.scene.pushMatrix();
         this.scene.translate(Math.sqrt(2)/2,3*Math.sqrt(2)/2,0);
         this.scene.rotate(-45.0*deg2rad, 0, 0, 1);
         this.trianglePink.display();
         this.scene.popMatrix();
         
-        //this.redMaterial.apply();
+        this.scene.redMaterial.apply();
         this.scene.pushMatrix();
         this.scene.translate(0,2*Math.sqrt(2),0);
         this.scene.rotate(45.0*deg2rad, 0, 0, 1);
         this.triangleRed.display();
         this.scene.popMatrix();
         
-        //this.orangeMaterial.apply();
+        this.scene.orangeMaterial.apply();
         this.scene.pushMatrix();
         // sqrt(8)/2 to bring it to y=0 
         // sqrt(2)/2 to bring it to the top of the diamond
@@ -81,7 +80,7 @@ export class MyTangram extends CGFobject {
         this.triangleOrange.display();
         this.scene.popMatrix();
         
-        //this.blueMaterial.apply();
+        this.scene.blueMaterial.apply();
         this.scene.pushMatrix();  
         // sqrt(8)/2 to bring it to y=0 
         // sqrt(2)/2 to bring it to the top of the diamond
@@ -91,13 +90,12 @@ export class MyTangram extends CGFobject {
         this.triangleBlue.display();
         this.scene.popMatrix();
         
-        //this.yellowMaterial.apply();
+        this.scene.yellowMaterial.apply();
         this.scene.pushMatrix();
         this.scene.translate(0, Math.sqrt(2)/2+2*Math.sqrt(2)+Math.sqrt(8), 0);
         this.scene.scale(-1, 1, 1);
         this.scene.rotate(70.0*deg2rad, 0, 0, 1);
         this.parallelogram.display();
-        this.scene.popMatrix();
         this.scene.popMatrix();
     }
 }
