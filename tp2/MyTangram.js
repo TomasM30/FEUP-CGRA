@@ -33,7 +33,7 @@ export class MyTangram extends CGFobject {
 
         const cos_a = Math.cos(45.0*deg2rad);
         const sin_a = Math.sin(45.0*deg2rad);
-        const Ty = - (3 + Math.sqrt(8) + Math.sqrt(2)*2 + Math.sqrt(2)/2 )/2 + Math.sqrt(2)/2;
+        const Ty = - (3 + Math.sqrt(8) + Math.sqrt(2)*2 + Math.sqrt(2) )/2 + Math.sqrt(2)/2;
 
 
         this.scene.multMatrix([
