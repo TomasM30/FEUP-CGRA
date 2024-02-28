@@ -16,26 +16,26 @@ export class MyTriangle extends CGFobject {
             1, -1, 0,    //1: right point
             -1, 1, 0,     //2: top point
 
-			-1, -1, 0,    //3: origin point
+            -1, -1, 0,    //3: origin point
             1, -1, 0,    //4: right point
             -1, 1, 0     //5: top point
         ];
 
-		//Counter-clockwise reference of vertices
-		this.indices = [
-			0, 1, 2,
+        //Counter-clockwise reference of vertices
+        this.indices = [
+            0, 1, 2,    // front face
 			5, 4, 3
-		];
+        ];
 
-		this.normals = [
-			0, 0, 1,  // Normal of the front face
-			0, 0, 1,  
-			0, 0, 1,  
-	
-			0, 0, -1,  // Normal of the back face
-			0, 0, -1,  
-			0, 0, -1,  
-		];
+        this.normals = [
+            0, 0, 1,   // normals for front face
+            0, 0, 1,
+            0, 0, 1,
+
+            0, 0, -1,  // normals for back face
+            0, 0, -1,
+            0, 0, -1
+        ];
 
 		//The defined indices (and corresponding vertices)
 		//will be read in groups of three to draw triangles

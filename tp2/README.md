@@ -65,9 +65,6 @@ After building the Tangram, we created a class to encapsulate the Tangram's obje
 
 In this exercice we built a cube centered at the origin, by indicating the 8 vertexes of the cube and corresponding indices to form the faces. We then applied some transformations to the cube in order to put it besides the tangram to use it as a 'base'. After that a `rotation` and `translation` were applied to the cube to position the set (cube and tangram) parallel to the XZ plane with the upper left vertex of the base cube at the origin.
 
-### Screenshots
-
-![Cube with tangram](screenshots/CG-t07g3-tp2-2.png)
 
 ### Conclusion
 
