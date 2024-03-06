@@ -35,7 +35,7 @@ export class MyScene extends CGFscene {
         this.pyramid = new MyPyramid(this, 3, 1);
         this.tangram = new MyTangram(this);
         this.unitCube = new MyUnitCube(this);
-        this.prism = new MyPrism(this, 6, 10);
+        this.prism = new MyPrism(this, 8, 20);
         
         this.objects = [this.plane, this.pyramid, this.cone, this.tangram ,this.unitCube, this.prism];
 
@@ -43,7 +43,7 @@ export class MyScene extends CGFscene {
         this.objectIDs = { 'Plane': 0 , 'Pyramid': 1, 'Cone': 2, 'Tangram': 3, 'Unit Cube': 4, 'Prism': 5};
 
         //Other variables connected to MyInterface
-        this.selectedObject = 5;
+        this.selectedObject = 0;
         this.selectedMaterial = 0;
         this.displayAxis = true;
         this.displayNormals = false;
