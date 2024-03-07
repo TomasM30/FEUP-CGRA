@@ -1,9 +1,9 @@
 import { CGFobject } from "../lib/CGF.js";
-import { MyDiamond } from "./MyDiamond.js";
-import { MyTriangle } from "./MyTriangle.js";
-import { MyParallelogram } from "./MyParallelogram.js";
-import { MyTriangleSmall } from "./MyTriangleSmall.js";
-import { MyTriangleBig } from "./MyTriangleBig.js"
+import { MyDiamond } from "./tangram/MyDiamond.js";
+import { MyTriangle } from "./tangram/MyTriangle.js";
+import { MyParallelogram } from "./tangram/MyParallelogram.js";
+import { MyTriangleSmall } from "./tangram/MyTriangleSmall.js";
+import { MyTriangleBig } from "./tangram/MyTriangleBig.js"
 
 /**
  * MyTangram
@@ -27,6 +27,26 @@ export class MyTangram extends CGFobject {
         this.triangleBlue = new MyTriangleBig(this.scene);
     }
 
+    enableNormalViz() {
+        this.diamond.enableNormalViz();
+        this.trianglePurple.enableNormalViz();
+        this.parallelogram.enableNormalViz();
+        this.trianglePink.enableNormalViz();
+        this.triangleRed.enableNormalViz();
+        this.triangleOrange.enableNormalViz();
+        this.triangleBlue.enableNormalViz();
+    }
+
+    disableNormalViz() {
+        this.diamond.disableNormalViz();
+        this.trianglePurple.disableNormalViz();
+        this.parallelogram.disableNormalViz();
+        this.trianglePink.disableNormalViz();
+        this.triangleRed.disableNormalViz();
+        this.triangleOrange.disableNormalViz();
+        this.triangleBlue.disableNormalViz();
+    }
+
     display() {
 
         const deg2rad = Math.PI / 180;    
@@ -44,7 +64,7 @@ export class MyTangram extends CGFobject {
         ]);
         
         
-        this.scene.greenMaterial.apply();
+        this.scene.customMaterial.apply();
         this.diamond.display();
         
         //Small triangle side has the same length has the diamond -> sqrt(2)

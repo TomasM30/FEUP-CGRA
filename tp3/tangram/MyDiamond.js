@@ -1,4 +1,4 @@
-import {CGFobject} from '../lib/CGF.js';
+import {CGFobject} from '../../lib/CGF.js';
 /**
  * MyDiamond
  * @constructor
@@ -12,16 +12,43 @@ export class MyDiamond extends CGFobject {
 	
 	initBuffers() {
 		this.vertices = [
+			// Front face
 			-1, 0, 0,	//0
 			0, -1, 0,	//1
 			0, 1, 0,	//2
-			1, 0, 0		//3
+			1, 0, 0,	//3
+
+			// Back face
+			-1, 0, 0,	//4
+			0, -1, 0,	//5
+			0, 1, 0,	//6
+			1, 0, 0,	//7
+
 		];
 
 		//Counter-clockwise reference of vertices
 		this.indices = [
+			// Front face
 			0, 1, 2,
-			1, 3, 2
+			1, 3, 2,
+
+			// Back face
+			4, 6, 5,
+			5, 6, 7,
+		];
+
+		this.normals = [
+			// Front face
+			0, 0, 1,
+			0, 0, 1,
+			0, 0, 1,
+			0, 0, 1,
+
+			// Back face
+			0, 0, -1,
+			0, 0, -1,
+			0, 0, -1,
+			0, 0, -1
 		];
 
 		//The defined indices (and corresponding vertices)
