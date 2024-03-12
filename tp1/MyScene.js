@@ -1,4 +1,4 @@
-import { CGFscene, CGFcamera, CGFaxis } from "../lib/CGF.js";
+import { CGFscene, CGFcamera, CGFaxis, CGFappearance } from "../lib/CGF.js";
 import { MyDiamond } from "./MyDiamond.js";
 import { MyTriangle } from "./MyTriangle.js";
 import { MyParallelogram } from "./MyParallelogram.js";
@@ -18,6 +18,7 @@ export class MyScene extends CGFscene {
     
     this.initCameras();
     this.initLights();
+    this.initMaterials();
 
     //Background color
     this.gl.clearColor(0.0, 0.0, 0.0, 1.0);
@@ -35,7 +36,6 @@ export class MyScene extends CGFscene {
     this.triangleSmall = new MyTriangleSmall(this);
     this.triangleBig = new MyTriangleBig(this);
 
-
     //Objects connected to MyInterface
     this.displayAxis = true;
     this.scaleFactor = 1;
@@ -46,12 +46,14 @@ export class MyScene extends CGFscene {
     this.displayTriangleBig = true;
     
   }
+
   initLights() {
     this.lights[0].setPosition(15, 2, 5, 1);
     this.lights[0].setDiffuse(1.0, 1.0, 1.0, 1.0);
     this.lights[0].enable();
     this.lights[0].update();
   }
+
   initCameras() {
     this.camera = new CGFcamera(
       0.4,
@@ -61,12 +63,28 @@ export class MyScene extends CGFscene {
       vec3.fromValues(0, 0, 0)
     );
   }
+
+  initMaterials() {
+    this.redMaterial = new CGFappearance(this);
+    this.redMaterial.setAmbient(0.5, 0, 0, 1.0);
+    this.redMaterial.setDiffuse(0.8, 0.2, 0.2, 1.0);
+    this.redMaterial.setSpecular(0.5, 0, 0.5, 1);    
+    this.redMaterial.setShininess(10.0);
+
+    this.whiteMaterial = new CGFappearance(this);
+    this.whiteMaterial.setAmbient(1.0, 1.0, 1.0, 1.0);
+    this.whiteMaterial.setDiffuse(1.0, 1.0, 1.0, 1.0);
+    this.whiteMaterial.setSpecular(1, 1, 1, 1);    
+    this.whiteMaterial.setShininess(10.0);
+  }
+
   setDefaultAppearance() {
     this.setAmbient(0.2, 0.4, 0.8, 1.0);
     this.setDiffuse(0.2, 0.4, 0.8, 1.0);
     this.setSpecular(0.2, 0.4, 0.8, 1.0);
     this.setShininess(10.0);
   }
+
   display() {
     // ---- BEGIN Background, camera and axis setup
     // Clear image and depth buffer everytime we update the scene
@@ -118,13 +136,17 @@ export class MyScene extends CGFscene {
       this.parallelogram.display();
     }
 
+    if (this.displayTriangleBig) {
+      this.redMaterial.apply();
+      this.triangleBig.display();
+    }
+
     if (this.displayTriangleSmall) {
+      this.whiteMaterial.apply();
       this.triangleSmall.display();
     }
 
-    if (this.displayTriangleBig) {
-      this.triangleBig.display();
-    }
+
     
 
     // ---- END Primitive drawing section
