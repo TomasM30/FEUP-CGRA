@@ -7,8 +7,7 @@ export class MyUnitCubeQuad extends CGFobject {
         super(scene);
         this.quad = new MyQuad(this.scene);
         this.initTextures(text1, text2, text3, text4, text5, text6);
-        this.initMaterials();
-    }
+        }
 
 
     initTextures(text1, text2, text3, text4, text5, text6) {
@@ -20,6 +19,7 @@ export class MyUnitCubeQuad extends CGFobject {
         this.text6 = text6;
     }
 
+        /*
     initMaterials() {
         this.material = new CGFappearance(this.scene);
         this.material.setAmbient(0.1, 0.1, 0.1, 1);
@@ -27,7 +27,7 @@ export class MyUnitCubeQuad extends CGFobject {
         this.material.setSpecular(0.1, 0.1, 0.1, 1);
         this.material.setShininess(10.0);
         this.material.setTextureWrap('REPEAT', 'REPEAT');
-    }
+    }*/
 
     chooseFilter() {
         if (this.scene.filteringNearest) {
@@ -45,10 +45,9 @@ export class MyUnitCubeQuad extends CGFobject {
 
         //face da frente
         if (this.text2 != null){
-           this.material.setTexture(this.text2);
+           this.text2.bind();
            this.chooseFilter();
         } 
-        this.material.apply();
         this.scene.pushMatrix();        
         this.scene.translate(0,0,0.5);
         this.quad.display();
@@ -56,10 +55,9 @@ export class MyUnitCubeQuad extends CGFobject {
 
         //face de trás
         if (this.text4 != null) {
-            this.material.setTexture(this.text4);
+            this.text4.bind();
             this.chooseFilter();            
         }
-        this.material.apply();
         this.scene.pushMatrix();
         this.scene.translate(0,0,-0.5);
         this.scene.rotate(180.0*deg2rad, 0, 1, 0);
@@ -68,10 +66,9 @@ export class MyUnitCubeQuad extends CGFobject {
         
         //face da direita
         if (this.text3 != null) {
-            this.material.setTexture(this.text3);
+            this.text3.bind();
             this.chooseFilter();
         }
-        this.material.apply();
         this.scene.pushMatrix();
         this.scene.translate(0.5,0,0);
         this.scene.rotate(90.0*deg2rad, 0, 1, 0);
@@ -80,10 +77,9 @@ export class MyUnitCubeQuad extends CGFobject {
         
         //face da esquerda
         if (this.text5 != null) {
-            this.material.setTexture(this.text5);
+            this.text5.bind();
             this.chooseFilter();
         }
-        this.material.apply();
         this.scene.pushMatrix();
         this.scene.translate(-0.5,0,0);
         this.scene.rotate(-90.0*deg2rad, 0, 1, 0);
@@ -92,10 +88,9 @@ export class MyUnitCubeQuad extends CGFobject {
         
         //face de cima
         if (this.text1 != null) {
-            this.material.setTexture(this.text1);
+            this.text1.bind();
             this.chooseFilter();
         }
-        this.material.apply();
         this.scene.pushMatrix();
         this.scene.translate(0, 0.5, 0);
         this.scene.rotate(-90.0*deg2rad, 1, 0, 0);
@@ -104,17 +99,14 @@ export class MyUnitCubeQuad extends CGFobject {
 
         //face de baixo
         if (this.text6 != null) {
-            this.material.setTexture(this.text6);
+            this.text6.bind();
             this.chooseFilter();
         }
-        this.material.apply();
         this.scene.pushMatrix();
         this.scene.translate(0, -0.5, 0);
         this.scene.rotate(90.0*deg2rad, 1, 0, 0);
         this.quad.display();
         this.scene.popMatrix();
-        
-        
         
     }
 
