@@ -26,7 +26,7 @@ export class MyScene extends CGFscene {
 
     //Initialize scene objects
     this.axis = new CGFaxis(this);
-    this.sphere = new MySphere(this, 100, 100);
+    this.sphere = new MySphere(this, 100, 50);
     this.plane = new MyPlane(this,30);
 
     //Objects connected to MyInterface
@@ -39,6 +39,10 @@ export class MyScene extends CGFscene {
   this.appearance = new CGFappearance(this);
   this.appearance.setTexture(this.texture);
   this.appearance.setTextureWrap('REPEAT', 'REPEAT');
+
+  this.sphereMaterial = new CGFappearance(this);
+  this.sphereMaterial.loadTexture('images/earth.jpg');
+  this.sphereMaterial.setTextureWrap('REPEAT', 'REPEAT');
 
   }
   initLights() {
@@ -85,8 +89,11 @@ export class MyScene extends CGFscene {
     this.rotate(-Math.PI/2.0,1,0,0);
     this.plane.display();
     this.popMatrix();
-    this.sphere.display();
 
+    this.pushMatrix();
+    this.sphereMaterial.apply();
+    this.sphere.display();
+    this.popMatrix();
     // ---- END Primitive drawing section
   }
 }
