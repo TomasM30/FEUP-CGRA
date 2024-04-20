@@ -19,41 +19,66 @@ export class MySphere extends CGFobject {
 		this.vertices = [];
 		this.indices = [];
 		this.normals = [];
-        this.texCoords = [];
-
-		let alpha = (2*Math.PI) / (2*this.slices); //increments on XZ
-		let beta = Math.PI / (2*this.stacks); //increments on XY
 
 
-		for (let i = 0; i < this.stacks; i++){
-			let angXY = i * beta;
-			for (let j = 0; j < (this.slices*2); j++){
-				let angXZ = j * alpha;
-				
-				let r = Math.cos(angXY); //radius of the circle on XY plane
+		let stacks = ((this.stacks+1)*2);
 
-				let x =  Math.cos(angXZ) * r;
-				let y =  Math.sin(angXY);
-				let z =  Math.sin(angXZ) * r; 
+		let alpha = (2*Math.PI) / this.slices; //increments on XZ
+		let beta = Math.PI/ stacks; //increments on XY
 
+
+		for (let i = 0; i <= this.slices; i++){
+
+			let angXZ = i * alpha;
+			
+			for (let j = 0; j <= stacks; j++){
+
+				let angXY = -Math.PI/2 + j * beta;
+
+				let x = Math.cos(angXZ) * Math.cos(angXY);
+				let y = Math.sin(angXY);
+				let z = Math.sin(angXZ) * Math.cos(angXY);
 
 				this.vertices.push(x, y, z);
 				this.normals.push(x, y, z);
-				
+
+			}	
+		}
+
+		for (let i = 0; i < this.slices; i++){
+			
+			for (let j = 1; j < stacks -1; j++){
+
+				let baseIndex = i* (stacks+1) +j;
+
+				this.indices.push(baseIndex, baseIndex+1, baseIndex+stacks+1);
+				this.indices.push(baseIndex+stacks+1, baseIndex+1, baseIndex+stacks+2);
+
 			}
+		}
+
+		for (let i = 0; i < this.slices; i++){
+
+				let baseIndex = i* (stacks+1) + 1;
+
+				this.indices.push(baseIndex, baseIndex+stacks+1, baseIndex-1);
+		}
+
+		for (let i = 0; i < this.slices; i++){
+
+				let baseIndex = i* (stacks+1) + (stacks-1);
+
+				this.indices.push(baseIndex, baseIndex+1, baseIndex+stacks+1);
 		}
 
 		
-		for (let i = 0; i < this.stacks; i++){
-			for (let j = 0; j < (this.slices*2); j++){
 
-				let base_vertex = i * (this.slices*2);
+	
 
-				this.indices.push(first, third, second);
-				this.indices.push(third, fourth, second);
-			}
-		}
+		
+		
 
+		
 
 		//The defined indices (and corresponding vertices)
 		//will be read in groups of three to draw triangles
