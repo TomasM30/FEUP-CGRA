@@ -1,6 +1,7 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } from "../lib/CGF.js";
 import { MyPlane } from "./MyPlane.js";
 import { MySphere } from "./MySphere.js";
+import { MyPanorama } from "./MyPanorama.js";
 
 /**
  * MyScene
@@ -26,23 +27,34 @@ export class MyScene extends CGFscene {
 
     //Initialize scene objects
     this.axis = new CGFaxis(this);
-    this.sphere = new MySphere(this, 100, 50);
     this.plane = new MyPlane(this,30);
 
     //Objects connected to MyInterface
     this.displayAxis = true;
+    this.FOV = 1.0;
     this.scaleFactor = 1;
-
+    this.selectedPanoramaTexture = 1;
     this.enableTextures(true);
 
-  this.texture = new CGFtexture(this, "images/terrain.jpg");
-  this.appearance = new CGFappearance(this);
-  this.appearance.setTexture(this.texture);
-  this.appearance.setTextureWrap('REPEAT', 'REPEAT');
+    this.texture = new CGFtexture(this, "images/terrain.jpg");
+    this.appearance = new CGFappearance(this);
+    this.appearance.setTexture(this.texture);
+    this.appearance.setTextureWrap('REPEAT', 'REPEAT');
 
-  this.sphereMaterial = new CGFappearance(this);
-  this.sphereMaterial.loadTexture('images/earth.jpg');
-  this.sphereMaterial.setTextureWrap('REPEAT', 'REPEAT');
+    this.sphereMaterial = new CGFappearance(this);
+    this.sphereMaterial.loadTexture('images/earth.jpg');
+    this.sphereMaterial.setTextureWrap('REPEAT', 'REPEAT');
+
+    //Initialize Panorama object and Textures
+
+    this.panoramaTextureIds = { 'Panorama 1': 0, 'Panorama 2': 1, 'Panorama 3': 2 };
+
+    this.panoramaTexture1 = new CGFtexture(this, "images/panorama1.jpg");
+    this.panoramaTexture2 = new CGFtexture(this, "images/panorama2.jpg");
+    this.panoramaTexture3 = new CGFtexture(this, "images/panorama3.jpg");
+    this.panoramaTextures = [this.panoramaTexture1, this.panoramaTexture2, this.panoramaTexture3]
+
+    this.panorama = new MyPanorama(this, this.panoramaTextures[this.selectedPanoramaTexture]);
 
   }
   initLights() {
@@ -51,6 +63,7 @@ export class MyScene extends CGFscene {
     this.lights[0].enable();
     this.lights[0].update();
   }
+
   initCameras() {
     this.camera = new CGFcamera(
       1.0,
@@ -60,12 +73,27 @@ export class MyScene extends CGFscene {
       vec3.fromValues(0, 0, 0)
     );
   }
+
+  updateFOV() {
+    this.camera.fov = this.FOV;
+  }
+
+  updatePanoramaTexture() {
+
+    this.panorama.updateTexture(this.panoramaTextures[this.selectedPanoramaTexture]);
+
+  }
+
+
+
   setDefaultAppearance() {
     this.setAmbient(0.2, 0.4, 0.8, 1.0);
     this.setDiffuse(0.2, 0.4, 0.8, 1.0);
     this.setSpecular(0.2, 0.4, 0.8, 1.0);
     this.setShininess(10.0);
   }
+
+  
   display() {
     // ---- BEGIN Background, camera and axis setup
     // Clear image and depth buffer everytime we update the scene
@@ -91,8 +119,7 @@ export class MyScene extends CGFscene {
     this.popMatrix();
 
     this.pushMatrix();
-    this.sphereMaterial.apply();
-    this.sphere.display();
+    this.panorama.display();
     this.popMatrix();
     // ---- END Primitive drawing section
   }

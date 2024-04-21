@@ -5,11 +5,12 @@ import {CGFobject, CGFappearance} from '../lib/CGF.js';
  * @param scene - Reference to MyScene object
  */
 export class MySphere extends CGFobject {
-	constructor(scene, slices, stacks) {
+	constructor(scene, slices, stacks, inverted = false) {
 		super(scene);
 
 		this.slices = slices;
 		this.stacks = stacks;
+		this.inverted = inverted;
 
 		this.initBuffers();
 	}
@@ -46,6 +47,13 @@ export class MySphere extends CGFobject {
 				let z = Math.sin(angXZ) * Math.cos(angXY);
 
 				this.vertices.push(x, y, z);
+
+				if (this.inverted){
+					x = -x;
+					y = -y;
+					z = -z;
+				}
+
 				this.normals.push(x, y, z);
 
 				this.texCoords.push(text_x, text_y);
@@ -64,24 +72,45 @@ export class MySphere extends CGFobject {
 
 				let baseIndex = i* (stacks+1) +j;
 
-				this.indices.push(baseIndex, baseIndex+1, baseIndex+stacks+1);
-				this.indices.push(baseIndex+stacks+1, baseIndex+1, baseIndex+stacks+2);
+				if(this.inverted){
+					this.indices.push(baseIndex, baseIndex+stacks+1, baseIndex+1);
+					this.indices.push(baseIndex+stacks+1, baseIndex+stacks+2, baseIndex+1);
+				} else {
+					this.indices.push(baseIndex, baseIndex+1, baseIndex+stacks+1);
+					this.indices.push(baseIndex+stacks+1, baseIndex+1, baseIndex+stacks+2);
+				}
+
 
 			}
 		}
 
+		//Bottom Vertex indices
 		for (let i = 0; i < this.slices; i++){
 
 				let baseIndex = i* (stacks+1) + 1;
 
-				this.indices.push(baseIndex, baseIndex+stacks+1, baseIndex-1);
+				if(this.inverted){
+					this.indices.push(baseIndex, baseIndex-1, baseIndex+stacks+1);
+				}
+				else {
+					this.indices.push(baseIndex, baseIndex+stacks+1, baseIndex-1);
+				}
+
+
 		}
 
+		
+		//Top Vertex indices
 		for (let i = 0; i < this.slices; i++){
 
 				let baseIndex = i* (stacks+1) + (stacks-1);
 
-				this.indices.push(baseIndex, baseIndex+1, baseIndex+stacks+1);
+				if (this.inverted) {
+					this.indices.push(baseIndex, baseIndex+stacks+1, baseIndex+1);
+				}
+				else {
+					this.indices.push(baseIndex, baseIndex+1, baseIndex+stacks+1);
+				}
 		}
 
 
