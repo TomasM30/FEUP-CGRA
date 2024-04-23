@@ -2,6 +2,7 @@ import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } fr
 import { MyPlane } from "./MyPlane.js";
 import { MySphere } from "./MySphere.js";
 import { MyPanorama } from "./MyPanorama.js";
+import { MyFlower } from "./MyFlower.js";
 
 /**
  * MyScene
@@ -55,6 +56,8 @@ export class MyScene extends CGFscene {
     this.panoramaTextures = [this.panoramaTexture1, this.panoramaTexture2, this.panoramaTexture3]
 
     this.panorama = new MyPanorama(this, this.panoramaTextures[this.selectedPanoramaTexture]);
+
+    this.flower = new MyFlower(this, 3, 5, 1, 0.1, 5);
 
   }
   initLights() {
@@ -119,12 +122,13 @@ export class MyScene extends CGFscene {
     this.popMatrix();
 
     this.pushMatrix();
-    this.panorama.display();
+    //this.panorama.display();
     this.popMatrix();
 
     this.pushMatrix();
     this.sphereMaterial.apply();
-    this.sphere.display();
+    //this.sphere.display();
+    this.flower.display();
     this.popMatrix();
 
     // ---- END Primitive drawing section

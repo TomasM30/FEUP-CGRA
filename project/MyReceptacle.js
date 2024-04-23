@@ -20,8 +20,9 @@ export class MyReceptacle extends CGFobject {
 	
     display(){
 
-        this.scene.scale(1, 0.5, 1);
+        this.scene.scale(1, 1, 1);
         this.sphere.display();
+		
 
     }
 
