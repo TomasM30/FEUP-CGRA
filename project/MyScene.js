@@ -121,6 +121,12 @@ export class MyScene extends CGFscene {
     this.pushMatrix();
     this.panorama.display();
     this.popMatrix();
+
+    this.pushMatrix();
+    this.sphereMaterial.apply();
+    this.sphere.display();
+    this.popMatrix();
+
     // ---- END Primitive drawing section
   }
 }
