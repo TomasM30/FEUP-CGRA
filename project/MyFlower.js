@@ -27,7 +27,9 @@ export class MyFlower extends CGFobject {
 
         let petalHeight = this.externalRadius - this.heartRadius;
         for(let i = 0; i < this.numPetals; i++){
-            this.petals.push(new MyPetal(this.scene, petalHeight));
+            let curvatureAngle = Math.random() * -Math.PI/2;
+            this.petals.push(new MyPetal(this.scene, petalHeight, curvatureAngle, Math.PI/(2.5), Math.PI/2, this.heartRadius));
+
         }
 
         this.receptacle = new MyReceptacle(this.scene, 10, 10);
@@ -37,12 +39,12 @@ export class MyFlower extends CGFobject {
         }
     }
 
+
     display(){
 
         for(let i = 0; i < this.numPetals; i++){
             this.scene.pushMatrix();
-            this.scene.rotate(2 * Math.PI * i / this.numPetals, 0, 0, 1); // rotation around y-axis
-            this.scene.translate(0, this.heartRadius, 0);
+            this.scene.rotate(i*Math.PI*2/this.numPetals, 0, 1, 0);
             this.petals[i].display();
             this.scene.popMatrix();
         }

@@ -57,7 +57,7 @@ export class MyScene extends CGFscene {
 
     this.panorama = new MyPanorama(this, this.panoramaTextures[this.selectedPanoramaTexture]);
 
-    this.flower = new MyFlower(this, 3, 5, 1, 0.1, 5);
+    this.flower = new MyFlower(this, 4, 30, 1, 0.1, 5);
 
   }
   initLights() {
