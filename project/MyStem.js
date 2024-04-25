@@ -1,4 +1,5 @@
 import {CGFobject} from '../lib/CGF.js';
+import { MyCylinder } from "./MyCylinder.js";
 
 /**
  * MyStem
@@ -6,61 +7,36 @@ import {CGFobject} from '../lib/CGF.js';
  * @param scene - Reference to MyScene object
  */
 export class MyStem extends CGFobject {
-	constructor(scene, slices, stacks) {
-		super(scene);
+    constructor(scene, numCilynders, radius) {
+        super(scene);
 
-		this.slices = slices;
-		this.stacks = stacks;
+        this.numCilynders = numCilynders;
+        this.radius = radius;
+        this.cilynders = [];
+        this.rotations = [];
 
-		this.initBuffers();
-	}
-	
-	initBuffers() {
+        this.initObjects();
+    }
 
-		this.vertices = [];
-		this.indices = [];
-		this.normals = [];
+    initObjects(){
+        for(let i = 0; i < this.numCilynders; i++){
+            let height = Math.random();
+            this.cilynders.push(new MyCylinder(this.scene, 30, 30, height, this.radius));
+            this.rotations.push(Math.random() * 25 * (Math.PI / 180));
+        }
+    }
 
-		let alfa = Math.PI * 2 / this.slices;
-
-		for (var i = 0; i < this.slices; i++) {
-
-			var ang = alfa * i;
-			var sin = Math.sin(ang);
-			var cos = Math.cos(ang);
-			for (var j = 0; j <= this.stacks; j++) {
-
-				var z = 1/this.stacks * j;
-
-				this.vertices.push(cos, sin, z);
-				this.normals.push(cos, sin, 0);
-			}
-
-		}
-
-		for (var i = 0; i < this.slices-1; i++) {
-			for (var j = 0; j < this.stacks; j++) {
-				var bv = j + i*(this.stacks+1); //stands for base vertex
-
-				this.indices.push(bv, bv+(this.stacks+1), bv+(this.stacks+1)+1);
-				this.indices.push(bv, bv+(this.stacks+1)+1, bv+1);
-				}
-		}
-
-		for (var j = 0; j < this.stacks; j++) {
-
-			var lv = (this.slices-1)*(this.stacks+1) + j; //stands for last vertex
-			this.indices.push(lv, j, j+1);
-			this.indices.push(lv, j+1, lv+1);
-		
-		}
-
-		//The defined indices (and corresponding vertices)
-		//will be read in groups of three to draw triangles
-		this.primitiveType = this.scene.gl.TRIANGLES;
-
-		this.initGLBuffers();
-	}
-
+    display(){
+        let totalHeight = 2*this.radius*Math.sin(this.rotations[0]);
+        for(let i = 0; i < this.numCilynders; i++){
+            this.scene.pushMatrix();
+            this.scene.translate(0, -totalHeight, 0);
+            this.scene.translate(0, -this.cilynders[i].height/2, 0);
+            //this.scene.rotate(this.rotations[i], 0, 0, 1);
+            this.scene.translate(0, this.cilynders[i].height/2, 0);
+            this.cilynders[i].display();
+            this.scene.popMatrix();
+            totalHeight += this.cilynders[i].height;
+        }
+    }
 }
-

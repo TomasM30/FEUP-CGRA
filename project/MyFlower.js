@@ -1,7 +1,8 @@
 import {CGFobject, CGFappearance} from '../lib/CGF.js';
-import { MyStem } from './MyStem.js';
 import { MyPetal } from './MyPetal.js';
 import { MyReceptacle } from './MyReceptacle.js';
+import { MyStem } from './MyStem.js';
+
 
 /**
  * MyFlower
@@ -33,10 +34,7 @@ export class MyFlower extends CGFobject {
         }
 
         this.receptacle = new MyReceptacle(this.scene, 10, 10);
-
-        for (let i = 0; i < this.stemSize; i++){
-            this.stems.push(new MyStem(this.scene, 30,30));
-        }
+        this.stem = new MyStem(this.scene, this.stemSize, this.stemRadius);
     }
 
 
@@ -51,18 +49,13 @@ export class MyFlower extends CGFobject {
 
         this.scene.pushMatrix();
         this.scene.scale(this.heartRadius, this.heartRadius, this.heartRadius);
-        this.receptacle.display();
+        //this.receptacle.display();
         this.scene.popMatrix();
 
-        let stemTranslateY = 0;
-        for(let i = 0; i < this.stemSize; i++){
-            this.scene.pushMatrix();
-            this.scene.rotate(Math.PI/2, 1, 0, 0);
-            this.scene.translate(0, 0, this.heartRadius+stemTranslateY);
-            this.scene.scale(this.stemRadius, this.stemRadius, 1);
-            this.stems[i].display();
-            this.scene.popMatrix();
-            stemTranslateY += 1;
-        }
+        this.scene.pushMatrix();
+        //this.scene.translate(0, -this.heartRadius, 0);
+        this.stem.display();
+        this.scene.popMatrix();
+        
     }
 }
