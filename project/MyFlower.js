@@ -49,11 +49,12 @@ export class MyFlower extends CGFobject {
 
         this.scene.pushMatrix();
         this.scene.scale(this.heartRadius, this.heartRadius, this.heartRadius);
-        //this.receptacle.display();
+        this.receptacle.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        //this.scene.translate(0, -this.heartRadius, 0);
+        this.scene.translate(0, -this.heartRadius, 0);
+        this.scene.scale(this.stemRadius, 1, this.stemRadius);
         this.stem.display();
         this.scene.popMatrix();
         
