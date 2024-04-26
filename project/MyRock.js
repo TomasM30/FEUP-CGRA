@@ -1,16 +1,15 @@
 import {CGFobject} from '../lib/CGF.js';
 /**
- * MySphere
+ * MyRock
  * @constructor
  * @param scene - Reference to MyScene object
  */
-export class MySphere extends CGFobject {
-	constructor(scene, slices, stacks, inverted = false) {
+export class MyRock extends CGFobject {
+	constructor(scene, slices, stacks) {
 		super(scene);
 
 		this.slices = slices;
 		this.stacks = stacks;
-		this.inverted = inverted;
 
 		this.initBuffers();
 	}
@@ -32,7 +31,7 @@ export class MySphere extends CGFobject {
 
 		let text_x = 1;
 
-		for (let i = 0; i <= this.slices; i++){
+		for (let i = 0; i < this.slices; i++){
 
 			let angXZ = i * alpha;
 
@@ -48,12 +47,6 @@ export class MySphere extends CGFobject {
 
 				this.vertices.push(x, y, z);
 
-				if (this.inverted){
-					x = -x;
-					y = -y;
-					z = -z;
-				}
-
 				this.normals.push(x, y, z);
 
 				this.texCoords.push(text_x, text_y);
@@ -66,20 +59,30 @@ export class MySphere extends CGFobject {
 
 		}
 
+        let text_y = 1;
+
+        for (let i = 0; i <= stacks; i++){
+
+            let x = this.vertices[i*3]
+            let y = this.vertices[i*3 + 1]
+            let z = this.vertices[i*3 + 2]
+            this.vertices.push(x, y, z);
+            this.normals.push(x, y, z);
+
+            this.texCoords.push(text_x, text_y);
+
+            text_y -= dec_text_y;
+
+        }
+
 		for (let i = 0; i < this.slices; i++){
 			
 			for (let j = 1; j < stacks -1; j++){
 
 				let baseIndex = i* (stacks+1) +j;
 
-				if(this.inverted){
-					this.indices.push(baseIndex, baseIndex+stacks+1, baseIndex+1);
-					this.indices.push(baseIndex+stacks+1, baseIndex+stacks+2, baseIndex+1);
-				} else {
-					this.indices.push(baseIndex, baseIndex+1, baseIndex+stacks+1);
-					this.indices.push(baseIndex+stacks+1, baseIndex+1, baseIndex+stacks+2);
-				}
-
+                this.indices.push(baseIndex, baseIndex+1, baseIndex+stacks+1);
+                this.indices.push(baseIndex+stacks+1, baseIndex+1, baseIndex+stacks+2);
 
 			}
 		}
@@ -87,15 +90,8 @@ export class MySphere extends CGFobject {
 		//Bottom Vertex indices
 		for (let i = 0; i < this.slices; i++){
 
-				let baseIndex = i* (stacks+1) + 1;
-
-				if(this.inverted){
-					this.indices.push(baseIndex, baseIndex-1, baseIndex+stacks+1);
-				}
-				else {
-					this.indices.push(baseIndex, baseIndex+stacks+1, baseIndex-1);
-				}
-
+            let baseIndex = i* (stacks+1) + 1;
+            this.indices.push(baseIndex, baseIndex+stacks+1, baseIndex-1);
 
 		}
 
@@ -103,15 +99,10 @@ export class MySphere extends CGFobject {
 		//Top Vertex indices
 		for (let i = 0; i < this.slices; i++){
 
-				let baseIndex = i* (stacks+1) + (stacks-1);
-
-				if (this.inverted) {
-					this.indices.push(baseIndex, baseIndex+stacks+1, baseIndex+1);
-				}
-				else {
-					this.indices.push(baseIndex, baseIndex+1, baseIndex+stacks+1);
-				}
-		}
+            let baseIndex = i* (stacks+1) + (stacks-1);
+            this.indices.push(baseIndex, baseIndex+1, baseIndex+stacks+1);
+        
+        }
 
 
 		//The defined indices (and corresponding vertices)

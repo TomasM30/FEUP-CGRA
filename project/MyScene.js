@@ -3,6 +3,7 @@ import { MyPlane } from "./MyPlane.js";
 import { MySphere } from "./MySphere.js";
 import { MyPanorama } from "./MyPanorama.js";
 import { MyFlower } from "./MyFlower.js";
+import { MyRockSet } from "./MyRockSet.js";
 
 /**
  * MyScene
@@ -26,16 +27,24 @@ export class MyScene extends CGFscene {
     this.gl.enable(this.gl.CULL_FACE);
     this.gl.depthFunc(this.gl.LEQUAL);
 
-    //Initialize scene objects
-    this.axis = new CGFaxis(this);
-    this.plane = new MyPlane(this,30);
-
     //Objects connected to MyInterface
     this.displayAxis = true;
+    this.displaySphere = false;
+    this.displayPanorama = false;
+    this.displayFlower = false;
+    this.displayRockSet = true;
+    this.base_size = 1;
     this.FOV = 1.0;
     this.scaleFactor = 1;
     this.selectedPanoramaTexture = 1;
     this.enableTextures(true);
+
+    //Initialize scene objects
+    this.axis = new CGFaxis(this);
+    this.plane = new MyPlane(this,30);
+    this.sphere = new MySphere(this, 30, 30);
+    this.flower = new MyFlower(this, 3, 5, 1, 0.1, 5);
+    this.rockSet = new MyRockSet(this, this.base_size);
 
     this.texture = new CGFtexture(this, "images/terrain.jpg");
     this.appearance = new CGFappearance(this);
@@ -57,7 +66,6 @@ export class MyScene extends CGFscene {
 
     this.panorama = new MyPanorama(this, this.panoramaTextures[this.selectedPanoramaTexture]);
 
-    this.flower = new MyFlower(this, 3, 5, 1, 0.1, 5);
 
   }
   initLights() {
@@ -82,12 +90,12 @@ export class MyScene extends CGFscene {
   }
 
   updatePanoramaTexture() {
-
     this.panorama.updateTexture(this.panoramaTextures[this.selectedPanoramaTexture]);
-
   }
 
-
+  updateBaseSize() {
+    this.rockSet = new MyRockSet(this, this.base_size);
+  }
 
   setDefaultAppearance() {
     this.setAmbient(0.2, 0.4, 0.8, 1.0);
@@ -121,15 +129,32 @@ export class MyScene extends CGFscene {
     this.plane.display();
     this.popMatrix();
 
-    this.pushMatrix();
-    //this.panorama.display();
-    this.popMatrix();
+    if (this.displaySphere) {
+      this.pushMatrix();
+      this.sphereMaterial.apply();
+      this.sphere.display();
+      this.popMatrix();
+    }
 
-    this.pushMatrix();
-    this.sphereMaterial.apply();
-    //this.sphere.display();
-    this.flower.display();
-    this.popMatrix();
+    if (this.displayPanorama) {
+      this.pushMatrix();
+      this.panorama.display();
+      this.popMatrix();
+    }
+
+    if (this.displayFlower) {
+      this.pushMatrix();
+      this.sphereMaterial.apply();
+      this.flower.display();
+      this.popMatrix();
+    }
+
+    if (this.displayRockSet) {
+      this.pushMatrix();
+      this.rockSet.display();
+      this.popMatrix();
+    }
+
 
     // ---- END Primitive drawing section
   }
