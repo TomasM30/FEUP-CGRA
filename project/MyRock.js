@@ -45,7 +45,10 @@ export class MyRock extends CGFobject {
 				let y = Math.sin(angXY);
 				let z = Math.sin(angXZ) * Math.cos(angXY);
 
-				this.vertices.push(x, y, z);
+                //Randomize the size of the rock (values between 0.9 and 1.1)
+                let rand = Math.random() * 0.2 + 0.9;
+
+                this.vertices.push(x*rand, y*rand, z*rand);
 
 				this.normals.push(x, y, z);
 
@@ -66,6 +69,7 @@ export class MyRock extends CGFobject {
             let x = this.vertices[i*3]
             let y = this.vertices[i*3 + 1]
             let z = this.vertices[i*3 + 2]
+
             this.vertices.push(x, y, z);
             this.normals.push(x, y, z);
 
