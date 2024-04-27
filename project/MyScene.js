@@ -3,6 +3,7 @@ import { MyPlane } from "./MyPlane.js";
 import { MySphere } from "./SkySphere/MySphere.js";
 import { MyPanorama } from "./SkySphere/MyPanorama.js";
 import { MyGarden } from "./Flower/MyGarden.js";
+import { MyRockSet } from "./RockSet/MyRockSet.js";
 
 /**
  * MyScene
@@ -47,6 +48,8 @@ export class MyScene extends CGFscene {
     this.plane = new MyPlane(this,30);
     this.sphere = new MySphere(this, 30, 30);
     this.panorama = new MyPanorama(this, this.panoramaTextures[this.selectedPanoramaTexture]);
+    this.garden = new MyGarden(this, this.gardenRows, this.gardenColumns, this.petalTextures, this.receptacleTextures, this.stemTextures, this.leavesTextures);
+    this.rockSet = new MyRockSet(this, this.base_size, this.rockTexture);
 
   }
 
@@ -108,6 +111,8 @@ export class MyScene extends CGFscene {
     this.leavesTextures.push(new CGFtexture(this, 'images/leaves_flower/Leaf2.jpg'));
     this.leavesTextures.push(new CGFtexture(this, 'images/leaves_flower/Leaf3.jpg'));
     this.leavesTextures.push(new CGFtexture(this, 'images/leaves_flower/Leaf4.jpg'));
+
+    this.rockTexture = new CGFtexture(this, 'images/rock.jpg');
   }
 
   updateFOV() {
@@ -123,7 +128,7 @@ export class MyScene extends CGFscene {
   }  
   
   updateBaseSize() {
-    this.rockSet = new MyRockSet(this, this.base_size);
+    this.rockSet = new MyRockSet(this, this.base_size, this.rockTexture);
   }
 
   setDefaultAppearance() {

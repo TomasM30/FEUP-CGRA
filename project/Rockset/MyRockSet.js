@@ -1,4 +1,4 @@
-import {CGFobject, CGFappearance} from '../lib/CGF.js';
+import {CGFobject, CGFappearance} from '../../lib/CGF.js';
 import {MyRock} from './MyRock.js';
 /**
  * MyRockSet
@@ -6,7 +6,7 @@ import {MyRock} from './MyRock.js';
  * @param scene - Reference to MyScene object
  */
 export class MyRockSet extends CGFobject {
-	constructor(scene, base_size) {
+	constructor(scene, base_size, t) {
 		super(scene);
 
         this.base_size = base_size;
