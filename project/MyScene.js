@@ -2,7 +2,6 @@ import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } fr
 import { MyPlane } from "./MyPlane.js";
 import { MySphere } from "./SkySphere/MySphere.js";
 import { MyPanorama } from "./SkySphere/MyPanorama.js";
-import { MyFlower } from "./Flower/MyFlower.js";
 import { MyGarden } from "./Flower/MyGarden.js";
 
 /**
@@ -18,6 +17,7 @@ export class MyScene extends CGFscene {
     
     this.initCameras();
     this.initLights();
+    this.initMaterialsAndTextures();
 
     //Background color
     this.gl.clearColor(0.0, 0.0, 0.0, 1.0);
@@ -32,9 +32,8 @@ export class MyScene extends CGFscene {
     this.displayPlane = false;
     this.displaySphere = false;
     this.displayPanorama = false;
-    this.displayFlower = true;
-    this.displayGarden = false;
-    this.gardenRows = 3;
+    this.displayGarden = true;
+    this.gardenRows = 1;
     this.gardenColumns = 1;
     this.base_size = 1;
     this.FOV = 1.0;
@@ -46,33 +45,8 @@ export class MyScene extends CGFscene {
     this.axis = new CGFaxis(this);
     this.plane = new MyPlane(this,30);
     this.sphere = new MySphere(this, 30, 30);
-
-    let petalColor = [1, 1, 0];
-    let receptacleColor = [88/255, 57/255, 39/255];
-    let stemColor = [24/255, 70/255, 50/255];
-    this.flower = new MyFlower(this, 3, 10, 1, 0.1, 5, petalColor, receptacleColor, stemColor);
-
-    this.garden = new MyGarden(this, this.gardenRows, this.gardenColumns);
-
-    this.texture = new CGFtexture(this, "images/terrain.jpg");
-    this.appearance = new CGFappearance(this);
-    this.appearance.setTexture(this.texture);
-    this.appearance.setTextureWrap('REPEAT', 'REPEAT');
-
-    this.sphereMaterial = new CGFappearance(this);
-    this.sphereMaterial.loadTexture('images/earth.jpg');
-    this.sphereMaterial.setTextureWrap('REPEAT', 'REPEAT');
-
-    //Initialize Panorama object and Textures
-
-    this.panoramaTextureIds = { 'Panorama 1': 0, 'Panorama 2': 1, 'Panorama 3': 2 };
-
-    this.panoramaTexture1 = new CGFtexture(this, "images/panorama1.jpg");
-    this.panoramaTexture2 = new CGFtexture(this, "images/panorama2.jpg");
-    this.panoramaTexture3 = new CGFtexture(this, "images/panorama3.jpg");
-    this.panoramaTextures = [this.panoramaTexture1, this.panoramaTexture2, this.panoramaTexture3]
-
     this.panorama = new MyPanorama(this, this.panoramaTextures[this.selectedPanoramaTexture]);
+    this.garden = new MyGarden(this, this.gardenRows, this.gardenColumns, this.petalTextures, this.receptacleTextures, this.stemTextures, this.leavesTextures);
   }
 
   initLights() {
@@ -92,6 +66,49 @@ export class MyScene extends CGFscene {
     );
   }
 
+  initMaterialsAndTextures() {
+    this.texture = new CGFtexture(this, "images/terrain.jpg");
+    this.appearance = new CGFappearance(this);
+    this.appearance.setTexture(this.texture);
+    this.appearance.setTextureWrap('REPEAT', 'REPEAT');
+
+    this.sphereMaterial = new CGFappearance(this);
+    this.sphereMaterial.loadTexture('images/earth.jpg');
+    this.sphereMaterial.setTextureWrap('REPEAT', 'REPEAT');
+
+
+    //Initialize Panorama Textures
+    this.panoramaTextureIds = { 'Panorama 1': 0, 'Panorama 2': 1, 'Panorama 3': 2 };
+    this.panoramaTexture1 = new CGFtexture(this, "images/panorama1.jpg");
+    this.panoramaTexture2 = new CGFtexture(this, "images/panorama2.jpg");
+    this.panoramaTexture3 = new CGFtexture(this, "images/panorama3.jpg");
+    this.panoramaTextures = [this.panoramaTexture1, this.panoramaTexture2, this.panoramaTexture3]
+
+    this.petalTextures = [];
+    this.petalTextures.push(new CGFtexture(this, 'images/petals_flower/Petal1.jpg'));
+    this.petalTextures.push(new CGFtexture(this, 'images/petals_flower/Petal2.jpg'));
+    this.petalTextures.push(new CGFtexture(this, 'images/petals_flower/Petal3.jpg'));
+    this.petalTextures.push(new CGFtexture(this, 'images/petals_flower/Petal4.jpg'));
+
+    this.receptacleTextures = [];
+    this.receptacleTextures.push(new CGFtexture(this, 'images/hearts_flower/Heart1.jpg'));
+    this.receptacleTextures.push(new CGFtexture(this, 'images/hearts_flower/Heart2.jpg'));
+    this.receptacleTextures.push(new CGFtexture(this, 'images/hearts_flower/Heart3.jpg'));
+    this.receptacleTextures.push(new CGFtexture(this, 'images/hearts_flower/Heart4.jpg'));
+    
+    this.stemTextures = [];
+    this.stemTextures.push(new CGFtexture(this, 'images/stems_flower/Stem1.jpg'));
+    this.stemTextures.push(new CGFtexture(this, 'images/stems_flower/Stem2.jpg'));
+    this.stemTextures.push(new CGFtexture(this, 'images/stems_flower/Stem3.jpg'));
+    this.stemTextures.push(new CGFtexture(this, 'images/stems_flower/Stem4.jpg'));
+
+    this.leavesTextures = [];
+    this.leavesTextures.push(new CGFtexture(this, 'images/leaves_flower/Leaf1.jpg'));
+    this.leavesTextures.push(new CGFtexture(this, 'images/leaves_flower/Leaf2.jpg'));
+    this.leavesTextures.push(new CGFtexture(this, 'images/leaves_flower/Leaf3.jpg'));
+    this.leavesTextures.push(new CGFtexture(this, 'images/leaves_flower/Leaf4.jpg'));
+  }
+
   updateFOV() {
     this.camera.fov = this.FOV;
   }
@@ -101,7 +118,7 @@ export class MyScene extends CGFscene {
   }
 
   updateGarden() {
-    this.garden = new MyGarden(this, this.gardenRows, this.gardenColumns);
+    this.garden = new MyGarden(this, this.gardenRows, this.gardenColumns, this.petalTextures, this.receptacleTextures, this.stemTextures, this.leavesTextures);
   }
 
   setDefaultAppearance() {
@@ -147,13 +164,6 @@ export class MyScene extends CGFscene {
     if (this.displayPanorama) {
       this.pushMatrix();
       this.panorama.display();
-      this.popMatrix();
-    }
-
-    if (this.displayFlower) {
-      this.pushMatrix();
-      this.sphereMaterial.apply();
-      this.flower.display();
       this.popMatrix();
     }
 

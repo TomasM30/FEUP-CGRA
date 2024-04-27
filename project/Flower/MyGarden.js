@@ -1,4 +1,4 @@
-import {CGFobject, CGFappearance} from '../../lib/CGF.js';
+import {CGFobject} from '../../lib/CGF.js';
 import { MyFlower } from './MyFlower.js';
 
 /**
@@ -7,15 +7,36 @@ import { MyFlower } from './MyFlower.js';
  * @param scene - Reference to MyScene object
  */
 export class MyGarden extends CGFobject {
-    constructor(scene, rows, columns) {
+    constructor(scene, rows, columns, petalTextures, receptacleTextures, stemTextures, leavesTextures) {
         super(scene);
     
         this.rows = rows;
         this.columns = columns;
+        this.petalTextures = petalTextures;
+        this.receptacleTextures = receptacleTextures;
+        this.stemTextures = stemTextures;
+        this.leavesTextures = leavesTextures;
 
         this.initObjects();
 
     }
+
+    getIndexFromRandom(num) {
+
+        if (num < 0.25) {
+          return 0;
+        }
+        else if (num < 0.5) {
+          return 1;
+        }
+        else if (num < 0.75) {
+          return 2;
+        }
+        else {
+          return 3;
+        }
+    
+      }
 
     initObjects(){
 
@@ -26,16 +47,20 @@ export class MyGarden extends CGFobject {
 
             for(let j = 0; j < this.columns; j++){
 
-                let n_petals = Math.random() * 10 + 5;
+                let n_petals = Math.floor(Math.random() * 10 + 5);
                 let heart_radius = Math.random() + 0.5;
                 let stem_radius = Math.random() * 0.1 + 0.1;
-                let stem_size = Math.random() * 5 + 5;
+                let stem_size = Math.floor(Math.random() * 5 + 5);
                 let externalRadius = Math.random() * 4 + 3; 
                 let petalColor = [1, 1, 0];
                 let receptacleColor = [88/255, 57/255, 39/255];
                 let stemColor = [24/255, 70/255, 50/255];
+                let petalText = this.petalTextures[this.getIndexFromRandom(Math.random())];
+                let receptacleText = this.receptacleTextures[this.getIndexFromRandom(Math.random())];
+                let stemText = this.stemTextures[this.getIndexFromRandom(Math.random())];
 
-                let flower = new MyFlower(this.scene, externalRadius, n_petals, heart_radius, stem_radius, stem_size, petalColor, receptacleColor, stemColor); 
+
+                let flower = new MyFlower(this.scene, externalRadius, n_petals, heart_radius, stem_radius, stem_size, petalColor, receptacleColor, stemColor, petalText, receptacleText, stemText, this.leavesTextures); 
                 this.flowers.push(flower);
                 this.flower_heights.push(flower.getStemHeight() + heart_radius);
             }

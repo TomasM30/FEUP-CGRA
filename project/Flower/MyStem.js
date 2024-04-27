@@ -8,7 +8,7 @@ import { MyLeaf } from "./MyLeaf.js";
  * @param scene - Reference to MyScene object
  */
 export class MyStem extends CGFobject {
-    constructor(scene, numCilynders, radius, stemMaterial) {
+    constructor(scene, numCilynders, radius, stemMaterial, leavesTextures) {
         super(scene);
 
         this.numCilynders = numCilynders;
@@ -18,7 +18,8 @@ export class MyStem extends CGFobject {
         this.leaves = [];
         this.rotationsY = [];
         this.rotationsZ = [];
-        this.leavesMaterial = [];
+        this.leavesTextures = leavesTextures;
+        this.leafTextureOrder = [];
 
         this.initObjects();
         this.initMaterials();
@@ -46,59 +47,29 @@ export class MyStem extends CGFobject {
 
     initMaterials(){
 
-        let materials = []
-
-        materials.push(new CGFappearance(this.scene));
-        materials[0].setAmbient(1, 1, 1, 1);
-        materials[0].setDiffuse(0.9, 0.9, 0.9, 1);
-        materials[0].setSpecular(0.1, 0.1, 0.1, 1);
-        materials[0].setShininess(10.0);
-        materials[0].loadTexture('images/leaves_flower/Leaf1.jpg');
-        materials[0].setTextureWrap('REPEAT', 'REPEAT');
-
-        materials.push(new CGFappearance(this.scene));
-        materials[1].setAmbient(1, 1, 1, 1);
-        materials[1].setDiffuse(0.9, 0.9, 0.9, 1);
-        materials[1].setSpecular(0.1, 0.1, 0.1, 1);
-        materials[1].setShininess(10.0);
-        materials[1].loadTexture('images/leaves_flower/Leaf1.jpg');
-        materials[1].setTextureWrap('REPEAT', 'REPEAT');
-
-        materials.push(new CGFappearance(this.scene));
-        materials[2].setAmbient(1, 1, 1, 1);
-        materials[2].setDiffuse(0.9, 0.9, 0.9, 1);
-        materials[2].setSpecular(0.1, 0.1, 0.1, 1);
-        materials[2].setShininess(10.0);
-        materials[2].loadTexture('images/leaves_flower/Leaf1.jpg');
-        materials[2].setTextureWrap('REPEAT', 'REPEAT');
-
-        materials.push(new CGFappearance(this.scene));
-        materials[3].setAmbient(1, 1, 1, 1);
-        materials[3].setDiffuse(0.9, 0.9, 0.9, 1);
-        materials[3].setSpecular(0.1, 0.1, 0.1, 1);
-        materials[3].setShininess(10.0);
-        materials[3].loadTexture('images/leaves_flower/Leaf1.jpg');
-        materials[3].setTextureWrap('REPEAT', 'REPEAT');
-        
-
+        this.leafMaterial = new CGFappearance(this.scene);
+        this.leafMaterial.setAmbient(1, 1, 1, 1);
+        this.leafMaterial.setDiffuse(0.9, 0.9, 0.9, 1);
+        this.leafMaterial.setSpecular(0.1, 0.1, 0.1, 1);
+        this.leafMaterial.setShininess(10.0);
+        this.leafMaterial.setTextureWrap('REPEAT', 'REPEAT');
 
         for (let i = 0; i < this.leaves.length; i++) {
 
             let num = Math.random();
             if (num < 0.25) {
-                this.leavesMaterial.push(materials[0]);
+                this.leafTextureOrder.push(this.leavesTextures[0]);
             }
             else if (num < 0.5) {
-                this.leavesMaterial.push(materials[1]);
+                this.leafTextureOrder.push(this.leavesTextures[1]);
             }
             else if (num < 0.75) {
-                this.leavesMaterial.push(materials[2]);
+                this.leafTextureOrder.push(this.leavesTextures[2]);
             }
             else {
-                this.leavesMaterial.push(materials[3]);
+                this.leafTextureOrder.push(this.leavesTextures[3]);
             }
         }
-
 
     }
 
@@ -125,7 +96,8 @@ export class MyStem extends CGFobject {
                 this.scene.rotate(this.rotationsY[i], 0, 1, 0);
                 this.scene.rotate(this.rotationsZ[i], 0, 0, 1);
                 this.scene.rotate(Math.PI / 2, 1, 0, 0);
-                this.leavesMaterial[i].apply();
+                this.leafMaterial.setTexture(this.leafTextureOrder[i]);
+                this.leafMaterial.apply();
                 this.leaves[i].display();
                 this.scene.popMatrix();
             }
