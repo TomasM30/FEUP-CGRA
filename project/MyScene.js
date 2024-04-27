@@ -1,8 +1,9 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } from "../lib/CGF.js";
 import { MyPlane } from "./MyPlane.js";
-import { MySphere } from "./MySphere.js";
-import { MyPanorama } from "./MyPanorama.js";
-import { MyFlower } from "./MyFlower.js";
+import { MySphere } from "./SkySphere/MySphere.js";
+import { MyPanorama } from "./SkySphere/MyPanorama.js";
+import { MyFlower } from "./Flower/MyFlower.js";
+import { MyGarden } from "./Flower/MyGarden.js";
 
 /**
  * MyScene
@@ -26,16 +27,32 @@ export class MyScene extends CGFscene {
     this.gl.enable(this.gl.CULL_FACE);
     this.gl.depthFunc(this.gl.LEQUAL);
 
-    //Initialize scene objects
-    this.axis = new CGFaxis(this);
-    this.plane = new MyPlane(this,30);
-
     //Objects connected to MyInterface
     this.displayAxis = true;
+    this.displayPlane = false;
+    this.displaySphere = false;
+    this.displayPanorama = false;
+    this.displayFlower = false;
+    this.displayGarden = true;
+    this.gardenRows = 3;
+    this.gardenColumns = 1;
+    this.base_size = 1;
     this.FOV = 1.0;
     this.scaleFactor = 1;
     this.selectedPanoramaTexture = 1;
     this.enableTextures(true);
+
+    //Initialize scene objects
+    this.axis = new CGFaxis(this);
+    this.plane = new MyPlane(this,30);
+    this.sphere = new MySphere(this, 30, 30);
+
+    let petalColor = [1, 1, 0];
+    let receptacleColor = [88/255, 57/255, 39/255];
+    let stemColor = [24/255, 70/255, 50/255];
+    this.flower = new MyFlower(this, 3, 10, 1, 0.1, 5, petalColor, receptacleColor, stemColor);
+
+    this.garden = new MyGarden(this, this.gardenRows, this.gardenColumns);
 
     this.texture = new CGFtexture(this, "images/terrain.jpg");
     this.appearance = new CGFappearance(this);
@@ -57,7 +74,6 @@ export class MyScene extends CGFscene {
 
     this.panorama = new MyPanorama(this, this.panoramaTextures[this.selectedPanoramaTexture]);
 
-    this.flower = new MyFlower(this, 4, 8, 1, 0.2, 6);
 
   }
   initLights() {
@@ -82,12 +98,12 @@ export class MyScene extends CGFscene {
   }
 
   updatePanoramaTexture() {
-
     this.panorama.updateTexture(this.panoramaTextures[this.selectedPanoramaTexture]);
-
   }
 
-
+  updateGarden() {
+    this.garden = new MyGarden(this, this.gardenRows, this.gardenColumns);
+  }
 
   setDefaultAppearance() {
     this.setAmbient(0.2, 0.4, 0.8, 1.0);
@@ -113,23 +129,43 @@ export class MyScene extends CGFscene {
 
     // ---- BEGIN Primitive drawing section
 
-    this.pushMatrix();
-    this.appearance.apply();
-    this.translate(0,-100,0);
-    this.scale(400,400,400);
-    this.rotate(-Math.PI/2.0,1,0,0);
-    this.plane.display();
-    this.popMatrix();
+    if (this.displayPlane) {
+      this.pushMatrix();
+      this.appearance.apply();
+      this.translate(0,-100,0);
+      this.scale(400,400,400);
+      this.rotate(-Math.PI/2.0,1,0,0);
+      this.plane.display();
+      this.popMatrix();
+    }
 
-    this.pushMatrix();
-    //this.panorama.display();
-    this.popMatrix();
+    if (this.displaySphere) {
+      this.pushMatrix();
+      this.sphereMaterial.apply();
+      this.sphere.display();
+      this.popMatrix();
+    }
 
-    this.pushMatrix();
-    this.sphereMaterial.apply();
-    //this.sphere.display();
-    this.flower.display();
-    this.popMatrix();
+    if (this.displayPanorama) {
+      this.pushMatrix();
+      this.panorama.display();
+      this.popMatrix();
+    }
+
+    if (this.displayFlower) {
+      this.pushMatrix();
+      this.sphereMaterial.apply();
+      this.flower.display();
+      this.popMatrix();
+    }
+
+    if (this.displayGarden) {
+      this.pushMatrix();
+      this.garden.display();
+      this.popMatrix();
+    }
+
+
 
     // ---- END Primitive drawing section
   }

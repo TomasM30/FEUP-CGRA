@@ -1,4 +1,4 @@
-import {CGFobject} from '../lib/CGF.js';
+import {CGFobject} from '../../lib/CGF.js';
 
 /**
  * MyCylinder
@@ -6,13 +6,12 @@ import {CGFobject} from '../lib/CGF.js';
  * @param scene - Reference to MyScene object
  */
 export class MyCylinder extends CGFobject {
-	constructor(scene, slices, stacks, height, radius, rotationX, rotationY) {
+	constructor(scene, slices, stacks, height, rotationX, rotationY) {
 		super(scene);
 
 		this.slices = slices;
 		this.stacks = stacks;
 		this.height = height;
-		this.radius = radius;
 		this.rotationX = rotationX;
 		this.rotationY = rotationY;
 
