@@ -1,5 +1,5 @@
-import {CGFobject} from '../lib/CGF.js';
-import { MySphere } from './MySphere.js';
+import {CGFobject} from '../../lib/CGF.js';
+import { MySphere } from '../SkySphere/MySphere.js';
 
 /**
  * MyReceptacle
@@ -20,8 +20,10 @@ export class MyReceptacle extends CGFobject {
 	
     display(){
 
+		this.scene.pushMatrix();
         this.scene.scale(1, 1, 1);
         this.sphere.display();
+		this.scene.popMatrix();
 		
 
     }

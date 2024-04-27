@@ -1,4 +1,4 @@
-import {CGFobject, CGFtexture, CGFappearance} from '../lib/CGF.js';
+import {CGFobject, CGFappearance} from '../../lib/CGF.js';
 import { MySphere } from './MySphere.js';
 /**
  * MyPanorama
