@@ -30,8 +30,7 @@ export class MyGarden extends CGFobject {
                 let heart_radius = Math.random() + 0.5;
                 let stem_radius = Math.random() * 0.1 + 0.1;
                 let stem_size = Math.random() * 5 + 5;
-                let petal_size = Math.random() * 2 + 1;
-                let externalRadius = heart_radius + petal_size; 
+                let externalRadius = Math.random() * 4 + 3; 
                 let petalColor = [1, 1, 0];
                 let receptacleColor = [88/255, 57/255, 39/255];
                 let stemColor = [24/255, 70/255, 50/255];

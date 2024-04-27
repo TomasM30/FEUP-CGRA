@@ -23,6 +23,7 @@ export class MyCylinder extends CGFobject {
 		this.vertices = [];
 		this.indices = [];
 		this.normals = [];
+		this.texCoords = [];
 
 		let alfa = Math.PI * 2 / this.slices;
 
@@ -37,7 +38,12 @@ export class MyCylinder extends CGFobject {
 		let obliquenessFactorX = Math.tan(this.rotationX);
 		let obliquenessFactorY = Math.tan(this.rotationY);
 
+
+		let text_x = 0;
+
 		for (var i = 0; i < this.slices; i++) {
+
+			let text_y = 0;
 
 			var ang = alfa * i;
 			var sin = Math.sin(ang);
@@ -51,7 +57,12 @@ export class MyCylinder extends CGFobject {
 	
 				this.vertices.push(obliqueX, obliqueY, z);
 				this.normals.push(cos, sin, 0);
+				this.texCoords.push(text_x, text_y);
+
+				text_y += 1/this.stacks;
 			}
+
+			text_x += 1/this.slices;
 
 		}
 

@@ -32,8 +32,8 @@ export class MyScene extends CGFscene {
     this.displayPlane = false;
     this.displaySphere = false;
     this.displayPanorama = false;
-    this.displayFlower = false;
-    this.displayGarden = true;
+    this.displayFlower = true;
+    this.displayGarden = false;
     this.gardenRows = 3;
     this.gardenColumns = 1;
     this.base_size = 1;
@@ -73,9 +73,8 @@ export class MyScene extends CGFscene {
     this.panoramaTextures = [this.panoramaTexture1, this.panoramaTexture2, this.panoramaTexture3]
 
     this.panorama = new MyPanorama(this, this.panoramaTextures[this.selectedPanoramaTexture]);
-
-
   }
+
   initLights() {
     this.lights[0].setPosition(15, 0, 5, 1);
     this.lights[0].setDiffuse(1.0, 1.0, 1.0, 1.0);
@@ -111,7 +110,6 @@ export class MyScene extends CGFscene {
     this.setSpecular(0.2, 0.4, 0.8, 1.0);
     this.setShininess(10.0);
   }
-
   
   display() {
     // ---- BEGIN Background, camera and axis setup
