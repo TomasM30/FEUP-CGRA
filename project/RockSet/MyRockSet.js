@@ -14,6 +14,10 @@ export class MyRockSet extends CGFobject {
         this.init_rocks();
 
         this.rockMaterial = new CGFappearance(this.scene);
+        this.rockMaterial.setAmbient(1, 1, 1, 1);
+        this.rockMaterial.setDiffuse(0.9, 0.9, 0.9, 1);
+        this.rockMaterial.setSpecular(0.1, 0.1, 0.1, 1);
+        this.rockMaterial.setShininess(10.0);
         this.rockMaterial.setTextureWrap('REPEAT', 'REPEAT');
         this.rockMaterial.setTexture(texture);
     
@@ -23,6 +27,7 @@ export class MyRockSet extends CGFobject {
      
         this.rocks = []; 
         this.scaleValues = [];
+        this.rotations = [];
 
         for(let i = this.base_size; i > 0; i--) {
             
@@ -37,8 +42,10 @@ export class MyRockSet extends CGFobject {
                     let randX = Math.random() * 0.2 + 0.9;
                     let randY = Math.random() * 0.4 + 0.3;
                     let randZ = Math.random() * 0.2 + 0.9;
+                    let randRot = Math.random() * 2 * Math.PI;
 
                     this.scaleValues.push([randX, randY, randZ]);
+                    this.rotations.push(randRot);
             
                 }
             }
@@ -64,10 +71,9 @@ export class MyRockSet extends CGFobject {
                     let scaleZ = this.scaleValues[curr_rock][2];
 
                     this.scene.pushMatrix();
-
-                    this.scene.scale(scaleX, scaleY, scaleZ);
-
                     this.scene.translate(j*2 + layer, layer, k*2 + layer);
+                    this.scene.scale(scaleX, scaleY, scaleZ);
+                    this.scene.rotate(this.rotations[curr_rock], 0, 1, 0);
                     this.rockMaterial.apply();
                     this.rocks[curr_rock].display();
                     this.scene.popMatrix();

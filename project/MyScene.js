@@ -33,7 +33,7 @@ export class MyScene extends CGFscene {
     this.displayPlane = false;
     this.displaySphere = false;
     this.displayPanorama = false;
-    this.displayGarden = true;
+    this.displayGarden = false;
     this.gardenRows = 1;
     this.gardenColumns = 1;
     this.displayRockSet = true;
