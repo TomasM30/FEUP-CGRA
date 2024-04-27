@@ -1,4 +1,4 @@
-import {CGFobject} from '../lib/CGF.js';
+import {CGFobject, CGFappearance} from '../../lib/CGF.js';
 /**
  * MySphere
  * @constructor
