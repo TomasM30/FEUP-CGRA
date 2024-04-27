@@ -15,12 +15,14 @@ export class MyRockSet extends CGFobject {
 
         this.rockMaterial = new CGFappearance(this.scene);
         this.rockMaterial.setTextureWrap('REPEAT', 'REPEAT');
+        this.rockMaterial.loadTexture('images/rock.jpg');
     
     }
 
     init_rocks() {
      
         this.rocks = []; 
+        this.scaleValues = [];
 
         for(let i = this.base_size; i > 0; i--) {
             
@@ -30,6 +32,13 @@ export class MyRockSet extends CGFobject {
 
                     let rock = new MyRock(this.scene, 10, 10);
                     this.rocks.push(rock);
+
+                    //Randomize the scale multiplier
+                    let randX = Math.random() * 0.2 + 0.9;
+                    let randY = Math.random() * 0.4 + 0.3;
+                    let randZ = Math.random() * 0.2 + 0.9;
+
+                    this.scaleValues.push([randX, randY, randZ]);
             
                 }
             }
@@ -46,31 +55,30 @@ export class MyRockSet extends CGFobject {
 
         for (let i = this.base_size; i > 0; i--) {
 
-            let inc_x = 0;
-
             for (let j = 0; j < i; j++) {
-                
-                let inc_z = 0;
 
                 for (let k = 0; k < i; k++) {
 
+                    let scaleX = this.scaleValues[curr_rock][0];
+                    let scaleY = this.scaleValues[curr_rock][1];
+                    let scaleZ = this.scaleValues[curr_rock][2];
+
                     this.scene.pushMatrix();
-                    this.scene.translate(j + inc_x + layer, layer, k + inc_z + layer);
-                    //this.scene.scale(0.5, 0.5, 0.5);
-                    //this.rockMaterial.apply();
+
+                    this.scene.scale(scaleX, scaleY, scaleZ);
+
+                    this.scene.translate(j*2 + layer, layer, k*2 + layer);
+                    this.rockMaterial.apply();
                     this.rocks[curr_rock].display();
                     this.scene.popMatrix();
 
                     curr_rock++;
-                    inc_z++;
 
                 }
 
-                inc_x++;
-
             }
         
-            layer += 0.8;
+            layer++;
 
         }
 

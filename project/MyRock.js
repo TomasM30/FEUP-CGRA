@@ -23,6 +23,10 @@ export class MyRock extends CGFobject {
 
 		let stacks = ((this.stacks+1)*2);
 
+		//Define top and bottom vertices
+		let bottom_y_rand = Math.random() * 0.2 + 0.9;
+		let top_y_rand = Math.random() * 0.2 + 0.9;
+
 		let alpha = (2*Math.PI) / this.slices; //increments on XZ
 		let beta = Math.PI/ stacks; //increments on XY
 
@@ -48,7 +52,15 @@ export class MyRock extends CGFobject {
                 //Randomize the size of the rock (values between 0.9 and 1.1)
                 let rand = Math.random() * 0.2 + 0.9;
 
-                this.vertices.push(x*rand, y*rand, z*rand);
+				if (j == 0 ) {
+					this.vertices.push(x*rand, y*bottom_y_rand, z*rand);
+				}
+				else if (j == stacks){
+					this.vertices.push(x*rand, y*top_y_rand, z*rand);
+				}
+				else {
+					this.vertices.push(x*rand, y*rand, z*rand);
+				}
 
 				this.normals.push(x, y, z);
 
@@ -64,6 +76,7 @@ export class MyRock extends CGFobject {
 
         let text_y = 1;
 
+		// First and Last slice are the same
         for (let i = 0; i <= stacks; i++){
 
             let x = this.vertices[i*3]
