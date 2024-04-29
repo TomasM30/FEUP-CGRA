@@ -71,7 +71,7 @@ export class MyRockSet extends CGFobject {
                     let scaleZ = this.scaleValues[curr_rock][2];
 
                     this.scene.pushMatrix();
-                    this.scene.translate(j*2 + layer, layer, k*2 + layer);
+                    this.scene.translate(j*2 + layer, layer - (0.3*layer), k*2 + layer);
                     this.scene.scale(scaleX, scaleY, scaleZ);
                     this.scene.rotate(this.rotations[curr_rock], 0, 1, 0);
                     this.rockMaterial.apply();
