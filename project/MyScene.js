@@ -3,6 +3,7 @@ import { MyPlane } from "./MyPlane.js";
 import { MySphere } from "./SkySphere/MySphere.js";
 import { MyPanorama } from "./SkySphere/MyPanorama.js";
 import { MyGarden } from "./Flower/MyGarden.js";
+import { MyRockSet } from "./RockSet/MyRockSet.js";
 
 /**
  * MyScene
@@ -31,11 +32,12 @@ export class MyScene extends CGFscene {
     this.displayAxis = true;
     this.displayPlane = false;
     this.displaySphere = false;
-    this.displayPanorama = false;
-    this.displayGarden = true;
+    this.displayPanorama = true;
+    this.displayGarden = false;
     this.gardenRows = 1;
     this.gardenColumns = 1;
-    this.base_size = 1;
+    this.displayRockSet = true;
+    this.base_size = 4;
     this.FOV = 1.0;
     this.scaleFactor = 1;
     this.selectedPanoramaTexture = 1;
@@ -47,6 +49,8 @@ export class MyScene extends CGFscene {
     this.sphere = new MySphere(this, 30, 30);
     this.panorama = new MyPanorama(this, this.panoramaTextures[this.selectedPanoramaTexture]);
     this.garden = new MyGarden(this, this.gardenRows, this.gardenColumns, this.petalTextures, this.receptacleTextures, this.stemTextures, this.leavesTextures);
+    this.rockSet = new MyRockSet(this, this.base_size, this.rockTexture);
+
   }
 
   initLights() {
@@ -107,6 +111,8 @@ export class MyScene extends CGFscene {
     this.leavesTextures.push(new CGFtexture(this, 'images/leaves_flower/Leaf2.jpg'));
     this.leavesTextures.push(new CGFtexture(this, 'images/leaves_flower/Leaf3.jpg'));
     this.leavesTextures.push(new CGFtexture(this, 'images/leaves_flower/Leaf4.jpg'));
+
+    this.rockTexture = new CGFtexture(this, 'images/rock.jpg');
   }
 
   updateFOV() {
@@ -119,6 +125,10 @@ export class MyScene extends CGFscene {
 
   updateGarden() {
     this.garden = new MyGarden(this, this.gardenRows, this.gardenColumns, this.petalTextures, this.receptacleTextures, this.stemTextures, this.leavesTextures);
+  }  
+  
+  updateBaseSize() {
+    this.rockSet = new MyRockSet(this, this.base_size, this.rockTexture);
   }
 
   setDefaultAppearance() {
@@ -172,7 +182,12 @@ export class MyScene extends CGFscene {
       this.garden.display();
       this.popMatrix();
     }
-
+    
+    if (this.displayRockSet) {
+      this.pushMatrix();
+      this.rockSet.display();
+      this.popMatrix();
+    }
 
 
     // ---- END Primitive drawing section

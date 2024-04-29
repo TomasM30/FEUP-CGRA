@@ -29,11 +29,11 @@ export class MyInterface extends CGFinterface {
         //Checkbox element for Panorama in GUI
         this.gui.add(this.scene, 'displayPanorama').name('Display Panorama');
 
-        //Slider element for FOV
-        this.gui.add(this.scene, 'FOV', 0.1, 3).name('Field of View').onChange(this.scene.updateFOV.bind(this.scene));
-
         //Dropdown for textures
         this.gui.add(this.scene, 'selectedPanoramaTexture', this.scene.panoramaTextureIds).name('Panorama Texture').onChange(this.scene.updatePanoramaTexture.bind(this.scene));
+
+        //Slider element for FOV
+        this.gui.add(this.scene, 'FOV', 0.1, 3).name('Field of View').onChange(this.scene.updateFOV.bind(this.scene));
 
         //Checkbox element for Garden in GUI
         this.gui.add(this.scene, 'displayGarden').name('Display Garden');
@@ -44,9 +44,13 @@ export class MyInterface extends CGFinterface {
         //Slider element for Garden Columns in GUI
         this.gui.add(this.scene, 'gardenColumns', 1, 10, 1).name('Garden Columns').onChange(this.scene.updateGarden.bind(this.scene));
 
+        //Checkbox element for Rock Set in GUI
+        this.gui.add(this.scene, 'displayRockSet').name('Display Rock Set');
+
+        //Slider element for base size of Rock Set
+        this.gui.add(this.scene, 'base_size', 1, 10, 1).name('Base Size').onChange(this.scene.updateBaseSize.bind(this.scene));
+
         //Slider element in GUI
         this.gui.add(this.scene, 'scaleFactor', 0.1, 5).name('Scale Factor');
-
-        return true;
     }
 }
