@@ -34,11 +34,11 @@ export class MyScene extends CGFscene {
     this.displayPlane = false;
     this.displaySphere = false;
     this.displayPanorama = true;
-    this.displayGarden = false;
+    this.displayGarden = true;
     this.gardenRows = 1;
     this.gardenColumns = 1;
     this.displayRockSet = false;
-    this.displayBee = true;
+    this.displayBee = false;
     this.base_size = 4;
     this.FOV = 1.0;
     this.scaleFactor = 1;
@@ -50,7 +50,7 @@ export class MyScene extends CGFscene {
     this.plane = new MyPlane(this,30);
     this.sphere = new MySphere(this, 30, 30);
     this.panorama = new MyPanorama(this, this.panoramaTextures[this.selectedPanoramaTexture]);
-    this.garden = new MyGarden(this, this.gardenRows, this.gardenColumns, this.petalTextures, this.receptacleTextures, this.stemTextures, this.leavesTextures);
+    this.garden = new MyGarden(this, this.gardenRows, this.gardenColumns);
     this.rockSet = new MyRockSet(this, this.base_size, this.rockTexture);
     this.bee = new MyBee(this);
 
@@ -118,6 +118,10 @@ export class MyScene extends CGFscene {
     this.rockTexture = new CGFtexture(this, 'images/rock.jpg');
 
     this.beeLegTexture = new CGFtexture(this, 'images/bee/Leg.jpg');
+    this.beeHeadTexture = new CGFtexture(this, 'images/bee/Head.jpg');
+    this.beeToraxTexture = new CGFtexture(this, 'images/bee/Torax.jpg');
+    this.beeAbdomenTexture = new CGFtexture(this, 'images/bee/Abdomen.jpg');
+    this.beeWingTexture = new CGFtexture(this, 'images/bee/Wing.jpg');
   }
 
   updateFOV() {
@@ -129,7 +133,7 @@ export class MyScene extends CGFscene {
   }
 
   updateGarden() {
-    this.garden = new MyGarden(this, this.gardenRows, this.gardenColumns, this.petalTextures, this.receptacleTextures, this.stemTextures, this.leavesTextures);
+    this.garden = new MyGarden(this, this.gardenRows, this.gardenColumns);
   }  
   
   updateBaseSize() {

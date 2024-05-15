@@ -7,15 +7,11 @@ import { MyFlower } from './MyFlower.js';
  * @param scene - Reference to MyScene object
  */
 export class MyGarden extends CGFobject {
-    constructor(scene, rows, columns, petalTextures, receptacleTextures, stemTextures, leavesTextures) {
+    constructor(scene, rows, columns) {
         super(scene);
     
         this.rows = rows;
         this.columns = columns;
-        this.petalTextures = petalTextures;
-        this.receptacleTextures = receptacleTextures;
-        this.stemTextures = stemTextures;
-        this.leavesTextures = leavesTextures;
 
         this.initObjects();
 
@@ -55,12 +51,12 @@ export class MyGarden extends CGFobject {
                 let petalColor = [1, 1, 0];
                 let receptacleColor = [88/255, 57/255, 39/255];
                 let stemColor = [24/255, 70/255, 50/255];
-                let petalText = this.petalTextures[this.getIndexFromRandom(Math.random())];
-                let receptacleText = this.receptacleTextures[this.getIndexFromRandom(Math.random())];
-                let stemText = this.stemTextures[this.getIndexFromRandom(Math.random())];
+                let petalText = this.scene.petalTextures[this.getIndexFromRandom(Math.random())];
+                let receptacleText = this.scene.receptacleTextures[this.getIndexFromRandom(Math.random())];
+                let stemText = this.scene.stemTextures[this.getIndexFromRandom(Math.random())];
 
 
-                let flower = new MyFlower(this.scene, externalRadius, n_petals, heart_radius, stem_radius, stem_size, petalColor, receptacleColor, stemColor, petalText, receptacleText, stemText, this.leavesTextures); 
+                let flower = new MyFlower(this.scene, externalRadius, n_petals, heart_radius, stem_radius, stem_size, petalColor, receptacleColor, stemColor, petalText, receptacleText, stemText); 
                 this.flowers.push(flower);
                 this.flower_heights.push(flower.getStemHeight() + heart_radius);
             }

@@ -10,7 +10,7 @@ import { MyStem } from './MyStem.js';
  * @param scene - Reference to MyScene object
  */
 export class MyFlower extends CGFobject {
-    constructor(scene, externalRadius, numPetals, heartRadius, stemRadius, stemSize, petalColor, receptacleColor, stemColor, petalTexture, receptacleTexture, stemTexture, leavesTextures) {
+    constructor(scene, externalRadius, numPetals, heartRadius, stemRadius, stemSize, petalColor, receptacleColor, stemColor, petalTexture, receptacleTexture, stemTexture) {
         super(scene);
         this.numPetals = numPetals;
         this.externalRadius = externalRadius;
@@ -25,7 +25,6 @@ export class MyFlower extends CGFobject {
         this.petalTexture = petalTexture;
         this.receptacleTexture = receptacleTexture;
         this.stemTexture = stemTexture;
-        this.leavesTextures = leavesTextures;
 
         this.initMaterials();
         this.initObjects();
@@ -46,7 +45,7 @@ export class MyFlower extends CGFobject {
         }
 
         this.receptacle = new MyReceptacle(this.scene, 30, 30);
-        this.stem = new MyStem(this.scene, this.stemSize, this.stemRadius, this.stemMaterial, this.leavesTextures);
+        this.stem = new MyStem(this.scene, this.stemSize, this.stemRadius, this.stemMaterial);
     }
 
     initMaterials() {

@@ -8,7 +8,7 @@ import { MyLeaf } from "./MyLeaf.js";
  * @param scene - Reference to MyScene object
  */
 export class MyStem extends CGFobject {
-    constructor(scene, numCilynders, radius, stemMaterial, leavesTextures) {
+    constructor(scene, numCilynders, radius, stemMaterial) {
         super(scene);
 
         this.numCilynders = numCilynders;
@@ -18,7 +18,6 @@ export class MyStem extends CGFobject {
         this.leaves = [];
         this.rotationsY = [];
         this.rotationsZ = [];
-        this.leavesTextures = leavesTextures;
         this.leafTextureOrder = [];
 
         this.initObjects();
@@ -58,16 +57,16 @@ export class MyStem extends CGFobject {
 
             let num = Math.random();
             if (num < 0.25) {
-                this.leafTextureOrder.push(this.leavesTextures[0]);
+                this.leafTextureOrder.push(this.scene.leavesTextures[0]);
             }
             else if (num < 0.5) {
-                this.leafTextureOrder.push(this.leavesTextures[1]);
+                this.leafTextureOrder.push(this.scene.leavesTextures[1]);
             }
             else if (num < 0.75) {
-                this.leafTextureOrder.push(this.leavesTextures[2]);
+                this.leafTextureOrder.push(this.scene.leavesTextures[2]);
             }
             else {
-                this.leafTextureOrder.push(this.leavesTextures[3]);
+                this.leafTextureOrder.push(this.scene.leavesTextures[3]);
             }
         }
 

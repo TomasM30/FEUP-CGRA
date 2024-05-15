@@ -42,6 +42,9 @@ export class MyBee extends CGFobject{
     }
 
     display(){
+
+        this.scene.pushMatrix();
+
         this.scene.pushMatrix();
         for(let i = 0; i < 3; i++){
             this.scene.pushMatrix();
@@ -62,6 +65,9 @@ export class MyBee extends CGFobject{
         this.scene.pushMatrix();
         this.scene.translate(0, 1, 0);
         this.head.display();
+        this.scene.popMatrix();
+
+        this.scene.translate(this.scene.camera.position[0], this.scene.camera.position[1], this.scene.camera.position[2]);
         this.scene.popMatrix();
     }
 
