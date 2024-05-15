@@ -25,19 +25,19 @@ export class MyHead extends CGFobject {
     initMaterials() {
     
         this.headMaterial = new CGFappearance(this.scene);
-        this.headMaterial.setAmbient(0, 0, 0, 1);
-        this.headMaterial.setDiffuse(0.1, 0.1, 0.1, 1);
-        this.headMaterial.setSpecular(0.1, 0.1, 0.1, 1);
+        this.headMaterial.setAmbient(1, 1, 1, 1);
+        this.headMaterial.setDiffuse(1, 1, 1, 1);
+        this.headMaterial.setSpecular(1, 1, 1, 1);
         this.headMaterial.setShininess(10.0);
         this.headMaterial.setTexture(this.scene.beeHeadTexture);
         this.headMaterial.setTextureWrap('REPEAT', 'REPEAT');
 
         this.eyeMaterial = new CGFappearance(this.scene);
-        this.eyeMaterial.setAmbient(0.1, 0.1, 0.1, 1);
+        this.eyeMaterial.setAmbient(0, 0, 0, 1);
         this.eyeMaterial.setDiffuse(0.1, 0.1, 0.1, 1);
         this.eyeMaterial.setSpecular(0.1, 0.1, 0.1, 1);
         this.eyeMaterial.setShininess(10.0);
-        this.headMaterial.setTexture(this.scene.beeEyeTexture);
+        this.eyeMaterial.setTexture(this.scene.beeEyeTexture);
         this.eyeMaterial.setTextureWrap('REPEAT', 'REPEAT');
 
     }
@@ -45,20 +45,23 @@ export class MyHead extends CGFobject {
     display() {
 
         this.scene.pushMatrix();
-        this.scene.translate(5.5, 0, 0);
+        this.eyeMaterial.apply();
+        this.scene.translate(1, 2, 2);
         this.scene.rotate(Math.PI/4, 1, 0, 0);
         this.scene.scale(0.8, 0.8, 1);
         this.leftEye.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(-5.5, 0, 0);
+        this.eyeMaterial.apply();
+        this.scene.translate(-1, 2, 2);
         this.scene.rotate(Math.PI/4, 1, 0, 0);
         this.scene.scale(0.8, 0.8, 1);
         this.rightEye.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
+        this.headMaterial.apply();
         this.scene.rotate(Math.PI/4, 1, 0, 0);
         this.scene.scale(3, 3, 4);
         this.head.display();

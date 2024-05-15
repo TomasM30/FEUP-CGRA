@@ -34,15 +34,15 @@ export class MyScene extends CGFscene {
     this.displayPlane = false;
     this.displaySphere = false;
     this.displayPanorama = true;
-    this.displayGarden = true;
+    this.displayGarden = false;
     this.gardenRows = 1;
     this.gardenColumns = 1;
     this.displayRockSet = false;
-    this.displayBee = false;
+    this.displayBee = true;
     this.base_size = 4;
     this.FOV = 1.0;
     this.scaleFactor = 1;
-    this.selectedPanoramaTexture = 1;
+    this.selectedPanoramaTexture = 0;
     this.enableTextures(true);
 
     //Initialize scene objects
