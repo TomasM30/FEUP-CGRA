@@ -5,7 +5,7 @@ export class MyWings extends CGFobject {
     constructor(scene) {
         super(scene);
         this.initObjects();
-        this.ini
+        this.angle = 0;
     }
     
     initObjects() {
@@ -13,6 +13,10 @@ export class MyWings extends CGFobject {
         this.wing2 = new MySphere(this.scene, 16, 8);
         this.wing3 = new MySphere(this.scene, 16, 8);
         this.wing4 = new MySphere(this.scene, 16, 8);
+    }
+
+    update(timeSinceAppStart) {
+        this.angle= Math.PI * (Math.sin(timeSinceAppStart*Math.PI) * 0.25);
     }
 
 
@@ -24,7 +28,7 @@ export class MyWings extends CGFobject {
         // Display wing1
         this.scene.pushMatrix();
         this.scene.translate(0.1, 0, 0);
-        this.scene.rotate(Math.PI/15, 0, 0, 1);
+        this.scene.rotate(Math.PI/15+this.angle, 0, 0, 1);
         this.scene.rotate(Math.PI/2, 0, 1, 0);
         this.scene.scale(0.1, 0.025, 0.2);
         this.scene.translate(0, 0, 1);

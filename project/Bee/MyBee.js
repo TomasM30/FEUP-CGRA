@@ -54,16 +54,21 @@ export class MyBee extends CGFobject{
 
     }
 
+    updateWings(timeSinceAppStart){
+        this.wings.update(timeSinceAppStart);
+    }
+
+
     display(){
 
 
         this.scene.pushMatrix();
         
+        // Draw Head
         this.scene.pushMatrix();
         this.scene.translate(0,0,0.75);
         this.head.display();
         this.scene.popMatrix();
-
 
         // Draw Antennaes
         for (let i = 0; i < 2; i++) {

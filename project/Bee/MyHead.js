@@ -29,7 +29,7 @@ export class MyHead extends CGFobject {
         this.headMaterial.setDiffuse(1, 1, 1, 1);
         this.headMaterial.setSpecular(1, 1, 1, 1);
         this.headMaterial.setShininess(10.0);
-        this.headMaterial.setTexture(this.scene.beeToraxTexture);
+        this.headMaterial.setTexture(this.scene.beeHeadTexture);
         this.headMaterial.setTextureWrap('REPEAT', 'REPEAT');
 
         this.eyeMaterial = new CGFappearance(this.scene);

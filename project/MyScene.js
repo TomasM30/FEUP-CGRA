@@ -54,6 +54,8 @@ export class MyScene extends CGFscene {
     this.rockSet = new MyRockSet(this, this.base_size, this.rockTexture);
     this.bee = new MyBee(this);
 
+    this.appStartTime=Date.now(); // current time in milisecs
+    this.setUpdatePeriod(50); // **at least** 50 ms between animations
   }
 
   initLights() {
@@ -118,7 +120,7 @@ export class MyScene extends CGFscene {
     this.rockTexture = new CGFtexture(this, 'images/rock.jpg');
 
     this.beeLegTexture = new CGFtexture(this, 'images/bee/Leg.jpg');
-    this.beeHeadTexture = new CGFtexture(this, 'images/bee/Head.jpg');
+    this.beeHeadTexture = new CGFtexture(this, 'images/bee/Torax.jpg');
     this.beeEyeTexture = new CGFtexture(this, 'images/bee/Eye.jpg');
     this.beeToraxTexture = new CGFtexture(this, 'images/bee/Torax.jpg');
     this.beeAbdomenTexture = new CGFtexture(this, 'images/bee/Abdomen.jpg');
@@ -146,6 +148,17 @@ export class MyScene extends CGFscene {
     this.setDiffuse(0.2, 0.4, 0.8, 1.0);
     this.setSpecular(0.2, 0.4, 0.8, 1.0);
     this.setShininess(10.0);
+  }
+
+  update(t)
+  {
+      // Continuous animation based on current time and app start time 
+      var timeSinceAppStart=(t-this.appStartTime)/1000.0;
+      
+      this.beeY=3+ Math.sin(timeSinceAppStart*Math.PI*2);
+
+      this.bee.updateWings(timeSinceAppStart);
+
   }
   
   display() {
@@ -201,6 +214,7 @@ export class MyScene extends CGFscene {
 
     if (this.displayBee) {
       this.pushMatrix();
+      this.translate(0,this.beeY,0);
       this.bee.display();
       this.popMatrix();
     }
