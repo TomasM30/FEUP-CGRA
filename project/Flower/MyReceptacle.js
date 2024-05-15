@@ -1,5 +1,5 @@
 import {CGFobject} from '../../lib/CGF.js';
-import { MySphere } from '../SkySphere/MySphere.js';
+import { MySphere } from '../Common/MySphere.js';
 
 /**
  * MyReceptacle

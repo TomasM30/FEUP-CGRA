@@ -47,6 +47,9 @@ export class MyInterface extends CGFinterface {
         //Checkbox element for Rock Set in GUI
         this.gui.add(this.scene, 'displayRockSet').name('Display Rock Set');
 
+        //Checkbox element for bees in GUI
+        this.gui.add(this.scene, 'displayBee').name('Display Bee');
+
         //Slider element for base size of Rock Set
         this.gui.add(this.scene, 'base_size', 1, 10, 1).name('Base Size').onChange(this.scene.updateBaseSize.bind(this.scene));
 

@@ -1,6 +1,6 @@
 import {CGFobject} from '../../lib/CGF.js';
-import { MyCylinder } from "./MyCylinder.js";
-import { MyTriangle } from "./MyTriangle.js";
+import { MyCylinder } from "../Common/MyCylinder.js";
+import { MyTriangle } from "../Common/MyTriangle.js";
 
 /**
  * MyStem

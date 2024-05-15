@@ -1,9 +1,10 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } from "../lib/CGF.js";
 import { MyPlane } from "./MyPlane.js";
-import { MySphere } from "./SkySphere/MySphere.js";
+import { MySphere } from "./Common/MySphere.js";
 import { MyPanorama } from "./SkySphere/MyPanorama.js";
 import { MyGarden } from "./Flower/MyGarden.js";
 import { MyRockSet } from "./RockSet/MyRockSet.js";
+import { MyBee } from "./Bee/MyBee.js";
 
 /**
  * MyScene
@@ -36,7 +37,8 @@ export class MyScene extends CGFscene {
     this.displayGarden = false;
     this.gardenRows = 1;
     this.gardenColumns = 1;
-    this.displayRockSet = true;
+    this.displayRockSet = false;
+    this.displayBee = true;
     this.base_size = 4;
     this.FOV = 1.0;
     this.scaleFactor = 1;
@@ -50,6 +52,7 @@ export class MyScene extends CGFscene {
     this.panorama = new MyPanorama(this, this.panoramaTextures[this.selectedPanoramaTexture]);
     this.garden = new MyGarden(this, this.gardenRows, this.gardenColumns, this.petalTextures, this.receptacleTextures, this.stemTextures, this.leavesTextures);
     this.rockSet = new MyRockSet(this, this.base_size, this.rockTexture);
+    this.bee = new MyBee(this);
 
   }
 
@@ -83,9 +86,9 @@ export class MyScene extends CGFscene {
 
     //Initialize Panorama Textures
     this.panoramaTextureIds = { 'Panorama 1': 0, 'Panorama 2': 1, 'Panorama 3': 2 };
-    this.panoramaTexture1 = new CGFtexture(this, "images/panorama1.jpg");
-    this.panoramaTexture2 = new CGFtexture(this, "images/panorama2.jpg");
-    this.panoramaTexture3 = new CGFtexture(this, "images/panorama3.jpg");
+    this.panoramaTexture1 = new CGFtexture(this, "images/panorama/panorama1.jpg");
+    this.panoramaTexture2 = new CGFtexture(this, "images/panorama/panorama2.jpg");
+    this.panoramaTexture3 = new CGFtexture(this, "images/panorama/panorama3.jpg");
     this.panoramaTextures = [this.panoramaTexture1, this.panoramaTexture2, this.panoramaTexture3]
 
     this.petalTextures = [];
@@ -113,6 +116,8 @@ export class MyScene extends CGFscene {
     this.leavesTextures.push(new CGFtexture(this, 'images/leaves_flower/Leaf4.jpg'));
 
     this.rockTexture = new CGFtexture(this, 'images/rock.jpg');
+
+    this.beeLegTexture = new CGFtexture(this, 'images/bee/Leg.jpg');
   }
 
   updateFOV() {
@@ -186,6 +191,12 @@ export class MyScene extends CGFscene {
     if (this.displayRockSet) {
       this.pushMatrix();
       this.rockSet.display();
+      this.popMatrix();
+    }
+
+    if (this.displayBee) {
+      this.pushMatrix();
+      this.bee.display();
       this.popMatrix();
     }
 
