@@ -29,13 +29,13 @@ export class MyHead extends CGFobject {
         this.headMaterial.setDiffuse(1, 1, 1, 1);
         this.headMaterial.setSpecular(1, 1, 1, 1);
         this.headMaterial.setShininess(10.0);
-        this.headMaterial.setTexture(this.scene.beeHeadTexture);
+        this.headMaterial.setTexture(this.scene.beeToraxTexture);
         this.headMaterial.setTextureWrap('REPEAT', 'REPEAT');
 
         this.eyeMaterial = new CGFappearance(this.scene);
-        this.eyeMaterial.setAmbient(0, 0, 0, 1);
-        this.eyeMaterial.setDiffuse(0.1, 0.1, 0.1, 1);
-        this.eyeMaterial.setSpecular(0.1, 0.1, 0.1, 1);
+        this.eyeMaterial.setAmbient(1, 1, 1, 1);
+        this.eyeMaterial.setDiffuse(1, 1, 1, 1);
+        this.eyeMaterial.setSpecular(1, 1, 1, 1);
         this.eyeMaterial.setShininess(10.0);
         this.eyeMaterial.setTexture(this.scene.beeEyeTexture);
         this.eyeMaterial.setTextureWrap('REPEAT', 'REPEAT');
@@ -44,26 +44,28 @@ export class MyHead extends CGFobject {
     
     display() {
 
+        
         this.scene.pushMatrix();
         this.eyeMaterial.apply();
-        this.scene.translate(1, 2, 2);
-        this.scene.rotate(Math.PI/4, 1, 0, 0);
-        this.scene.scale(0.8, 0.8, 1);
+        this.scene.translate(0.12, 0.07, 0.1);
+        this.scene.rotate(Math.PI/3, 1, 0, 0);
+        this.scene.scale(0.075, 0.05, 0.15);
         this.leftEye.display();
         this.scene.popMatrix();
-
+        
         this.scene.pushMatrix();
         this.eyeMaterial.apply();
-        this.scene.translate(-1, 2, 2);
-        this.scene.rotate(Math.PI/4, 1, 0, 0);
-        this.scene.scale(0.8, 0.8, 1);
+        this.scene.translate(-0.12, 0.07, 0.1); 
+        this.scene.rotate(Math.PI/3, 1, 0, 0);
+        this.scene.scale(0.075, 0.05, 0.15);
         this.rightEye.display();
         this.scene.popMatrix();
+        
 
         this.scene.pushMatrix();
         this.headMaterial.apply();
-        this.scene.rotate(Math.PI/4, 1, 0, 0);
-        this.scene.scale(3, 3, 4);
+        this.scene.rotate(Math.PI/3, 1, 0, 0);
+        this.scene.scale(0.2, 0.15, 0.25);
         this.head.display();
         this.scene.popMatrix();
 

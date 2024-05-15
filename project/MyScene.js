@@ -65,10 +65,10 @@ export class MyScene extends CGFscene {
 
   initCameras() {
     this.camera = new CGFcamera(
-      1.0,
+      1,
       0.1,
       1000,
-      vec3.fromValues(50, 10, 15),
+      vec3.fromValues(5, 5, 5),
       vec3.fromValues(0, 0, 0)
     );
   }
@@ -119,6 +119,7 @@ export class MyScene extends CGFscene {
 
     this.beeLegTexture = new CGFtexture(this, 'images/bee/Leg.jpg');
     this.beeHeadTexture = new CGFtexture(this, 'images/bee/Head.jpg');
+    this.beeEyeTexture = new CGFtexture(this, 'images/bee/Eye.jpg');
     this.beeToraxTexture = new CGFtexture(this, 'images/bee/Torax.jpg');
     this.beeAbdomenTexture = new CGFtexture(this, 'images/bee/Abdomen.jpg');
     this.beeWingTexture = new CGFtexture(this, 'images/bee/Wing.jpg');

@@ -2,11 +2,11 @@ import {CGFobject, CGFappearance} from '../../lib/CGF.js';
 import { MyCylinder } from '../Common/MyCylinder.js';
 
 /**
- * MyLeg
+ * MyAntennae
  * @constructor
  * @param scene - Reference to MyScene object
  */
-export class MyLeg extends CGFobject {
+export class MyAntennae extends CGFobject {
     constructor(scene) {
         super(scene);
         this.cilynders = [];
@@ -14,10 +14,10 @@ export class MyLeg extends CGFobject {
     }
 
     initObjects(){
-        let cylinder1 = new MyCylinder(this.scene, 30, 30, 1, 0, 0);
+        let cylinder1 = new MyCylinder(this.scene, 30, 30, 1.5, 0, 0);
         this.cilynders.push(cylinder1);
 
-        let cylinder2 = new MyCylinder(this.scene, 30, 30, 2.5, 0, Math.PI/2.6);
+        let cylinder2 = new MyCylinder(this.scene, 30, 30, 1, 0,Math.PI/2.5);
         this.cilynders.push(cylinder2);
 
     }
