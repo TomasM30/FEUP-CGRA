@@ -8,8 +8,13 @@ import { MyAntennae } from './MyAntennae .js';
 
 export class MyBee extends CGFobject{
 
-    constructor(scene){
+    constructor(scene, position, orientation, speed){
         super(scene);
+
+        this.position = position;
+        this.orientation = orientation;
+        this.speed = speed;
+
         this.initMaterials();
         this.initObjects();
         this.initBuffers();
@@ -54,16 +59,58 @@ export class MyBee extends CGFobject{
 
     }
 
-    updateWings(timeSinceAppStart){
-        this.wings.update(timeSinceAppStart);
+    turn(v){
+
+        this.orientation += v;
+        
+        var norm = Math.sqrt( Math.pow(this.speed[0], 2) + Math.pow(this.speed[2], 2), 2);
+        this.speed[0] = norm * Math.sin(this.orientation);
+        this.speed[2] = norm * Math.cos(this.orientation);
+        
+    }
+    
+    accelerate(v){
+ 
+        this.speed[0] += v * Math.sin(this.orientation);
+        this.speed[2] += v * Math.cos(this.orientation);
+
+        //if the dot product between the direction vector and the speed vector is negative,
+        //then the angle between the two vectors is greater than 90 degrees
+        //and the speed should be 0
+        let dirVec = [Math.sin(this.orientation), 0, Math.cos(this.orientation)];
+        if(dirVec[0] * this.speed[0] + dirVec[2] * this.speed[2] < 0){
+            this.speed[0] = 0;
+            this.speed[2] = 0;
+        }
+
+
     }
 
+    reset(){
+        this.speed = [0, 0, 0];
+        this.position = [0, 3, 0];
+        this.orientation = 0;
+    }
+
+    update(timeSinceAppStart){  
+        
+        this.position[1] = 3 + Math.sin(timeSinceAppStart*Math.PI*2);
+
+        this.position[0] += this.speed[0];
+
+        this.position[2] += this.speed[2];
+
+        this.wings.update(timeSinceAppStart);
+
+    }
 
     display(){
 
-
         this.scene.pushMatrix();
-        
+
+        this.scene.translate(this.position[0], this.position[1], this.position[2]);
+        this.scene.rotate(this.orientation, 0, 1, 0);
+
         // Draw Head
         this.scene.pushMatrix();
         this.scene.translate(0,0,0.75);
@@ -113,10 +160,8 @@ export class MyBee extends CGFobject{
         this.wings.display();
         this.scene.popMatrix();
 
-        
-
-        this.scene.translate(this.scene.camera.position[0], this.scene.camera.position[1], this.scene.camera.position[2]);
         this.scene.popMatrix();
+        
     }
 
 }
