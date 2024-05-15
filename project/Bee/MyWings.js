@@ -16,7 +16,7 @@ export class MyWings extends CGFobject {
     }
 
     update(timeSinceAppStart) {
-        this.angle= Math.PI * (Math.sin(timeSinceAppStart*Math.PI) * 0.25);
+        this.angle= Math.PI * (Math.sin(timeSinceAppStart*3*Math.PI) * 0.25);
     }
 
 
@@ -28,7 +28,7 @@ export class MyWings extends CGFobject {
         // Display wing1
         this.scene.pushMatrix();
         this.scene.translate(0.1, 0, 0);
-        this.scene.rotate(Math.PI/15+this.angle, 0, 0, 1);
+        this.scene.rotate(Math.PI/6+this.angle, 0, 0, 1);
         this.scene.rotate(Math.PI/2, 0, 1, 0);
         this.scene.scale(0.1, 0.025, 0.2);
         this.scene.translate(0, 0, 1);
@@ -38,7 +38,7 @@ export class MyWings extends CGFobject {
         // Display wing2
         this.scene.pushMatrix();
         this.scene.translate(0.1, 0, 0);
-        this.scene.rotate(Math.PI/20, 0, 0, 1);
+        this.scene.rotate(Math.PI/20 +this.angle, 0, 0, 1);
         this.scene.rotate(1.2*Math.PI/2, 0, 1, 0);
         this.scene.scale(0.1, 0.025, 0.4);
         this.scene.translate(0, 0, 1);
@@ -48,7 +48,7 @@ export class MyWings extends CGFobject {
         // Display wing3
         this.scene.pushMatrix();
         this.scene.translate(-0.1, 0, 0);
-        this.scene.rotate(-Math.PI/15, 0, 0, 1);
+        this.scene.rotate(-Math.PI/6-this.angle, 0, 0, 1);
         this.scene.rotate(-Math.PI/2, 0, 1, 0);
         this.scene.scale(0.1, 0.025, 0.2);
         this.scene.translate(0, 0, 1);
@@ -58,7 +58,7 @@ export class MyWings extends CGFobject {
         // Display wing4
         this.scene.pushMatrix();
         this.scene.translate(-0.1, 0, 0);
-        this.scene.rotate(-Math.PI/20, 0, 0, 1);
+        this.scene.rotate(-Math.PI/20-this.angle, 0, 0, 1);
         this.scene.rotate(-1.2*Math.PI/2, 0, 1, 0);
         this.scene.scale(0.1, 0.025, 0.4);
         this.scene.translate(0, 0, 1);
