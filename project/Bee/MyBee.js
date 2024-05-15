@@ -1,6 +1,7 @@
 import {CGFobject, CGFappearance} from '../../lib/CGF.js';
 import { MyLeg } from './MyLeg.js';
 import { MyHead } from './MyHead.js';
+import { MyWing } from './MyWing.js';
 
 export class MyBee extends CGFobject{
 
@@ -19,7 +20,8 @@ export class MyBee extends CGFobject{
             this.legs.push(new MyLeg(this.scene, this.legMaterial));
         }
 
-        this.head = new MyHead(this.scene);         
+        this.head = new MyHead(this.scene);   
+        this.wing = new MyWing(this.scene);      
         /*  
         this.torax = new MyTorax(this.scene);         
         this.abdomen = new MyAbdomen(this.scene);         
@@ -42,25 +44,25 @@ export class MyBee extends CGFobject{
     }
 
     display(){
-        this.scene.pushMatrix();
-        for(let i = 0; i < 6; i++){
-            this.scene.pushMatrix();
-            let side = i < 3 ? -1 : 1;
-            let position = i % 3;
-            this.scene.translate(0, 0, position * 2);
-            if(side === 1) {
-                this.scene.rotate(Math.PI, 0, 1, 0);
-            }
-            this.scene.scale(0.5, 1, 0.5);
-            this.legs[i].display();
-            this.scene.popMatrix();
-        }
+        //this.scene.pushMatrix();
+        //for(let i = 0; i < 6; i++){
+        //    this.scene.pushMatrix();
+        //    let side = i < 3 ? -1 : 1;
+        //    let position = i % 3;
+        //    this.scene.translate(0, 0, position * 2);
+        //    if(side === 1) {
+        //        this.scene.rotate(Math.PI, 0, 1, 0);
+        //    }
+        //    this.scene.scale(0.5, 1, 0.5);
+        //    this.legs[i].display();
+        //    this.scene.popMatrix();
+        //}
 
-        this.scene.popMatrix();
+        //this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(0, 1, 0);
-        this.head.display();
+        //this.head.display();
+        this.wing.display();
         this.scene.popMatrix();
     }
 
