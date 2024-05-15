@@ -46,20 +46,19 @@ export class MyBee extends CGFobject{
         this.scene.pushMatrix();
 
         this.scene.pushMatrix();
-        for(let i = 0; i < 3; i++){
+        for(let i = 0; i < 6; i++){
             this.scene.pushMatrix();
-            this.scene.translate(0, 0, i * 4); // Translate each leg on the left side
+            let side = i < 3 ? -1 : 1;
+            let position = i % 3;
+            this.scene.translate(0, 0, position * 2);
+            if(side === 1) {
+                this.scene.rotate(Math.PI, 0, 1, 0);
+            }
+            this.scene.scale(0.5, 1, 0.5);
             this.legs[i].display();
             this.scene.popMatrix();
         }
-    
-        for(let i = 3; i < 6; i++){
-            this.scene.pushMatrix();
-            this.scene.translate(0, 0, (i-3)*4);
-            this.scene.rotate(Math.PI, 0, 1, 0); // Rotate the legs on the right side
-            this.legs[i].display();
-            this.scene.popMatrix();
-        }
+
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
