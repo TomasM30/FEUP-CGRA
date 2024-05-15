@@ -2,6 +2,7 @@ import {CGFobject, CGFappearance} from '../../lib/CGF.js';
 import { MyLeg } from './MyLeg.js';
 import { MyHead } from './MyHead.js';
 import { MyTorax } from './MyTorax.js';
+import { MyWing } from './MyWing.js';
 
 export class MyBee extends CGFobject{
 
@@ -20,8 +21,9 @@ export class MyBee extends CGFobject{
             this.legs.push(new MyLeg(this.scene, this.legMaterial));
         }
 
-        this.head = new MyHead(this.scene);           
+        this.head = new MyHead(this.scene);     
         this.torax = new MyTorax(this.scene);  
+        this.wing = new MyWing(this.scene);      
         /*       
         this.abdomen = new MyAbdomen(this.scene);         
         this.wing = [];         
@@ -46,17 +48,21 @@ export class MyBee extends CGFobject{
 
         this.scene.pushMatrix();
 
-        /*
-        this.scene.pushMatrix();
-        this.scene.translate(0, 1, 0);
-        this.head.display();
-        this.scene.popMatrix();
-        */
-
         this.scene.pushMatrix();
         this.torax.display();
         this.scene.popMatrix();
+        
+        /*
+        this.scene.pushmatrix();
+        this.head.display();
+        this.scene.popMatrix();
+        */ 
 
+        /*
+        this.scene.pushMatrix();
+        this.wing.display();
+        this.scene.popMatrix();
+        */
 
         this.scene.translate(this.scene.camera.position[0], this.scene.camera.position[1], this.scene.camera.position[2]);
         this.scene.popMatrix();
