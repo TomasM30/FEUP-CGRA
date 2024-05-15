@@ -20,6 +20,8 @@ export class MyFlower extends CGFobject {
         this.petalColor = petalColor;
         this.receptacleColor = receptacleColor;
         this.stemColor = stemColor;
+
+        //TODO Refactor this to scene.textures
         this.petalTexture = petalTexture;
         this.receptacleTexture = receptacleTexture;
         this.stemTexture = stemTexture;
