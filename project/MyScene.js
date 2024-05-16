@@ -247,9 +247,13 @@ export class MyScene extends CGFscene {
 
     if (this.displayBee) {
       this.pushMatrix();
+      this.translate(this.bee.position[0], this.bee.position[1], this.bee.position[2]);
       this.scale(this.scaleFactor, this.scaleFactor, this.scaleFactor);
+      this.translate(-this.bee.position[0], -this.bee.position[1], -this.bee.position[2]);      
       this.bee.display();
       this.popMatrix();
+
+
     }
 
     // ---- END Primitive drawing section
