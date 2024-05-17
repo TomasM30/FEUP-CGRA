@@ -5,12 +5,14 @@ import {CGFobject, CGFappearance} from '../../lib/CGF.js';
  * @param scene - Reference to MyScene object
  */
 export class MySphere extends CGFobject {
-	constructor(scene, slices, stacks, inverted = false) {
+	constructor(scene, slices, stacks, inverted = false, topScale = 1, bottomScale = 1) {
 		super(scene);
 
-		this.slices = slices;
-		this.stacks = stacks;
-		this.inverted = inverted;
+        this.slices = slices;
+        this.stacks = stacks;
+        this.inverted = inverted;
+        this.topScale = topScale;
+        this.bottomScale = bottomScale;
 
 		this.initBuffers();
 	}
@@ -45,6 +47,12 @@ export class MySphere extends CGFobject {
 				let x = Math.cos(angXZ) * Math.cos(angXY);
 				let y = Math.sin(angXY);
 				let z = Math.sin(angXZ) * Math.cos(angXY);
+
+				if (y >= 0) {
+					y *= this.topScale;
+				} else {
+					y *= this.bottomScale;
+				}
 
 				this.vertices.push(x, y, z);
 

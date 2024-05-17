@@ -1,5 +1,6 @@
 import {CGFobject} from '../../lib/CGF.js';
 import { MyFlower } from './MyFlower.js';
+import { MyPollen } from '../Bee/MyPollen.js';
 
 /**
  * MyGarden
@@ -38,6 +39,8 @@ export class MyGarden extends CGFobject {
 
         this.flowers = [];
         this.flower_heights = [];
+        this.totalHeight = [];
+        this.pollens = [];
 
         for(let i = 0; i < this.rows; i++){
 
@@ -59,6 +62,10 @@ export class MyGarden extends CGFobject {
                 let flower = new MyFlower(this.scene, externalRadius, n_petals, heart_radius, stem_radius, stem_size, petalColor, receptacleColor, stemColor, petalText, receptacleText, stemText); 
                 this.flowers.push(flower);
                 this.flower_heights.push(flower.getStemHeight() + heart_radius);
+                this.totalHeight.push(flower.getStemHeight() + heart_radius + heart_radius);
+
+                let pollen = new MyPollen(this.scene);
+                this.pollens.push(pollen);
             }
         }
 
@@ -70,10 +77,15 @@ export class MyGarden extends CGFobject {
 
             for (let j = 0; j < this.columns; j++) {
 
-                this.scene.pushMatrix();
-                this.scene.translate(i * 8 , this.flower_heights[i*this.columns + j], j * 8);
-                this.flowers[i * this.columns + j].display();
-                this.scene.popMatrix();
+              this.scene.pushMatrix();
+              this.scene.translate(i * 8 , this.totalHeight[i*this.columns + j], j * 8);
+              this.scene.scale(0.15, 0.15, 0.15);
+              this.pollens[i * this.columns + j].display();
+              this.scene.popMatrix();
+              this.scene.pushMatrix();
+              this.scene.translate(i * 8 , this.flower_heights[i*this.columns + j], j * 8);
+              this.flowers[i * this.columns + j].display();
+              this.scene.popMatrix();
 
             }
 

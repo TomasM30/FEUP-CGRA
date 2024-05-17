@@ -1,5 +1,8 @@
 import {CGFobject, CGFappearance} from '../../lib/CGF.js';
 import {MyRock} from './MyRock.js';
+import { MyHive } from '../Bee/MyHive.js';
+
+
 /**
  * MyRockSet
  * @constructor
@@ -52,6 +55,8 @@ export class MyRockSet extends CGFobject {
 
         }
 
+        this.hive = new MyHive(this.scene);
+
     }
 
 
@@ -59,6 +64,7 @@ export class MyRockSet extends CGFobject {
 
         let layer = 0;
         let curr_rock = 0;
+        let lastPosition = [0, 0, 0];
 
         for (let i = this.base_size; i > 0; i--) {
 
@@ -78,6 +84,8 @@ export class MyRockSet extends CGFobject {
                     this.rocks[curr_rock].display();
                     this.scene.popMatrix();
 
+                    lastPosition = [j*2 + layer, layer - (0.3*layer) + scaleY, k*2 + layer];
+
                     curr_rock++;
 
                 }
@@ -88,7 +96,13 @@ export class MyRockSet extends CGFobject {
 
         }
 
+        this.scene.pushMatrix();
+        this.scene.translate(lastPosition[0], lastPosition[1]+1, lastPosition[2]);
+        this.hive.display();
+        this.scene.popMatrix();
+
     }
+
 
 }
 

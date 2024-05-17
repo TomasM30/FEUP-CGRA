@@ -5,6 +5,7 @@ import { MyPanorama } from "./SkySphere/MyPanorama.js";
 import { MyGarden } from "./Flower/MyGarden.js";
 import { MyRockSet } from "./RockSet/MyRockSet.js";
 import { MyBee } from "./Bee/MyBee.js";
+import { MyHive } from "./Bee/MyHive.js";
 
 /**
  * MyScene
@@ -55,6 +56,7 @@ export class MyScene extends CGFscene {
     this.garden = new MyGarden(this, this.gardenRows, this.gardenColumns);
     this.rockSet = new MyRockSet(this, this.base_size, this.rockTexture);
     this.bee = new MyBee(this, [0, 3, 0], 0, [0, 0, 0]);
+    this.hive = new MyHive(this);
 
     this.appStartTime=Date.now(); // current time in milisecs
     this.setUpdatePeriod(50); // **at least** 50 ms between animations
@@ -127,6 +129,12 @@ export class MyScene extends CGFscene {
     this.beeToraxTexture = new CGFtexture(this, 'images/bee/Torax.jpg');
     this.beeAbdomenTexture = new CGFtexture(this, 'images/bee/Abdomen.jpg');
     this.beeWingTexture = new CGFtexture(this, 'images/bee/Wing.jpg');
+
+    this.pollenTexture = new CGFtexture(this, 'images/pollen/Pollen.jpg');
+
+    this.hiveTexture = new CGFtexture(this, 'images/hive/Hive.jpg');
+    this.roofTexture = new CGFtexture(this, 'images/hive/Roof.jpg');
+    this.entranceTexture = new CGFtexture(this, 'images/hive/Entrance.jpeg');
   }
 
   updateFOV() {
@@ -235,12 +243,14 @@ export class MyScene extends CGFscene {
 
     if (this.displayGarden) {
       this.pushMatrix();
+      //this.scale(0.25, 0.20, 0.25);
       this.garden.display();
       this.popMatrix();
     }
     
     if (this.displayRockSet) {
       this.pushMatrix();
+      //this.scale(0.25, 0.25, 0.25);
       this.rockSet.display();
       this.popMatrix();
     }

@@ -26,6 +26,7 @@ export class MyStem extends CGFobject {
     }
 
     initObjects(){
+
         for(let i = 0; i < this.numCilynders; i++){
             let height = Math.random() + 0.5;
             let rotationX = (Math.random() * 50 - 25) * (Math.PI / 180);
@@ -77,6 +78,7 @@ export class MyStem extends CGFobject {
         let totalHeight = 0;
         let xTranslation = 0;
         let zTranslation = 0;
+
         for(let i = 0; i < this.numCilynders; i++){
             
             this.scene.pushMatrix();
