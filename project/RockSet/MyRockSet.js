@@ -32,7 +32,7 @@ export class MyRockSet extends CGFobject {
         this.scaleValues = [];
         this.rotations = [];
 
-        for(let i = this.base_size; i > 0; i--) {
+        for(let i = this.base_size; i > 1; i--) {
             
             for (let j = 0; j < i; j++) {
 
@@ -66,7 +66,7 @@ export class MyRockSet extends CGFobject {
         let curr_rock = 0;
         let lastPosition = [0, 0, 0];
 
-        for (let i = this.base_size; i > 0; i--) {
+        for (let i = this.base_size; i > 1; i--) {
 
             for (let j = 0; j < i; j++) {
 

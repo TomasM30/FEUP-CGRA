@@ -46,7 +46,7 @@ export class MyInterface extends CGFinterface {
         //Checkbox element for Rock Set in GUI
         rockFolder.add(this.scene, 'displayRockSet').name('Display Rock Set');
         //Slider element for base size of Rock Set in GUI
-        rockFolder.add(this.scene, 'base_size', 1, 10, 1).name('Base Size').onChange(this.scene.updateBaseSize.bind(this.scene));
+        rockFolder.add(this.scene, 'base_size', 2, 10, 1).name('Base Size').onChange(this.scene.updateBaseSize.bind(this.scene));
 
         var beeFolder = this.gui.addFolder('Bee');
         //Checkbox element for bees in GUI
@@ -56,7 +56,12 @@ export class MyInterface extends CGFinterface {
         //Slider element for bee scale factor in GUI
         beeFolder.add(this.scene, 'scaleFactor', 0.5, 3).name('Scale Factor')
 
-        beeFolder.open();
+
+        var grassFolder = this.gui.addFolder('Grass');
+        //Checkbox element for Flower Bed in GUI
+        grassFolder.add(this.scene, 'displayFlowerBed').name('Display Flower Bed');
+        //Slider element for Flower Bed size in GUI
+        grassFolder.add(this.scene, 'flowerBedSize', 10, 50, 2).name('Flower Bed Size').onChange(this.scene.updateFlowerBedSize.bind(this.scene));
 
         this.initKeys();
     }

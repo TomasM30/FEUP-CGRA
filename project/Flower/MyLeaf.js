@@ -37,9 +37,5 @@ export class MyLeaf extends CGFobject {
         this.stemLeaf.display();
         this.scene.popMatrix();
 
-        this.scene.pushMatrix();
-        this.scene.scale(0.2, 0.2, 0.2);
-        this.scene.popMatrix();
-
     }
 }

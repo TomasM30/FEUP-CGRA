@@ -6,6 +6,7 @@ import { MyGarden } from "./Flower/MyGarden.js";
 import { MyRockSet } from "./RockSet/MyRockSet.js";
 import { MyBee } from "./Bee/MyBee.js";
 import { MyHive } from "./Bee/MyHive.js";
+import { MyFlowerBed } from "./Grass/MyFlowerBed.js";
 
 /**
  * MyScene
@@ -37,14 +38,16 @@ export class MyScene extends CGFscene {
     this.displayPanorama = true;
     this.selectedPanoramaTexture = 0;
     this.FOV = 1.7;
-    this.displayGarden = false;
-    this.gardenRows = 1;
-    this.gardenColumns = 1;
+    this.displayGarden = true;
+    this.gardenRows = 8;
+    this.gardenColumns = 8;
     this.displayRockSet = false;
     this.base_size = 4;
     this.displayBee = true;
     this.beeSpeedFactor = 0.1;
     this.scaleFactor = 1.0;
+    this.displayFlowerBed = false;
+    this.flowerBedSize = 10;
 
     this.enableTextures(true);
 
@@ -57,6 +60,7 @@ export class MyScene extends CGFscene {
     this.rockSet = new MyRockSet(this, this.base_size, this.rockTexture);
     this.bee = new MyBee(this, [0, 3, 0], 0, [0, 0, 0]);
     this.hive = new MyHive(this);
+    this.flowerBed = new MyFlowerBed(this, this.flowerBedSize);
 
     this.appStartTime=Date.now(); // current time in milisecs
     this.setUpdatePeriod(50); // **at least** 50 ms between animations
@@ -153,6 +157,10 @@ export class MyScene extends CGFscene {
     this.rockSet = new MyRockSet(this, this.base_size, this.rockTexture);
   }
 
+  updateFlowerBedSize() {
+    this.flowerBed = new MyFlowerBed(this, this.flowerBedSize);
+  }
+
   setDefaultAppearance() {
     this.setAmbient(0.2, 0.4, 0.8, 1.0);
     this.setDiffuse(0.2, 0.4, 0.8, 1.0);
@@ -235,15 +243,10 @@ export class MyScene extends CGFscene {
       this.popMatrix();
     }
 
-    if (this.displayPanorama) {
-      this.pushMatrix();
-      this.panorama.display();
-      this.popMatrix();
-    }
+    if (this.displayPanorama) this.panorama.display();
 
     if (this.displayGarden) {
       this.pushMatrix();
-      //this.scale(0.25, 0.20, 0.25);
       this.garden.display();
       this.popMatrix();
     }
@@ -262,9 +265,9 @@ export class MyScene extends CGFscene {
       this.translate(-this.bee.position[0], -this.bee.position[1], -this.bee.position[2]);      
       this.bee.display();
       this.popMatrix();
-
-
     }
+
+    if (this.displayFlowerBed) this.flowerBed.display();
 
     // ---- END Primitive drawing section
   }

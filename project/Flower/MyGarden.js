@@ -82,6 +82,7 @@ export class MyGarden extends CGFobject {
               this.scene.scale(0.15, 0.15, 0.15);
               this.pollens[i * this.columns + j].display();
               this.scene.popMatrix();
+
               this.scene.pushMatrix();
               this.scene.translate(i * 8 , this.flower_heights[i*this.columns + j], j * 8);
               this.flowers[i * this.columns + j].display();
