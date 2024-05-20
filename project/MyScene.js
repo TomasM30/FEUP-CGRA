@@ -271,6 +271,7 @@ export class MyScene extends CGFscene {
     
     if (this.displayRockSet) {
       this.pushMatrix();
+      this.scale(0.5, 0.5, 0.5);
       this.rockSet.display();
       this.popMatrix();
     }

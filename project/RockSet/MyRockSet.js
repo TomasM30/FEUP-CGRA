@@ -14,7 +14,7 @@ export class MyRockSet extends CGFobject {
 
         this.base_size = base_size;
 
-        this.init_rocks();
+        this.initObjects();
 
         this.rockMaterial = new CGFappearance(this.scene);
         this.rockMaterial.setAmbient(1, 1, 1, 1);
@@ -26,7 +26,7 @@ export class MyRockSet extends CGFobject {
     
     }
 
-    init_rocks() {
+    initObjects() {
      
         this.rocks = []; 
         this.scaleValues = [];
@@ -64,7 +64,7 @@ export class MyRockSet extends CGFobject {
 
         let layer = 0;
         let curr_rock = 0;
-        let lastPosition = [0, 0, 0];
+        let lastY = 0;
 
         for (let i = this.base_size; i > 1; i--) {
 
@@ -84,7 +84,7 @@ export class MyRockSet extends CGFobject {
                     this.rocks[curr_rock].display();
                     this.scene.popMatrix();
 
-                    lastPosition = [j*2 + layer, layer - (0.3*layer) + scaleY, k*2 + layer];
+                    lastY = layer - (0.3*layer) + scaleY;
 
                     curr_rock++;
 
@@ -97,7 +97,7 @@ export class MyRockSet extends CGFobject {
         }
 
         this.scene.pushMatrix();
-        this.scene.translate(lastPosition[0], lastPosition[1]+1, lastPosition[2]);
+        this.scene.translate(layer, lastY+1, layer);
         this.hive.display();
         this.scene.popMatrix();
 
