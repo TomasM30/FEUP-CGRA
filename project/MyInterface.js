@@ -59,9 +59,7 @@ export class MyInterface extends CGFinterface {
 
         var grassFolder = this.gui.addFolder('Grass');
         //Checkbox element for Flower Bed in GUI
-        grassFolder.add(this.scene, 'displayFlowerBed').name('Display Flower Bed');
-        //Slider element for Flower Bed size in GUI
-        grassFolder.add(this.scene, 'flowerBedSize', 10, 50, 2).name('Flower Bed Size').onChange(this.scene.updateFlowerBedSize.bind(this.scene));
+        grassFolder.add(this.scene, 'displayFlowerBed').name('Display Grass');
 
         this.initKeys();
     }
