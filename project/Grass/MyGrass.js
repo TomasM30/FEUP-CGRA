@@ -17,8 +17,8 @@ export class MyGrass extends CGFobject {
         
         for (let i = 0; i < this.stacks; i++) {
         
-            let x1 = (i/this.stacks)/2;
-            let x2 = 1 - (i/this.stacks)/2;
+            let x1 = (i/this.stacks)/2 * 0.4; 
+            let x2 = (1 - (i/this.stacks)/2 ) * 0.4;
 
             let y = i/this.stacks * 2;
 
@@ -29,10 +29,11 @@ export class MyGrass extends CGFobject {
             this.vertices.push(x2, y, z2);
             this.vertices.push(x1, y, z1);
             this.vertices.push(x2, y, z2);
-            this.normals.push(0, y, 1);
-            this.normals.push(0, y, 1);
-            this.normals.push(0, -y, -1);
-            this.normals.push(0, -y, -1);
+
+            this.normals.push(x1, y, z1);
+            this.normals.push(x2, y, z2);
+            this.normals.push(x1, y, z1);
+            this.normals.push(x2, y, z2);
 
         }
 
