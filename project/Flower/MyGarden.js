@@ -66,8 +66,6 @@ export class MyGarden extends CGFobject {
 
                 flower.setCoords([i * 8, this.totalHeight[i*this.columns + j], j * 8, i, j]);
 
-                let pollen = new MyPollen(this.scene);
-                this.pollens.push(pollen);
             }
         }
 
@@ -80,12 +78,6 @@ export class MyGarden extends CGFobject {
             for (let j = 0; j < this.columns; j++) {
 
               this.scene.pushMatrix();
-              this.scene.translate(i * 8 , this.totalHeight[i*this.columns + j], j * 8);
-              this.scene.scale(0.15, 0.15, 0.15);
-              this.pollens[i * this.columns + j].display();
-              this.scene.popMatrix();
-
-              this.scene.pushMatrix();
               this.scene.translate(i * 8 , this.flower_heights[i*this.columns + j], j * 8);
               this.flowers[i * this.columns + j].display();
               this.scene.popMatrix();
@@ -94,6 +86,10 @@ export class MyGarden extends CGFobject {
 
         }
 
+    }
+
+    getFlower(i, j){
+        return this.flowers[i * this.columns + j];
     }
     
 }

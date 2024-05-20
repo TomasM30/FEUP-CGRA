@@ -61,6 +61,14 @@ export class MyBee extends CGFobject{
         this.wingMaterial.setTexture(this.scene.beeWingTexture);
 
     }
+
+    pickupPollen(pollen){
+        this.pollen = pollen;
+    }
+
+    dropPollen(){
+        this.pollen = null;
+    }
     
 
     turn(v){
@@ -127,6 +135,43 @@ export class MyBee extends CGFobject{
                 }
                 break;
 
+                case "pollenDrop":
+                    let destination = this.scene.hiveCoords;
+                    let dx = destination[0] - this.position[0];
+                    let dy = destination[1] - this.position[1];
+                    let dz = 0.5+destination[2] - this.position[2];
+                    let distance = Math.sqrt(dx*dx + dy*dy + dz*dz);
+                    if (distance <0.1) {
+                        this.state = "stopped";
+                        if (this.pollen != null) {
+                            this.scene.rockSet.hive.addPollen(this.pollen);
+                            this.dropPollen();
+                            this.state = "controlled";
+                        }
+                    } else {
+                        let targetOrientation = Math.atan2(dx, dz);
+                        if (targetOrientation < 0) targetOrientation += 2*Math.PI;
+                        let currentOrientation = this.orientation;
+                        if (currentOrientation < 0) currentOrientation += 2*Math.PI;
+                
+                        let dOrientation = targetOrientation - currentOrientation;
+                
+                        this.turn(dOrientation*0.75);
+                        this.accelerate((distance - 0.1) * 0.0009);
+
+                        let diff = Math.abs(this.position[1] - destination[1]);
+
+                        if (diff <= 0.6 && distance < 6) {
+                            this.position[1] = destination[1];
+                        } else {
+                            this.position[1] = 4 + Math.sin(timeSinceAppStart * Math.PI * 2);
+                        }
+
+                        this.position[0] += this.speed[0];
+                        this.position[2] += this.speed[2];
+                    }
+                    break;
+
             case "stopped":
                 break;
             default:
@@ -142,10 +187,19 @@ export class MyBee extends CGFobject{
             let distanceX = Math.abs(this.position[0] - flowerCoord[0]);
             let distanceY = Math.abs(this.position[1] - flowerCoord[1]);
             let distanceZ = Math.abs(this.position[2] - flowerCoord[2]);
-    
-            if (distanceX < 0.2 && distanceY < 0.3 && distanceZ < 0.2) {
+
+            if (distanceX < 0.4 && distanceY < 0.3 && distanceZ < 0.4) {
                 console.log("Bee is above a flower");
-                let flower = this.scene.garden.flowers[flowerCoord[3]][flowerCoord[4]];
+                let flower = this.scene.garden.getFlower(flowerCoord[3], flowerCoord[4]);
+                let pollen = flower.pollen;
+                if (pollen != null) {
+                    this.pickupPollen(pollen);
+                    flower.removePollen();
+                } else {
+                    this.dropPollen();
+                    flower.putPollen(this.pollen);
+                }
+
                 return true;
             }
         }
@@ -153,6 +207,14 @@ export class MyBee extends CGFobject{
     }
 
     display(){
+
+        this.scene.pushMatrix();
+        if(this.pollen != null){
+            this.scene.translate(this.position[0], this.position[1]-0.4, this.position[2]);
+            this.scene.scale(0.15, 0.15, 0.15);
+            this.pollen.display();
+        }
+        this.scene.popMatrix();
 
         this.scene.pushMatrix();
 

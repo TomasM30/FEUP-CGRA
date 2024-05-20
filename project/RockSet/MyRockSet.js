@@ -56,15 +56,14 @@ export class MyRockSet extends CGFobject {
         }
 
         this.hive = new MyHive(this.scene);
-
     }
 
 
     display() {
 
         let layer = 0;
-        let curr_rock = 0;
         let lastY = 0;
+        let curr_rock = 0;
 
         for (let i = this.base_size; i > 1; i--) {
 
@@ -97,7 +96,8 @@ export class MyRockSet extends CGFobject {
         }
 
         this.scene.pushMatrix();
-        this.scene.translate(layer, lastY+1, layer);
+        this.scene.translate(layer, lastY+1.5, layer);
+        this.scene.scale(1.5, 1.5, 1.5);
         this.hive.display();
         this.scene.popMatrix();
 

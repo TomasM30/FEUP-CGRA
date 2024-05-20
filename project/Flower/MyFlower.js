@@ -48,6 +48,7 @@ export class MyFlower extends CGFobject {
 
         this.receptacle = new MyReceptacle(this.scene, 30, 30);
         this.stem = new MyStem(this.scene, this.stemSize, this.stemRadius, this.stemMaterial);
+        this.pollen = new MyPollen(this.scene);
     }
 
     initMaterials() {
@@ -77,6 +78,14 @@ export class MyFlower extends CGFobject {
         this.stemMaterial.setTexture(this.stemTexture);
     }
 
+    removePollen(){
+        this.pollen = null;
+    }
+
+    putPollen(pollen){
+        this.pollen = pollen;
+    }
+
 
     display(){
 
@@ -88,6 +97,14 @@ export class MyFlower extends CGFobject {
             this.petals[i].display();
             this.scene.popMatrix();
         }
+
+        this.scene.pushMatrix();
+        this.scene.translate(0, this.heartRadius, 0);
+        this.scene.scale(0.15, 0.15, 0.15);
+        if(this.pollen != null){
+            this.pollen.display();
+        }
+        this.scene.popMatrix();
         
 
         this.scene.pushMatrix();

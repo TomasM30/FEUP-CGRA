@@ -38,10 +38,10 @@ export class MyScene extends CGFscene {
     this.displayPanorama = true;
     this.selectedPanoramaTexture = 0;
     this.FOV = 1.7;
-    this.displayGarden = false;
-    this.gardenRows = 8;
-    this.gardenColumns = 8;
-    this.displayRockSet = false;
+    this.displayGarden = true;
+    this.gardenRows = 5;
+    this.gardenColumns = 5;
+    this.displayRockSet = true;
     this.base_size = 4;
     this.displayBee = true;
     this.beeSpeedFactor = 0.1;
@@ -63,9 +63,18 @@ export class MyScene extends CGFscene {
     this.flowerBed = new MyFlowerBed(this, this.flowerBedSize);
     this.heartCoord = [];
 
+    this.hiveCoords = [-this.base_size, 2.5, -this.base_size];
+
+
     for (let flower of this.garden.flowers) {
-      let scaledCoords = flower.coords.map(coord => coord * (3 / 9));
-      this.heartCoord.push(scaledCoords);
+      let scaledCoords = flower.coords.map((coord, index) => {
+        if (index < 3) {
+            return coord * (3 / 9);
+        } else {
+            return coord;
+        }
+    });      
+    this.heartCoord.push(scaledCoords);
   }
 
     this.appStartTime=Date.now(); // current time in milisecs
@@ -226,27 +235,34 @@ export class MyScene extends CGFscene {
           keysPressed=true;
           this.bee.turn(-Math.PI/20);
       }
-    }
-    if (this.gui.isKeyPressed("KeyR")) {
+
+      if (this.gui.isKeyPressed("KeyF") && this.displayGarden) {
+        text += " F ";
+        keysPressed = true;
+        this.bee.state = "descending"
+      }
+
+      if (this.gui.isKeyPressed("KeyR")) {
         text += " R ";
         keysPressed = true;
         
         this.bee.reset();
         this.bee.state = "controlled";
-    }
-    if (this.gui.isKeyPressed("KeyF")) {
-        text += " F ";
+      }
+
+      if (this.gui.isKeyPressed("KeyO") && this.bee.pollen !=null) {
+        text += " O ";
         keysPressed = true;
-        this.bee.state = "descending"
+        this.bee.state = "pollenDrop"
+      }
     }
-    if (this.gui.isKeyPressed("KeyP")) {
+    else if (this.bee.state == "stopped") {
+      if (this.gui.isKeyPressed("KeyP")  && this.displayGarden) {
+        console.log(this.bee.state);
         text += " P ";
         keysPressed = true;
         this.bee.state = "ascending"
-    }
-    if (this.gui.isKeyPressed("KeyO")) {
-        text += " O ";
-        keysPressed = true;
+      }
     }
     if (keysPressed)
        console.log(text);
@@ -296,7 +312,8 @@ export class MyScene extends CGFscene {
     
     if (this.displayRockSet) {
       this.pushMatrix();
-      this.scale(0.5, 0.5, 0.5);
+      //this.scale(0.5, 0.5, 0.5);
+      this.translate(-2*this.base_size, 0, -2*this.base_size);
       this.rockSet.display();
       this.popMatrix();
     }

@@ -11,6 +11,7 @@ export class MyHive extends CGFobject {
 		super(scene);
         this.initObjects();
         this.initMaterials();
+        this.pollen = null;
 	}
 
     initObjects(){
@@ -19,6 +20,10 @@ export class MyHive extends CGFobject {
         this.entrance1 = new MyUnitCubeQuad(this.scene);
         this.entrance2 = new MyUnitCubeQuad(this.scene);
 
+    }
+
+    addPollen(pollen){
+        this.pollen = pollen;
     }
 
     initMaterials(){
@@ -40,17 +45,26 @@ export class MyHive extends CGFobject {
     }
 
     display(){
+    
+        this.scene.pushMatrix();
+        if(this.pollen != null){
+            this.scene.translate(0, -.65, .75);
+            this.scene.scale(0.05, 0.05, 0.05);
+            this.pollen.display();
+        }
+        this.scene.popMatrix();
+        
         this.scene.pushMatrix();
         this.entranceMaterial.apply();
         this.scene.translate(0, .5, 0.33);
-        this.scene.scale(0.85, 0.15, 0.85);
+        this.scene.scale(0.85, 0.35, 0.85);
         this.entrance2.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
         this.entranceMaterial.apply();
         this.scene.translate(0, -0.5, 0.33);
-        this.scene.scale(0.85, 0.15, 0.85);
+        this.scene.scale(0.85, 0.35, 0.85);
         this.entrance1.display();
         this.scene.popMatrix();
 
