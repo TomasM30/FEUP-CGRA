@@ -47,9 +47,9 @@ export class MyGarden extends CGFobject {
             for(let j = 0; j < this.columns; j++){
 
                 let n_petals = Math.floor(Math.random() * 10 + 5);
-                let heart_radius = Math.random() + 0.5;
+                let heart_radius = Math.random() * 0.3 + 0.85;
                 let stem_radius = Math.random() * 0.1 + 0.1;
-                let stem_size = Math.floor(Math.random() * 5 + 5);
+                let stem_size = Math.floor(Math.random() * 2 + 3);
                 let externalRadius = Math.random() * 4 + 3; 
                 let petalColor = [1, 1, 0];
                 let receptacleColor = [88/255, 57/255, 39/255];
@@ -63,6 +63,8 @@ export class MyGarden extends CGFobject {
                 this.flowers.push(flower);
                 this.flower_heights.push(flower.getStemHeight() + heart_radius);
                 this.totalHeight.push(flower.getStemHeight() + heart_radius + heart_radius);
+
+                flower.setCoords([i * 8, this.totalHeight[i*this.columns + j], j * 8, i, j]);
 
                 let pollen = new MyPollen(this.scene);
                 this.pollens.push(pollen);

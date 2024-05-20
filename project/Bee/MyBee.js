@@ -6,6 +6,7 @@ import { MyLeg } from './MyLeg.js';
 import { MyWings } from './MyWings.js';
 import { MyAntennae } from './MyAntennae .js';
 
+
 export class MyBee extends CGFobject{
 
     constructor(scene, position, orientation, speed){
@@ -14,6 +15,8 @@ export class MyBee extends CGFobject{
         this.position = position;
         this.orientation = orientation;
         this.speed = speed;
+        this.state = "controlled";
+        this.pollen = null;
 
         this.initMaterials();
         this.initObjects();
@@ -58,6 +61,7 @@ export class MyBee extends CGFobject{
         this.wingMaterial.setTexture(this.scene.beeWingTexture);
 
     }
+    
 
     turn(v){
 
@@ -83,7 +87,6 @@ export class MyBee extends CGFobject{
             this.speed[2] = 0;
         }
 
-
     }
 
     reset(){
@@ -93,15 +96,60 @@ export class MyBee extends CGFobject{
     }
 
     update(timeSinceAppStart){  
-        
-        this.position[1] = 3 + Math.sin(timeSinceAppStart*Math.PI*2);
-
-        this.position[0] += this.speed[0];
-
-        this.position[2] += this.speed[2];
-
         this.wings.update(timeSinceAppStart);
 
+        switch(this.state){
+        
+            case "controlled": 
+                this.position[1] = 4 + Math.sin(timeSinceAppStart * Math.PI * 2);
+                this.position[0] += this.speed[0];
+                this.position[2] += this.speed[2];
+                break;
+
+            case "descending":
+                
+                if (this.checkFlowerCollision()){
+                    this.state = "stopped";
+                }
+                else if (this.position[1] <= 0.4){
+                    this.state = "stopped";
+                }
+                else {
+                    this.position[1] -= 0.1;
+                }
+                break;
+            
+            case "ascending":
+
+                this.position[1] += 0.1;
+                if(this.position[1] >= 3){
+                    this.state = "controlled";
+                }
+                break;
+
+            case "stopped":
+                break;
+            default:
+                break;
+
+        }
+
+    }
+
+
+    checkFlowerCollision() {
+        for (let flowerCoord of this.scene.heartCoord) {
+            let distanceX = Math.abs(this.position[0] - flowerCoord[0]);
+            let distanceY = Math.abs(this.position[1] - flowerCoord[1]);
+            let distanceZ = Math.abs(this.position[2] - flowerCoord[2]);
+    
+            if (distanceX < 0.2 && distanceY < 0.3 && distanceZ < 0.2) {
+                console.log("Bee is above a flower");
+                let flower = this.scene.garden.flowers[flowerCoord[3]][flowerCoord[4]];
+                return true;
+            }
+        }
+        return false;
     }
 
     display(){

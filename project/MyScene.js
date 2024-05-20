@@ -45,7 +45,7 @@ export class MyScene extends CGFscene {
     this.base_size = 4;
     this.displayBee = true;
     this.beeSpeedFactor = 0.1;
-    this.scaleFactor = 1.0;
+    this.scaleFactor = 0.5;
     this.displayFlowerBed = false;
     this.flowerBedSize = 10;
 
@@ -61,6 +61,12 @@ export class MyScene extends CGFscene {
     this.bee = new MyBee(this, [0, 3, 0], 0, [0, 0, 0]);
     this.hive = new MyHive(this);
     this.flowerBed = new MyFlowerBed(this, this.flowerBedSize);
+    this.heartCoord = [];
+
+    for (let flower of this.garden.flowers) {
+      let scaledCoords = flower.coords.map(coord => coord * (3 / 9));
+      this.heartCoord.push(scaledCoords);
+  }
 
     this.appStartTime=Date.now(); // current time in milisecs
     this.setUpdatePeriod(50); // **at least** 50 ms between animations
@@ -181,33 +187,51 @@ export class MyScene extends CGFscene {
   checkKeys() {
     var text="Keys pressed: ";
     var keysPressed=false;
-    if (this.gui.isKeyPressed("KeyW")) {
-        text+=" W ";
-        keysPressed=true;
-        this.bee.accelerate(this.beeSpeedFactor);
-    }
-    if (this.gui.isKeyPressed("KeyS")) {
-        text+=" S ";
-        keysPressed=true;
-        this.bee.accelerate(-this.beeSpeedFactor);
-    }
-    if (this.gui.isKeyPressed("KeyA")) {
-        text+=" A ";
-        keysPressed=true;
-        this.bee.turn(Math.PI/20);
-    }
-    if (this.gui.isKeyPressed("KeyD")) {
-        text+=" D ";
-        keysPressed=true;
-        this.bee.turn(-Math.PI/20);
+    if(this.bee.state == "controlled"){
+      if (this.gui.isKeyPressed("KeyW")) {
+          text+=" W ";
+          keysPressed=true;
+          this.bee.accelerate(this.beeSpeedFactor);
+      }
+      if (this.gui.isKeyPressed("KeyS")) {
+          text+=" S ";
+          keysPressed=true;
+          this.bee.accelerate(-this.beeSpeedFactor);
+      }
+      if (this.gui.isKeyPressed("KeyA")) {
+          text+=" A ";
+          keysPressed=true;
+          this.bee.turn(Math.PI/20);
+      }
+      if (this.gui.isKeyPressed("KeyD")) {
+          text+=" D ";
+          keysPressed=true;
+          this.bee.turn(-Math.PI/20);
+      }
     }
     if (this.gui.isKeyPressed("KeyR")) {
         text += " R ";
         keysPressed = true;
+        
         this.bee.reset();
+        this.bee.state = "controlled";
+    }
+    if (this.gui.isKeyPressed("KeyF")) {
+        text += " F ";
+        keysPressed = true;
+        this.bee.state = "descending"
+    }
+    if (this.gui.isKeyPressed("KeyP")) {
+        text += " P ";
+        keysPressed = true;
+        this.bee.state = "ascending"
+    }
+    if (this.gui.isKeyPressed("KeyO")) {
+        text += " O ";
+        keysPressed = true;
     }
     if (keysPressed)
-        console.log(text);
+       console.log(text);
   }
 
   display() {
@@ -247,6 +271,7 @@ export class MyScene extends CGFscene {
 
     if (this.displayGarden) {
       this.pushMatrix();
+      this.scale(3/9,3/9, 3/9);
       this.garden.display();
       this.popMatrix();
     }

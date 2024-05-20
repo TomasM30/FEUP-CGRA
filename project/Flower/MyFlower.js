@@ -2,6 +2,7 @@ import {CGFobject, CGFappearance} from '../../lib/CGF.js';
 import { MyPetal } from './MyPetal.js';
 import { MyReceptacle } from './MyReceptacle.js';
 import { MyStem } from './MyStem.js';
+import { MyPollen } from '../Bee/MyPollen.js';
 
 
 /**
@@ -20,6 +21,7 @@ export class MyFlower extends CGFobject {
         this.petalColor = petalColor;
         this.receptacleColor = receptacleColor;
         this.stemColor = stemColor;
+        this.coords = [];
 
         //TODO Refactor this to scene.textures
         this.petalTexture = petalTexture;
@@ -86,6 +88,7 @@ export class MyFlower extends CGFobject {
             this.petals[i].display();
             this.scene.popMatrix();
         }
+        
 
         this.scene.pushMatrix();
         this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.NEAREST);
@@ -104,6 +107,10 @@ export class MyFlower extends CGFobject {
 
     getStemHeight(){
         return this.stem.getStemHeight();
+    }
+
+    setCoords(coords){
+        this.coords = coords;
     }
 
 
