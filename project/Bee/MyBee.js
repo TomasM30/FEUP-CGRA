@@ -228,7 +228,7 @@ export class MyBee extends CGFobject{
             this.scene.translate(0,0.2,0.7);
             this.scene.rotate(Math.PI, 0, 0, 1);
             this.scene.scale(0.015, 0.06, 0.015);
-            this.antennaes[i]   .display();
+            this.antennaes[i].display();
             this.scene.popMatrix();
         }
 
