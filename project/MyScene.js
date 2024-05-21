@@ -250,6 +250,8 @@ export class MyScene extends CGFscene {
       if (this.gui.isKeyPressed("KeyF") && this.displayGarden) {
         text += " F ";
         keysPressed = true;
+        console.log(this.bee.speed);
+        this.bee.descendingSpeed = [this.bee.speed[0], -0.2, this.bee.speed[2]];
         this.bee.state = "descending"
       }
 
@@ -271,6 +273,7 @@ export class MyScene extends CGFscene {
       if (this.gui.isKeyPressed("KeyP")  && this.displayGarden) {
         text += " P ";
         keysPressed = true;
+        this.bee.ascendSpeed = [0,0.2,0];
         this.bee.state = "ascending"
       }
     }
