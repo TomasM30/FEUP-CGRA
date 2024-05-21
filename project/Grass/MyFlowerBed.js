@@ -58,12 +58,12 @@ export class MyFlowerBed extends CGFobject {
                 this.scene.translate(i+0.5, 0, j+0.5);
                 this.scene.rotate(this.rotations[i * this.base_size + j], 0, 1, 0);
                 this.grass[i * this.base_size + j].display();
+                this.scene.updateWind();
                 this.scene.popMatrix();
             
             }
         
         }
-
 
 
         this.scene.popMatrix();

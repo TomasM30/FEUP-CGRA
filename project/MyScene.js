@@ -38,16 +38,16 @@ export class MyScene extends CGFscene {
     this.displayPanorama = true;
     this.selectedPanoramaTexture = 0;
     this.FOV = 1.7;
-    this.displayGarden = true;
+    this.displayGarden = false;
     this.gardenRows = 5;
     this.gardenColumns = 5;
-    this.displayRockSet = true;
+    this.displayRockSet = false;
     this.base_size = 4;
-    this.displayBee = true;
+    this.displayBee = false;
     this.beeSpeedFactor = 0.1;
     this.scaleFactor = 0.5;
     this.displayFlowerBed = true;
-    this.flowerBedSize = 10;
+    this.flowerBedSize = 50;
 
     this.enableTextures(true);
 
@@ -173,6 +173,8 @@ export class MyScene extends CGFscene {
     this.entranceTexture = new CGFtexture(this, 'images/hive/Entrance.jpeg');
 
     this.grassTexture = new CGFtexture(this, 'images/grass.jpg');
+    this.grassShader = new CGFshader(this.gl, 'Grass/shaders/grass.vert', 'Grass/shaders/grass.frag');
+    this.grassShader.setUniformsValues({ timeFactor: 0, windStrength: 0.1 });
   }
 
   updateFOV() {
@@ -186,20 +188,16 @@ export class MyScene extends CGFscene {
   updateGarden() {
     this.garden = new MyGarden(this, this.gardenRows, this.gardenColumns);
   }  
-  
-  updateBaseSize() {
-    this.rockSet = new MyRockSet(this, this.base_size, this.rockTexture);
-  }
-
-  updateFlowerBedSize() {
-    this.flowerBed = new MyFlowerBed(this, this.flowerBedSize);
-  }
 
   setDefaultAppearance() {
     this.setAmbient(0.2, 0.4, 0.8, 1.0);
     this.setDiffuse(0.2, 0.4, 0.8, 1.0);
     this.setSpecular(0.2, 0.4, 0.8, 1.0);
     this.setShininess(10.0);
+  }
+
+  updateWind() {
+      this.grassShader.setUniformsValues({ windStrength: Math.random() * 0.1 + 0.1});
   }
 
   update(t)
@@ -210,12 +208,13 @@ export class MyScene extends CGFscene {
       this.bee.update(timeSinceAppStart);
 
       this.checkKeys();
+
+      this.grassShader.setUniformsValues({ timeFactor: t / 100 % 100000 });
   }
 
   checkKeys() {
     var text="Keys pressed: ";
     var keysPressed=false;
-    console.log(this.bee.state);
     if(this.bee.state == "controlled"){
       if (this.gui.isKeyPressed("KeyW")) {
           text+=" W ";
@@ -260,7 +259,6 @@ export class MyScene extends CGFscene {
     }
     else if (this.bee.state == "stopped") {
       if (this.gui.isKeyPressed("KeyP")  && this.displayGarden) {
-        console.log(this.bee.state);
         text += " P ";
         keysPressed = true;
         this.bee.state = "ascending"
@@ -322,11 +320,12 @@ export class MyScene extends CGFscene {
 
     if (this.displayFlowerBed) {
 
+      this.setActiveShader(this.grassShader);
       this.pushMatrix();
-      //this.translate(25, 0, 25);
+      this.translate(-25, 0, -25);
       this.flowerBed.display();
       this.popMatrix();
-
+      this.setActiveShader(this.defaultShader);
     }
 
 

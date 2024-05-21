@@ -188,7 +188,6 @@ export class MyBee extends CGFobject{
             let distanceZ = Math.abs(this.position[2] - flowerCoord[2]);
 
             if (distanceX < 0.4 && distanceY < 0.3 && distanceZ < 0.4) {
-                console.log("Bee is above a flower");
                 let flower = this.scene.garden.getFlower(flowerCoord[3], flowerCoord[4]);
                 let pollen = flower.pollen;
                 if (pollen != null) {
