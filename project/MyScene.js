@@ -38,12 +38,12 @@ export class MyScene extends CGFscene {
     this.displayPanorama = true;
     this.selectedPanoramaTexture = 0;
     this.FOV = 1.7;
-    this.displayGarden = false;
+    this.displayGarden = true;
     this.gardenRows = 5;
     this.gardenColumns = 5;
-    this.displayRockSet = false;
+    this.displayRockSet = true;
     this.base_size = 4;
-    this.displayBee = false;
+    this.displayBee = true;
     this.beeSpeedFactor = 0.1;
     this.scaleFactor = 0.5;
     this.displayFlowerBed = true;
@@ -56,14 +56,23 @@ export class MyScene extends CGFscene {
     this.plane = new MyPlane(this,100, 0, 10, 0, 10);
     this.sphere = new MySphere(this, 30, 30);
     this.panorama = new MyPanorama(this, this.panoramaTextures[this.selectedPanoramaTexture]);
+    
+    this.petalColors = [
+      [1, 0.5, 0.5], // light red
+      [0.5, 1, 0.5], // light green
+      [0.5, 0.5, 1], // light blue
+      [1, 1, 0.5], // light yellow
+      [1, 0.5, 1], // light magenta
+      [0.5, 1, 1]  // light cyan
+    ];
     this.garden = new MyGarden(this, this.gardenRows, this.gardenColumns);
     this.rockSet = new MyRockSet(this, this.base_size, this.rockTexture);
     this.bee = new MyBee(this, [0, 3, 0], 0, [0, 0, 0]);
     this.hive = new MyHive(this);
     this.flowerBed = new MyFlowerBed(this, this.flowerBedSize);
     this.heartCoord = [];
-
     this.hiveCoords = [-this.base_size, 2.5, -this.base_size];
+
 
 
     for (let flower of this.garden.flowers) {
@@ -104,7 +113,7 @@ export class MyScene extends CGFscene {
       1,
       0.1,
       1000,
-      vec3.fromValues(50, 10, 15),
+      vec3.fromValues(-50, 25, 25),
       vec3.fromValues(0, 0, 0)
     );
   }
@@ -127,11 +136,12 @@ export class MyScene extends CGFscene {
     this.sphereMaterial.setTextureWrap('REPEAT', 'REPEAT');
 
     //Initialize Panorama Textures
-    this.panoramaTextureIds = { 'Panorama 1': 0, 'Panorama 2': 1, 'Panorama 3': 2 };
+    this.panoramaTextureIds = { 'Panorama 1': 0, 'Panorama 2': 1, 'Panorama 3': 2, 'Panorama 4': 3};
     this.panoramaTexture1 = new CGFtexture(this, "images/panorama/panorama1.jpg");
     this.panoramaTexture2 = new CGFtexture(this, "images/panorama/panorama2.jpg");
     this.panoramaTexture3 = new CGFtexture(this, "images/panorama/panorama3.jpg");
-    this.panoramaTextures = [this.panoramaTexture1, this.panoramaTexture2, this.panoramaTexture3]
+    this.panoramaTexture4 = new CGFtexture(this, "images/panorama/panorama4.jpg");
+    this.panoramaTextures = [this.panoramaTexture1, this.panoramaTexture2, this.panoramaTexture3, this.panoramaTexture4]
 
     this.petalTextures = [];
     this.petalTextures.push(new CGFtexture(this, 'images/petals_flower/Petal1.jpg'));

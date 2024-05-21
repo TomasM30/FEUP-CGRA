@@ -37,12 +37,11 @@ export class MyInterface extends CGFinterface {
         //Checkbox element for Garden in GUI
         gardenFolder.add(this.scene, 'displayGarden').name('Display Garden');
         //Slider element for Garden Rows in GUI
-        gardenFolder.add(this.scene, 'gardenRows', 1, 50, 5).name('Garden Rows').onChange(this.scene.updateGarden.bind(this.scene));
+        gardenFolder.add(this.scene, 'gardenRows', 1, 7, 1).name('Garden Rows').onChange(this.scene.updateGarden.bind(this.scene));
         //Slider element for Garden Columns in GUI
-        gardenFolder.add(this.scene, 'gardenColumns', 1, 50, 5).name('Garden Columns').onChange(this.scene.updateGarden.bind(this.scene));
+        gardenFolder.add(this.scene, 'gardenColumns', 1, 7, 1).name('Garden Columns').onChange(this.scene.updateGarden.bind(this.scene));
 
 
-        var rockFolder = this.gui.addFolder('RockSet');
         //Checkbox element for Rock Set in GUI
         this.gui.add(this.scene, 'displayRockSet').name('Display Rock Set');
 

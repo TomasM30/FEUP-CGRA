@@ -51,7 +51,7 @@ export class MyGarden extends CGFobject {
                 let stem_radius = Math.random() * 0.1 + 0.1;
                 let stem_size = Math.floor(Math.random() * 2 + 3);
                 let externalRadius = Math.random() * 4 + 3; 
-                let petalColor = [1, 1, 0];
+                let petalColor = this.scene.petalColors[this.getIndexFromRandom(Math.random() * this.scene.petalColors.length)];
                 let receptacleColor = [88/255, 57/255, 39/255];
                 let stemColor = [24/255, 70/255, 50/255];
                 let petalText = this.scene.petalTextures[this.getIndexFromRandom(Math.random())];
