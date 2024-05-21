@@ -68,6 +68,7 @@ export class MyBee extends CGFobject{
 
     dropPollen(){
         this.pollen = null;
+        this.speed = [0, 0, 0];
     }
     
 
@@ -141,32 +142,24 @@ export class MyBee extends CGFobject{
                     let dy = destination[1] - this.position[1];
                     let dz = 0.5+destination[2] - this.position[2];
                     let distance = Math.sqrt(dx*dx + dy*dy + dz*dz);
-                    if (distance <0.1) {
-                        this.state = "stopped";
+                    
+                    if (distance < 0.5) {
                         if (this.pollen != null) {
                             this.scene.rockSet.hive.addPollen(this.pollen);
                             this.dropPollen();
-                            this.state = "controlled";
+                            this.state = "ascending";
                         }
                     } else {
                         let targetOrientation = Math.atan2(dx, dz);
-                        if (targetOrientation < 0) targetOrientation += 2*Math.PI;
-                        let currentOrientation = this.orientation;
-                        if (currentOrientation < 0) currentOrientation += 2*Math.PI;
-                
-                        let dOrientation = targetOrientation - currentOrientation;
-                
-                        this.turn(dOrientation*0.75);
+                        this.orientation = targetOrientation;
+                    
                         this.accelerate((distance - 0.1) * 0.0009);
-
-                        let diff = Math.abs(this.position[1] - destination[1]);
-
-                        if (diff <= 0.6 && distance < 6) {
-                            this.position[1] = destination[1];
-                        } else {
-                            this.position[1] = 4 + Math.sin(timeSinceAppStart * Math.PI * 2);
-                        }
-
+                    
+                        let t = timeSinceAppStart / (timeSinceAppStart + 1);
+                        let startValue = 4 + Math.sin(timeSinceAppStart * Math.PI * 2);
+                        let endValue = destination[1];
+                        this.position[1] = startValue + t * (endValue - startValue);
+                    
                         this.position[0] += this.speed[0];
                         this.position[2] += this.speed[2];
                     }
@@ -235,7 +228,7 @@ export class MyBee extends CGFobject{
             this.scene.translate(0,0.2,0.7);
             this.scene.rotate(Math.PI, 0, 0, 1);
             this.scene.scale(0.015, 0.06, 0.015);
-            this.antennaes[i].display();
+            this.antennaes[i]   .display();
             this.scene.popMatrix();
         }
 

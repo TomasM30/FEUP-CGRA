@@ -214,6 +214,7 @@ export class MyScene extends CGFscene {
   checkKeys() {
     var text="Keys pressed: ";
     var keysPressed=false;
+    console.log(this.bee.state);
     if(this.bee.state == "controlled"){
       if (this.gui.isKeyPressed("KeyW")) {
           text+=" W ";
@@ -326,6 +327,8 @@ export class MyScene extends CGFscene {
       this.popMatrix();
 
     }
+
+
 
     if (this.displayBee) {
       this.pushMatrix();

@@ -16,7 +16,7 @@ export class MyWings extends CGFobject {
     }
 
     update(timeSinceAppStart) {
-        this.angle= Math.PI * (Math.sin(timeSinceAppStart*3*Math.PI) * 0.25);
+        this.angle= Math.PI * (Math.sin(timeSinceAppStart*4*Math.PI) * 0.25);
     }
 
 
