@@ -17,13 +17,25 @@ export class MyGrass extends CGFobject {
         
         for (let i = 0; i < this.stacks; i++) {
         
-            let x1 = (i/this.stacks)/2 * 0.4; 
-            let x2 = (1 - (i/this.stacks)/2 ) * 0.4;
+
+            /*
+            * x1 and x2 must be at the same distance from the center
+            * (this.stacks-1) is the maximum value of i, so that the top of the triangle is at the top of the grass
+            * Then, we divide by 2 in order to make it narrower (instead of 1, the max value is 0.5) 
+            * The y must be the same for the two sides of the vertex
+            * z1 and z2 are the inclination of the grass, and are random. We used the quadratic function to incline the grass
+            * Each stack is composed by 4 vertices - 2 are duplicate and are used to make the grass be seen from both sides
+            */
+            let x1 = ((i/(this.stacks-1))/2) * 0.4; 
+            let x2 = (1 - ((i/(this.stacks-1))/2)) * 0.4; 
 
             let y = i/this.stacks * 2;
 
-            let z1 = - Math.pow(x1, 2) + Math.random() * 0.1;
-            let z2 = - Math.pow(x1, 2) + Math.random() * 0.1;
+            let z1 = Math.pow(x1, 2) + Math.random() * 0.1;
+            let z2 = 0;
+            if (i == this.stacks - 1) z2 = z1;  
+            else z2 = Math.pow(x2, 2) + Math.random() * 0.1;
+                
 
             this.vertices.push(x1, y, z1);
             this.vertices.push(x2, y, z2);

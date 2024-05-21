@@ -37,16 +37,14 @@ export class MyInterface extends CGFinterface {
         //Checkbox element for Garden in GUI
         gardenFolder.add(this.scene, 'displayGarden').name('Display Garden');
         //Slider element for Garden Rows in GUI
-        gardenFolder.add(this.scene, 'gardenRows', 1, 10, 1).name('Garden Rows').onChange(this.scene.updateGarden.bind(this.scene));
+        gardenFolder.add(this.scene, 'gardenRows', 1, 50, 5).name('Garden Rows').onChange(this.scene.updateGarden.bind(this.scene));
         //Slider element for Garden Columns in GUI
-        gardenFolder.add(this.scene, 'gardenColumns', 1, 10, 1).name('Garden Columns').onChange(this.scene.updateGarden.bind(this.scene));
+        gardenFolder.add(this.scene, 'gardenColumns', 1, 50, 5).name('Garden Columns').onChange(this.scene.updateGarden.bind(this.scene));
 
 
         var rockFolder = this.gui.addFolder('RockSet');
         //Checkbox element for Rock Set in GUI
-        rockFolder.add(this.scene, 'displayRockSet').name('Display Rock Set');
-        //Slider element for base size of Rock Set in GUI
-        rockFolder.add(this.scene, 'base_size', 2, 6, 1).name('Base Size').onChange(this.scene.updateBaseSize.bind(this.scene));
+        this.gui.add(this.scene, 'displayRockSet').name('Display Rock Set');
 
         var beeFolder = this.gui.addFolder('Bee');
         //Checkbox element for bees in GUI
@@ -56,10 +54,8 @@ export class MyInterface extends CGFinterface {
         //Slider element for bee scale factor in GUI
         beeFolder.add(this.scene, 'scaleFactor', 0.5, 3).name('Scale Factor')
 
-
-        var grassFolder = this.gui.addFolder('Grass');
-        //Checkbox element for Flower Bed in GUI
-        grassFolder.add(this.scene, 'displayFlowerBed').name('Display Grass');
+        //Checkbox element for Grass in GUI
+        this.gui.add(this.scene, 'displayFlowerBed').name('Display Grass');
 
         this.initKeys();
     }
