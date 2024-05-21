@@ -5,6 +5,9 @@ import { MyTriangle } from '../Common/MyTriangle.js';
  * MyPetal
  * @constructor
  * @param scene - Reference to MyScene object
+ * @param petalHeight - Height of the petal
+ * @param curvatureAngle - Angle of curvature of the petal
+ * @param heartRadius - Radius of the heart of the flower
  */
 export class MyPetal extends CGFobject {
     constructor(scene, petalHeight, curvatureAngle, heartRadius) {
@@ -16,11 +19,14 @@ export class MyPetal extends CGFobject {
         this.initObjects();
     }
 
+	// Create the two triangles that compose the petal
     initObjects() {
 		this.triangle = new MyTriangle(this.scene);
 		this.triangle2 = new MyTriangle(this.scene);
 	}
 
+
+	// Display and transform the triangles to make an angle between the base of both so it looks like a petal
 	display(){
 		this.scene.pushMatrix();
 		this.scene.translate(0, this.petalHeight/2*Math.sqrt(3)/2+this.heartRadius, 0);

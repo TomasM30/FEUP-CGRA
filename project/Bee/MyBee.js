@@ -6,7 +6,14 @@ import { MyLeg } from './MyLeg.js';
 import { MyWings } from './MyWings.js';
 import { MyAntennae } from './MyAntennae .js';
 
-
+/**
+ * MyBee class
+ * @constructor
+ * @param scene - Reference to MyScene object
+ * @param position - the position of the bee on the scene
+ * @param orientation - the angle on the y axis of the bee
+ * @param speed - the speed of the bee
+ */
 export class MyBee extends CGFobject{
 
     constructor(scene, position, orientation, speed){
@@ -32,11 +39,13 @@ export class MyBee extends CGFobject{
         this.abdomen = new MyAbdomen(this.scene);  
         this.wings = new MyWings(this.scene);  
         
+        // Create the legs
         this.legs = [];
         for (let i = 0; i < 6; i++) {
             this.legs.push(new MyLeg(this.scene));
         }
 
+        // Create the antennaes
         this.antennaes = [];
         for (let i = 0; i < 2; i++) {
             this.antennaes.push(new MyAntennae(this.scene));
@@ -53,6 +62,10 @@ export class MyBee extends CGFobject{
         this.legMaterial.setTextureWrap('REPEAT', 'REPEAT');
         this.legMaterial.setTexture(this.scene.beeLegTexture);
 
+        /**
+        * In this material the wings are transparent, so the sum of the `ALPHA` values
+        * in the aterial must be less than 1
+        */
         this.wingMaterial = new CGFappearance(this.scene);
         this.wingMaterial.setAmbient(0.3, 0.3, 0.3, 0.1);
         this.wingMaterial.setDiffuse(0.7, 0.7, 0.7, 0.1);
@@ -63,16 +76,36 @@ export class MyBee extends CGFobject{
 
     }
 
+
+    /**
+    * Pickup pollen from a flower
+    * @param pollen - the pollen object to be picked up
+    * 
+    * Get the pollen object from the flower and store it in the bee to be displayed
+    * 
+    */
     pickupPollen(pollen){
         this.pollen = pollen;
     }
 
+    /**
+    * Drop pollen in the hive
+    *
+    * Drop the pollen object in the hive and puts the bee speed at 0
+    */
     dropPollen(){
         this.pollen = null;
         this.speed = [0, 0, 0];
     }
     
 
+
+    /**
+    * Turn the bee
+    * @param v - the angle to turn the bee
+    * 
+    * Turn the bee by the angle v
+    */ 
     turn(v){
 
         this.orientation += v;
@@ -83,20 +116,29 @@ export class MyBee extends CGFobject{
         
     }
     
+    /**
+    * Accelerate the bee
+    * @param v - the acceleration value
+    * 
+    * Accelerate the bee by the value v
+    */ 
     accelerate(v){
  
         let speedLimit = 1;
         this.speed[0] += v * Math.sin(this.orientation);
         this.speed[2] += v * Math.cos(this.orientation);
 
+        // Limiting the speed
         if (this.speed[0] > speedLimit) this.speed[0] = speedLimit;
         if (this.speed[0] < -speedLimit) this.speed[0] = -speedLimit;
         if (this.speed[2] > speedLimit) this.speed[2] = speedLimit;
         if (this.speed[2] < -speedLimit) this.speed[2] = -speedLimit;
 
-        //if the dot product between the direction vector and the speed vector is negative,
-        //then the angle between the two vectors is greater than 90 degrees
-        //and the speed should be 0
+        /*
+        * if the dot product between the direction vector and the speed vector is negative,
+        * then the angle between the two vectors is greater than 90 degrees
+        * so the bee should stop
+        */
         let dirVec = [Math.sin(this.orientation), 0, Math.cos(this.orientation)];
         if(dirVec[0] * this.speed[0] + dirVec[2] * this.speed[2] < 0){
             this.speed[0] = 0;
@@ -105,23 +147,30 @@ export class MyBee extends CGFobject{
 
     }
 
+    // Reset the bee to the original state
     reset(){
         this.speed = [0, 0, 0];
         this.position = [0, 3, 0];
         this.orientation = 0;
     }
 
+    /**
+    * Update function that will work as a state machine for the bee
+    * @param timeSinceAppStart - the time since the application started
+    */
     update(timeSinceAppStart){  
         this.wings.update(timeSinceAppStart);
 
         switch(this.state){
-        
+     
+            // On this state the bee is controlled by the player
             case "controlled": 
                 this.position[1] = 4 + Math.sin(timeSinceAppStart * Math.PI * 2);
                 this.position[0] += this.speed[0];
                 this.position[2] += this.speed[2];
                 break;
 
+            // On this state the bee is descending to pick up pollen on a parabolic path
             case "descending":
 
                 if (this.checkFlowerCollision()){
@@ -144,6 +193,7 @@ export class MyBee extends CGFobject{
                 }
                 break;
             
+            // On this state the bee is ascending after picking up pollen
             case "ascending":
 
                 this.ascendSpeed[0] += this.speed[0] * 0.05;
@@ -161,6 +211,7 @@ export class MyBee extends CGFobject{
                 }
                 break;
 
+            // On this state the bee is flying to the hive to drop the pollen on a parabolic path
             case "pollenDrop":
 
                 let destination = this.scene.hiveCoords;
@@ -204,7 +255,10 @@ export class MyBee extends CGFobject{
 
     }
 
-
+    /**
+    * Check if the bee is colliding with a flower and pick up the pollen
+    * @return true if the bee is colliding with a flower, false otherwise
+    */
     checkFlowerCollision() {
         for (let flowerCoord of this.scene.heartCoord) {
             let distanceX = Math.abs(this.position[0] - flowerCoord[0]);
@@ -217,9 +271,6 @@ export class MyBee extends CGFobject{
                 if (pollen != null) {
                     this.pickupPollen(pollen);
                     flower.removePollen();
-                } else {
-                    this.dropPollen();
-                    flower.putPollen(this.pollen);
                 }
 
                 return true;
@@ -231,6 +282,10 @@ export class MyBee extends CGFobject{
     display(){
 
         this.scene.pushMatrix();
+        /**
+        * Draw the pollen 
+        * Puts the pollen object in the bee's legs
+        */
         if(this.pollen != null){
             this.scene.translate(this.position[0], this.position[1]-0.4, this.position[2]);
             this.scene.scale(0.15, 0.15, 0.15);
@@ -261,6 +316,7 @@ export class MyBee extends CGFobject{
             this.scene.popMatrix();
         }
 
+        // Draw Torax
         this.scene.pushMatrix();
         this.scene.translate(0,0,0.3);
         this.torax.display();
@@ -269,6 +325,11 @@ export class MyBee extends CGFobject{
         this.scene.pushMatrix();
         this.scene.translate(0,-0.1,-0.4);
         this.abdomen.display();
+
+        /**
+        * Draw the legs
+        * 3 legs on each side of the bee
+        */
         this.scene.popMatrix();
         this.legMaterial.apply();
         for (let i = 0; i < 6; i++) {
@@ -287,6 +348,7 @@ export class MyBee extends CGFobject{
         this.scene.gl.blendFunc(this.scene.gl.SRC_ALPHA, this.scene.gl.ONE_MINUS_SRC_ALPHA);
         this.scene.gl.enable(this.scene.gl.BLEND);
 
+        // Draw Wings
         this.scene.pushMatrix();
         this.wingMaterial.apply();
         this.wings.display();

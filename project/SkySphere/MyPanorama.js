@@ -4,6 +4,7 @@ import { MySphere } from '../Common/MySphere.js';
  * MyPanorama
  * @constructor
  * @param scene - Reference to MyScene object
+ * @param texture - texture to be applied to the sphere
  */
 export class MyPanorama extends CGFobject {
 	constructor(scene, texture) {
@@ -15,10 +16,20 @@ export class MyPanorama extends CGFobject {
 
 	}
 
+    /**
+     * Updates the texture of the sphere
+     * This function is called when the user changes the texture in the interface
+     */
     updateTexture(texture){
         this.texture = texture;
     }
 	
+    /**
+     * Displays the sphere with the texture
+     * The sphere created is inverted so that the texture is displayed inside the sphere
+     * The sphere is scaled to 200 so that it covers the entire screen
+     * The sphere is translated to the camera position so that the sphere is always around the camera
+     */
     display() {
 
         this.sphereMaterial = new CGFappearance(this.scene);

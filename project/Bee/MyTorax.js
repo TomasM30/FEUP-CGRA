@@ -26,6 +26,10 @@ export class MyTorax extends CGFobject {
         this.toraxMaterial.setTextureWrap('REPEAT', 'REPEAT');
     }
     
+    /**
+     * Since the torax is a simple spehere, with a small scale
+     * we can just apply the material and scale it
+     */
     display() {
         this.scene.pushMatrix();
         this.toraxMaterial.apply();

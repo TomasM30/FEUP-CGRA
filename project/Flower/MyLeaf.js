@@ -13,6 +13,7 @@ export class MyLeaf extends CGFobject {
         this.initObjects();
     }
 
+    // Define the two triangles that compose the leaf and the cylinder that works as a extension of the stem to the leaf
     initObjects(){
         this.triangle1 = new MyTriangle(this.scene);
         this.triangle2 = new MyTriangle(this.scene);
@@ -21,6 +22,7 @@ export class MyLeaf extends CGFobject {
 
     display(){
 
+        // Display the leaf composed by the two triangles
         this.scene.pushMatrix();
             this.scene.translate(0, 0.5, 0);
             this.scene.translate(0, Math.sqrt(3) / 2, 0);
@@ -31,6 +33,7 @@ export class MyLeaf extends CGFobject {
             this.scene.popMatrix();
         this.scene.popMatrix();
 
+        // Display the stem of the leaf
         this.scene.pushMatrix();
         this.scene.translate(0, (Math.sqrt(3)+0.5), 0);
         this.scene.scale(0.02, (Math.sqrt(3))+0.5, 0.02);

@@ -14,6 +14,7 @@ export class MyHead extends CGFobject {
 
 	}
     
+    // Define both eyes and the head of the bee
     initObjects() {
 
         this.leftEye = new MySphere(this.scene, 16, 8);
@@ -44,7 +45,7 @@ export class MyHead extends CGFobject {
     
     display() {
 
-        
+        // Display the left eye
         this.scene.pushMatrix();
         this.eyeMaterial.apply();
         this.scene.translate(0.12, 0.07, 0.1);
@@ -53,6 +54,7 @@ export class MyHead extends CGFobject {
         this.leftEye.display();
         this.scene.popMatrix();
         
+        // Display the right eye
         this.scene.pushMatrix();
         this.eyeMaterial.apply();
         this.scene.translate(-0.12, 0.07, 0.1); 
@@ -61,7 +63,7 @@ export class MyHead extends CGFobject {
         this.rightEye.display();
         this.scene.popMatrix();
         
-
+        // Display the head
         this.scene.pushMatrix();
         this.headMaterial.apply();
         this.scene.rotate(Math.PI/3, 1, 0, 0);

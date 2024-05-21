@@ -36,6 +36,7 @@ export class MyAbdomen extends CGFobject {
      * Display the abdomen on the scene.
      */
     display() {
+        
         // Save the current state of the scene
         this.scene.pushMatrix();
 

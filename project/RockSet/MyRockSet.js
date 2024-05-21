@@ -7,6 +7,8 @@ import { MyHive } from '../Bee/MyHive.js';
  * MyRockSet
  * @constructor
  * @param scene - Reference to MyScene object
+ * @param base_size - Number of the side of the matrix of the last layer of rocks
+ * @param texture - Texture to apply to the rocks
  */
 export class MyRockSet extends CGFobject {
 	constructor(scene, base_size, texture) {
@@ -26,6 +28,13 @@ export class MyRockSet extends CGFobject {
     
     }
 
+    /**
+     * Initializes the rocks, hive and their properties
+     * Each rock has a random scale multiplier and rotation
+     * In constructs a pyramid of rocks, beeing the top layer the hive
+     * The last layer of rocks has a side of base_size, 
+     * the next layer has a side of base_size - 1, and so on
+     */
     initObjects() {
      
         this.rocks = []; 
@@ -59,6 +68,12 @@ export class MyRockSet extends CGFobject {
     }
 
 
+    /**
+     * Goes through all the rocks and the hive, displaying them
+     * For the rocks, it applies the scale multiplier and rotation
+     * For the hive, it places it on the middle of the top layer of rocks
+     * 
+    */
     display() {
 
         let layer = 0;

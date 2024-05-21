@@ -74,7 +74,7 @@ export class MyScene extends CGFscene {
     this.hiveCoords = [-this.base_size, 2.5, -this.base_size];
 
 
-
+    // Scale the coords of the flowers to be checked by the bee
     for (let flower of this.garden.flowers) {
       let scaledCoords = flower.coords.map((coord, index) => {
         if (index < 3) {
@@ -90,6 +90,7 @@ export class MyScene extends CGFscene {
     this.setUpdatePeriod(50); // **at least** 50 ms between animations
   }
 
+  // Created 3 lights to make the scene brighter
   initLights() {
     this.lights[0].setPosition(15, 0, 5, 1);
     this.lights[0].setDiffuse(1.0, 1.0, 1.0, 1.0);
@@ -119,11 +120,9 @@ export class MyScene extends CGFscene {
   }
 
   initMaterialsAndTextures() {
-    this.texture = new CGFtexture(this, "images/terrain.jpg");
     this.floorTexture = new CGFtexture(this, "images/floor.jpg");
 
     this.appearance = new CGFappearance(this);
-    //this.appearance.setTexture(this.texture);
     this.appearance.setTexture(this.floorTexture);
     this.appearance.setAmbient(1, 1, 1, 1);
     this.appearance.setDiffuse(1, 1, 1, 1);
@@ -169,10 +168,11 @@ export class MyScene extends CGFscene {
 
     this.rockTexture = new CGFtexture(this, 'images/rock.jpg');
 
+    // beeHead and beeTorax textures are the same, but we created two different variables to mantain the code more readable
     this.beeLegTexture = new CGFtexture(this, 'images/bee/Leg.jpg');
     this.beeHeadTexture = new CGFtexture(this, 'images/bee/Torax.jpg');
     this.beeEyeTexture = new CGFtexture(this, 'images/bee/Eye.jpg');
-    this.beeToraxTexture = new CGFtexture(this, 'images/bee/Torax.jpg');
+    this.beeToraxTexture = this.beeHeadTexture;
     this.beeAbdomenTexture = new CGFtexture(this, 'images/bee/Abdomen.jpg');
     this.beeWingTexture = new CGFtexture(this, 'images/bee/Wing.jpg');
 
@@ -195,6 +195,7 @@ export class MyScene extends CGFscene {
     this.panorama.updateTexture(this.panoramaTextures[this.selectedPanoramaTexture]);
   }
 
+  // We need to create a new garden object to update the number of rows and columns and check the colisions with the objects
   updateGarden() {
     this.garden = new MyGarden(this, this.gardenRows, this.gardenColumns);
   }  
@@ -206,19 +207,24 @@ export class MyScene extends CGFscene {
     this.setShininess(10.0);
   }
 
+  // Wind is updated for each grass object
   updateWind() {
       this.grassShader.setUniformsValues({ windStrength: Math.random() * 0.1 + 0.1});
   }
 
+  // Called periodically (as per setUpdatePeriod() in init())
   update(t)
   {
       // Continuous animation based on current time and app start time 
       var timeSinceAppStart=(t-this.appStartTime)/1000.0;
 
+      // updates the bee position based on his state
       this.bee.update(timeSinceAppStart);
 
+      // Reads the key inputs
       this.checkKeys();
 
+      // Updates the wind with the time factors
       this.grassShader.setUniformsValues({ timeFactor: t / 100 % 100000 });
   }
 
@@ -226,28 +232,28 @@ export class MyScene extends CGFscene {
     var text="Keys pressed: ";
     var keysPressed=false;
     if(this.bee.state == "controlled"){
-      if (this.gui.isKeyPressed("KeyW")) {
+      if (this.gui.isKeyPressed("KeyW")) { // Accelerate
           text+=" W ";
           keysPressed=true;
           this.bee.accelerate(this.beeSpeedFactor);
       }
-      if (this.gui.isKeyPressed("KeyS")) {
+      if (this.gui.isKeyPressed("KeyS")) { // Break
           text+=" S ";
           keysPressed=true;
           this.bee.accelerate(-this.beeSpeedFactor);
       }
-      if (this.gui.isKeyPressed("KeyA")) {
+      if (this.gui.isKeyPressed("KeyA")) { // Turn left
           text+=" A ";
           keysPressed=true;
           this.bee.turn(Math.PI/20);
       }
-      if (this.gui.isKeyPressed("KeyD")) {
+      if (this.gui.isKeyPressed("KeyD")) { // Turn right
           text+=" D ";
           keysPressed=true;
           this.bee.turn(-Math.PI/20);
       }
 
-      if (this.gui.isKeyPressed("KeyF") && this.displayGarden) {
+      if (this.gui.isKeyPressed("KeyF") && this.displayGarden) { // Descend
         text += " F ";
         keysPressed = true;
         console.log(this.bee.speed);
@@ -255,7 +261,7 @@ export class MyScene extends CGFscene {
         this.bee.state = "descending"
       }
 
-      if (this.gui.isKeyPressed("KeyR")) {
+      if (this.gui.isKeyPressed("KeyR")) { // Reset
         text += " R ";
         keysPressed = true;
         
@@ -263,14 +269,14 @@ export class MyScene extends CGFscene {
         this.bee.state = "controlled";
       }
 
-      if (this.gui.isKeyPressed("KeyO") && this.bee.pollen !=null) {
+      if (this.gui.isKeyPressed("KeyO") && this.bee.pollen !=null) { // Go to hive and drop pollen
         text += " O ";
         keysPressed = true;
         this.bee.state = "pollenDrop"
       }
     }
-    else if (this.bee.state == "stopped") {
-      if (this.gui.isKeyPressed("KeyP")  && this.displayGarden) {
+    else if (this.bee.state == "stopped") { // Only works after the bee descends
+      if (this.gui.isKeyPressed("KeyP")  && this.displayGarden) { // Ascend
         text += " P ";
         keysPressed = true;
         this.bee.ascendSpeed = [0,0.2,0];
@@ -297,6 +303,11 @@ export class MyScene extends CGFscene {
 
     // ---- BEGIN Primitive drawing section
 
+    /**
+     * Scales the plane to make it bigger than the observer can see
+     * Rotates the plane to be horizontal
+     * Displays the plane with the desired texture
+     */
     if (this.displayPlane) {
       this.pushMatrix();
       this.appearance.apply();
@@ -316,6 +327,7 @@ export class MyScene extends CGFscene {
 
     if (this.displayPanorama) this.panorama.display();
 
+    // Scales the garden to be smaller than the bee 
     if (this.displayGarden) {
       this.pushMatrix();
       this.scale(3/9,3/9, 3/9);
@@ -325,14 +337,18 @@ export class MyScene extends CGFscene {
     
     if (this.displayRockSet) {
       this.pushMatrix();
-      //this.scale(0.5, 0.5, 0.5);
       this.translate(-2*this.base_size, 0, -2*this.base_size);
       this.rockSet.display();
       this.popMatrix();
     }
 
+    /**
+     * Activates the grass shader
+     * Translates the flower bed to the desired position
+     * Displays the flower bed
+     * Deactivates the grass shader
+     */
     if (this.displayFlowerBed) {
-
       this.setActiveShader(this.grassShader);
       this.pushMatrix();
       this.translate(-25, 0, -25);
@@ -341,7 +357,11 @@ export class MyScene extends CGFscene {
       this.setActiveShader(this.defaultShader);
     }
 
-
+    /**
+     * Translates the hive to hive to the (0,0,0) position so that
+     * the scaling doesn't affect the position of the bee
+     * Displays the bee
+     */
     if (this.displayBee) {
       this.pushMatrix();
       this.translate(this.bee.position[0], this.bee.position[1], this.bee.position[2]);

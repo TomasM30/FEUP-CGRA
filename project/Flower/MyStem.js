@@ -6,6 +6,9 @@ import { MyLeaf } from "./MyLeaf.js";
  * MyStem
  * @constructor
  * @param scene - Reference to MyScene object
+ * @param numCilynders - Number of cilynders that compose the stem
+ * @param radius - Radius of the stem
+ * @param stemMaterial - Material of the stem
  */
 export class MyStem extends CGFobject {
     constructor(scene, numCilynders, radius, stemMaterial) {
@@ -25,6 +28,11 @@ export class MyStem extends CGFobject {
 
     }
 
+    /**
+     * Initialize the objects of the stem - cilynders and leaves
+     * The cylinders are randomly generated with different heights and rotations between them so it looks more natural
+     * The leaves are created and a random rotation around the stem is given to each one
+     */
     initObjects(){
 
         for(let i = 0; i < this.numCilynders; i++){
@@ -73,14 +81,18 @@ export class MyStem extends CGFobject {
 
     }
 
+
     display(){
 
         let totalHeight = 0;
         let xTranslation = 0;
         let zTranslation = 0;
 
+
+
         for(let i = 0; i < this.numCilynders; i++){
             
+            // Display each cylinder of the stem that is translated to the bottom of the previous one
             this.scene.pushMatrix();
             this.scene.scale(this.radius, 1, this.radius);
             this.scene.translate(xTranslation, -totalHeight, zTranslation);
@@ -91,6 +103,7 @@ export class MyStem extends CGFobject {
             xTranslation += this.cilynders[i].getExtremeX();
             zTranslation += this.cilynders[i].getExtremeZ();
             
+            // Display the leaf between each cylinder
             if (i < this.numCilynders - 1) {
                 this.scene.pushMatrix();
                 this.scene.translate(xTranslation*this.radius, -totalHeight, zTranslation*this.radius);
@@ -107,6 +120,10 @@ export class MyStem extends CGFobject {
 
     }
 
+    /**
+     * 
+     * @returns the height of the stem given by the sum of the heights of the cilynders
+     */
     getStemHeight(){
         let totalHeight = 0;
         for(let i = 0; i < this.numCilynders; i++){

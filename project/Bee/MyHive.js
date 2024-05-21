@@ -11,9 +11,12 @@ export class MyHive extends CGFobject {
 		super(scene);
         this.initObjects();
         this.initMaterials();
+
+        // Pollen object that will be displayed on the hive when the bee reaches the hive
         this.pollen = null;
 	}
 
+    // Hive composed by the main structure (box), a roof and two entrances
     initObjects(){
         this.box1 = new MyUnitCubeQuad(this.scene);
         this.roof = new MyUnitCubeQuad(this.scene);
@@ -22,6 +25,10 @@ export class MyHive extends CGFobject {
 
     }
 
+    /**
+    * Add a pollen object to the hive object
+    * @param pollen - Pollen object that will be displayed
+    */
     addPollen(pollen){
         this.pollen = pollen;
     }
@@ -46,6 +53,9 @@ export class MyHive extends CGFobject {
 
     display(){
     
+        /**
+         * Display the pollen object on the down entrance of the hive
+         */
         this.scene.pushMatrix();
         if(this.pollen != null){
             this.scene.translate(0, -.65, .75);
@@ -54,6 +64,7 @@ export class MyHive extends CGFobject {
         }
         this.scene.popMatrix();
         
+        // Display the up entrance
         this.scene.pushMatrix();
         this.entranceMaterial.apply();
         this.scene.translate(0, .5, 0.33);
@@ -61,6 +72,7 @@ export class MyHive extends CGFobject {
         this.entrance2.display();
         this.scene.popMatrix();
 
+        // Display the down entrance
         this.scene.pushMatrix();
         this.entranceMaterial.apply();
         this.scene.translate(0, -0.5, 0.33);
@@ -68,6 +80,7 @@ export class MyHive extends CGFobject {
         this.entrance1.display();
         this.scene.popMatrix();
 
+        // Display the roof
         this.scene.pushMatrix();
         this.hiveMaterial.apply();
         this.scene.translate(0,1,0);
@@ -75,6 +88,7 @@ export class MyHive extends CGFobject {
         this.roof.display();
         this.scene.popMatrix();
 
+        // Display and transform the main structure of the hive to make it look like a parallelepiped
         this.scene.pushMatrix();
         this.hiveMaterial.apply();
         this.scene.scale(1.75, 2, 1.5);

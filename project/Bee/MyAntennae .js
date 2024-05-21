@@ -13,9 +13,7 @@ export class MyAntennae extends CGFobject {
         this.initObjects();
     }
 
-    /**
-     * Initialize the cylinder objects that make up the antennae.
-     */
+    // Initialize the cylinder objects that make up the antennae.
     initObjects(){
         // Create two cylinder objects
 
@@ -30,10 +28,9 @@ export class MyAntennae extends CGFobject {
         this.cylinders.push(cylinder2);
     }
 
-    /**
-     * Display the antennae on the scene.
-     */
+    // Display the antennae on the scene.
     display(){
+
         // Variables to hold the total height and translations in the x and z directions
         let totalHeight = 0;
         let xTranslation = 0;

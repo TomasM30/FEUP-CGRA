@@ -6,6 +6,7 @@ import { MyGrass } from './MyGrass.js';
  * MyFlowerBed
  * @constructor
  * @param scene - Reference to MyScene object
+ * @param base_size - Size of the Matrix of Grass
  */
 export class MyFlowerBed extends CGFobject {
 	constructor(scene, base_size) {
@@ -26,7 +27,10 @@ export class MyFlowerBed extends CGFobject {
     
     }
 
-
+    /**
+     * Generates base_size x base_size grass objects
+     * and generates random rotations and scales for each grass object
+     */
     initObjects() {
 
         this.grass = [];
@@ -46,6 +50,11 @@ export class MyFlowerBed extends CGFobject {
 
     }
 
+    /**
+     * Treats My flower bed as a matrix of grass objects
+     * For each matrix position, checks if exists a rock set or a flower in the garden
+     * If not, displays the grass object with the respective scale and rotation
+     */
     display() {
 
         this.scene.pushMatrix();

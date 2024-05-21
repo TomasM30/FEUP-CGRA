@@ -13,6 +13,10 @@ export class MyPollen extends CGFobject {
         this.initMaterials();
 	}
 
+    /**
+     * Pollen object - sphere enlongated too look like an 'egg'
+     * The sphere is rotated to give a more natural look - rotationAngle
+     */
     initObjects(){
         this.pollen = new MySphere(this.scene, 16, 10, false, 1.5, 1);
         this.rotationAngle = Math.random() * Math.PI/2 - Math.PI/4;
@@ -29,6 +33,8 @@ export class MyPollen extends CGFobject {
     }
 
     display(){
+
+        // Display the pollen object and rotate it
         this.scene.pushMatrix();
         this.scene.rotate(this.rotationAngle, 1, 0, 0);
         this.scene.translate(0, 1, 0);

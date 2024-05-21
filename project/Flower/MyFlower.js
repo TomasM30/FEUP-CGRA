@@ -9,6 +9,17 @@ import { MyPollen } from '../Bee/MyPollen.js';
  * MyFlower
  * @constructor
  * @param scene - Reference to MyScene object
+ * @param externalRadius - External radius of the flower (heart radius + petal height)
+ * @param numPetals - Number of petals the flower will have
+ * @param heartRadius - Radius of the heart of the flower
+ * @param stemRadius - Radius of the stem of the flower
+ * @param stemSize - Number of cylinders that compose the stem
+ * @param petalColor - Color of the petals
+ * @param receptacleColor - Color of the receptacle
+ * @param stemColor - Color of the stem
+ * @param petalTexture - Texture of the petals
+ * @param receptacleTexture - Texture of the receptacle
+ * @param stemTexture - Texture of the stem
  */
 export class MyFlower extends CGFobject {
     constructor(scene, externalRadius, numPetals, heartRadius, stemRadius, stemSize, petalColor, receptacleColor, stemColor, petalTexture, receptacleTexture, stemTexture) {
@@ -23,7 +34,6 @@ export class MyFlower extends CGFobject {
         this.stemColor = stemColor;
         this.coords = [];
 
-        //TODO Refactor this to scene.textures
         this.petalTexture = petalTexture;
         this.receptacleTexture = receptacleTexture;
         this.stemTexture = stemTexture;
@@ -34,16 +44,17 @@ export class MyFlower extends CGFobject {
     }
 
     initObjects(){
+        
         this.petals = [];
         this.stems = [];
-        this.rotations = [];
 
         let petalHeight = this.externalRadius - this.heartRadius;
         for(let i = 0; i < this.numPetals; i++){
+            // Randomize how the petal curves
             let curvatureAngle = Math.random() * -Math.PI/4;
+
+            // Create a new petal and add it to the array
             this.petals.push(new MyPetal(this.scene, petalHeight, curvatureAngle, this.heartRadius));
-            let randomYangle = Math.random() * (Math.PI/(2.5) - Math.PI/2) + Math.PI/2;
-            this.rotations.push(randomYangle);
         }
 
         this.receptacle = new MyReceptacle(this.scene, 30, 30);
@@ -78,17 +89,17 @@ export class MyFlower extends CGFobject {
         this.stemMaterial.setTexture(this.stemTexture);
     }
 
+    /**
+     * Remove the pollen from the flower object
+     */
     removePollen(){
         this.pollen = null;
-    }
-
-    putPollen(pollen){
-        this.pollen = pollen;
     }
 
 
     display(){
 
+        // Display each petal around the heart
         for(let i = 0; i < this.numPetals; i++){
             this.scene.pushMatrix();
             this.petalMaterial.apply();
@@ -98,6 +109,7 @@ export class MyFlower extends CGFobject {
             this.scene.popMatrix();
         }
 
+        // Display the pollen object on top of the heart
         this.scene.pushMatrix();
         this.scene.translate(0, this.heartRadius, 0);
         this.scene.scale(0.15, 0.15, 0.15);
@@ -107,6 +119,7 @@ export class MyFlower extends CGFobject {
         this.scene.popMatrix();
         
 
+        // Display the heart
         this.scene.pushMatrix();
         this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.NEAREST);
         this.receptacleMaterial.apply();
@@ -114,6 +127,7 @@ export class MyFlower extends CGFobject {
         this.receptacle.display();
         this.scene.popMatrix();
 
+        // Display the stem
         this.scene.pushMatrix();
         this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.LINEAR);
         this.stemMaterial.apply();
@@ -122,10 +136,18 @@ export class MyFlower extends CGFobject {
         this.scene.popMatrix();  
     }
 
+    /**
+     * 
+     * @returns the height of the stem
+     */
     getStemHeight(){
         return this.stem.getStemHeight();
     }
 
+    /**
+     * 
+     * @param coords - Coordinates of the heart
+     */
     setCoords(coords){
         this.coords = coords;
     }

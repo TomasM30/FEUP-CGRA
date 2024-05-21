@@ -13,6 +13,10 @@ export class MyLeg extends CGFobject {
         this.initObjects();
     }
 
+    /**
+     * My Leg consists of two cylinders, one on top of the other
+     * The second cylinder is slightly rotated to give the leg a more natural look
+     */
     initObjects(){
         let cylinder1 = new MyCylinder(this.scene, 30, 30, 1, 0, 0);
         this.cilynders.push(cylinder1);
@@ -22,6 +26,10 @@ export class MyLeg extends CGFobject {
 
     }
 
+    /**
+     * The display function just goes through the two cylinders and displays them
+     * The second cylinder is translated to the bottom of the first cylinder
+     */
     display(){
 
         let totalHeight = 0;

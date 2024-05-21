@@ -4,6 +4,11 @@ import {CGFobject} from '../../lib/CGF.js';
  * MyCylinder
  * @constructor
  * @param scene - Reference to MyScene object
+ * @param slices - Number of slices of the cylinder
+ * @param stacks - Number of stacks of the cylinder
+ * @param height - Height of the cylinder
+ * @param rotationX - Rotation on the X axis
+ * @param rotationY - Rotation on the Y axis
  */
 export class MyCylinder extends CGFobject {
 	constructor(scene, slices, stacks, height, rotationX, rotationY) {
@@ -18,6 +23,11 @@ export class MyCylinder extends CGFobject {
 		this.initBuffers();
 	}
 	
+
+	/**
+	 * Initializes the cylinder object
+	 * Cylinder with oblique sides and parallel bases
+	 */
 	initBuffers() {
 
 		this.vertices = [];
@@ -28,11 +38,11 @@ export class MyCylinder extends CGFobject {
 		let alfa = Math.PI * 2 / this.slices;
 
 		if (this.rotationX === Math.PI/2) {
-			this.rotationX -= 0.0001; // Adjust rotationX slightly
+			this.rotationX -= 0.0001;
 		}
 
 		if (this.rotationY === Math.PI/2) {
-			this.rotationY -= 0.0001; // Adjust rotationY slightly
+			this.rotationY -= 0.0001;
 		}
 
 		let obliquenessFactorX = Math.tan(this.rotationX);
@@ -92,17 +102,24 @@ export class MyCylinder extends CGFobject {
 
 	display(){
 		this.scene.pushMatrix();
-		//this.scene.scale(this.radius, 1,this.radius);
 		this.scene.rotate(Math.PI/2, 1, 0, 0);
 		super.display();
 		this.scene.popMatrix();
 	}
 
+	/**
+	 * Function to get the extreme x coordinate of the cylinder used to translate the next object
+	 * @returns the extreme x coordinate of the cylinder
+	 */
 	getExtremeX() {
 		let obliquenessFactor = Math.tan(this.rotationX);
 		return this.height * obliquenessFactor;
 	}
 	
+	/**
+	 * Function to get the extreme z coordinate of the cylinder used to translate the next object
+	 * @returns the extreme z coordinate of the cylinder
+	 */
 	getExtremeZ() {
 		let obliquenessFactor = Math.tan(this.rotationY);
 		return this.height * obliquenessFactor;	}

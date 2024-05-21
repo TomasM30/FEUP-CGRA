@@ -3,6 +3,7 @@ import {CGFobject} from '../../lib/CGF.js';
  * MyGrass
  * @constructor
  * @param scene - Reference to MyScene object
+ * @param stacks - Number of stacks of the grass
  */
 export class MyGrass extends CGFobject {
 	constructor(scene, stacks) {
@@ -11,14 +12,18 @@ export class MyGrass extends CGFobject {
 		this.initBuffers();
 	}
 	
+    /**
+     * Each stack is composed by 4 vertices, 2 of them are duplicate
+     * because the grass must be seen from both sides
+     * To construct the grass, we just did a simple triangle with a random inclination in the x axis (z1 and z2)
+     */
 	initBuffers() {
 		this.vertices = [];
 		this.normals = [];
         
         for (let i = 0; i < this.stacks; i++) {
-        
-
-            /*
+    
+            /**
             * x1 and x2 must be at the same distance from the center
             * (this.stacks-1) is the maximum value of i, so that the top of the triangle is at the top of the grass
             * Then, we divide by 2 in order to make it narrower (instead of 1, the max value is 0.5) 

@@ -5,6 +5,8 @@ import { MySphere } from '../Common/MySphere.js';
  * MyReceptacle
  * @constructor
  * @param scene - Reference to MyScene object
+ * @param slices - Number of slices of the sphere
+ * @param stacks - Number of stacks of the sphere
  */
 export class MyReceptacle extends CGFobject {
 	constructor(scene, slices, stacks) {
@@ -21,7 +23,6 @@ export class MyReceptacle extends CGFobject {
     display(){
 
 		this.scene.pushMatrix();
-        this.scene.scale(1, 1, 1);
         this.sphere.display();
 		this.scene.popMatrix();
 		

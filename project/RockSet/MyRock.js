@@ -3,6 +3,8 @@ import {CGFobject} from '../../lib/CGF.js';
  * MyRock
  * @constructor
  * @param scene - Reference to MyScene object
+ * @param slices - number of slices
+ * @param stacks - number of stacks
  */
 export class MyRock extends CGFobject {
 	constructor(scene, slices, stacks) {
@@ -14,6 +16,13 @@ export class MyRock extends CGFobject {
 		this.initBuffers();
 	}
 	
+	/**
+	 * The rock is a sphere with simple randomization of the vertices
+	 * For each vertex, the x,y and z values are randomized between 0.9 and 1.1, 
+	 * and the top and bottom vertices y are randomized before the loop, so that the rock is perfectly round
+	 * Then, it goes for each slice and stack, creating the vertices, normals and texCoords
+	 * For each slice, it created stacks+1 vertices, and the first and last slice are the same
+	 */
 	initBuffers() {
 
 		this.vertices = [];
