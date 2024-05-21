@@ -33,6 +33,12 @@ It was hard to make the sphere look like a sphere, with the desired slices and s
 ### 1.2 Panorama
 The panorama is a sphere with a texture that is applied to it. The texture is a panorama of a sky that is applied to the sphere. The sphere is placed in the center of the scene and the camera is placed inside the sphere, so the panorama is always visible.
 
+### Screenshots
+
+![panorama](screenshots/project-t07g3-1_1.png)
+![panorama](screenshots/project-t07g3-1_2.png)
+![panorama](screenshots/project-t07g3-1_3.png)
+
 ## 2. Flowers
 
 ### 2.1 Flower Model
@@ -78,9 +84,9 @@ The flower ans its components are randomly generated. The following parameters a
 
 ### Screenshots
 
-![alt text](screenshots/project-t07g3-2_1.png)
+![Matrix of flowers](screenshots/project-t07g3-2_1.png)
 
-![alt text](screenshots/project-t07g3-2_2.png)
+![Single Flower](screenshots/project-t07g3-2_2.png)
 
 ## 3. Rocks and boulders
 
@@ -90,13 +96,13 @@ Each rock is a sphere with random scaling, with a texture applied to it. It was 
 
 ### 3.2 Boulder Modelation
 
-A boulder is a pyramid of rocks. On the top of the pyramid, there is a hive. The boulder is composed by a matrix of rocks objects.
+A boulder is a pyramid of rocks. On the top of the pyramid, there is a hive. The boulder is composed by a matrix of rocks objects. On the screenshot, the boulder doesn't have the hive on top of it, instead it has a normal rock.
 
 ### Screenshots
 
-![single rock](screenshots/project-t07g3-4_1.png)
-![boulder](screenshots/project-t07g3-4_2.png)
-![]
+![boulder](screenshots/project-t07g3-3_1.png)
+![single rock](screenshots/project-t07g3-3_2.png)
+![single rock](screenshots/project-t07g3-3_3.png)
 
 ## 4. Bee
 
@@ -130,23 +136,53 @@ The wings are composed by like a scaled down enlongated sphere that is placed on
 The Bee has a simple animation that makes it move forward and rotate. Also it is able to descend and ascend to pick up pollen and transport it to the hive. The bee movement is represented by a parabolic movement.
 
 ### Screenshots
-![alt text](screenshots/project-t07g3-5_1.png)
+![Bee from the side](screenshots/project-t07g3-4_1.png)
 
-![alt text](screenshots/project-t07g3-5_2.png)
+![Bee from the top](screenshots/project-t07g3-4_2.png)
 
-## 5. Polen e Colmeia
+![Bee from the bottom](screenshots/project-t07g3-4_3.png)
 
-### 5.1 Modelação do Polen
+![Bee](screenshots/project-t07g3-5_1.png)
 
-### 5.2 Modelação da Colmeia
+## 5. Polen and hives
 
-### 5.3 Controlo da abelha
+### 5.1 Polen Modelation
 
-## 6. Shaders e Animação
+The polen is a normal sphere with a texture applied to it. It's also here were ew apply a different scaling to each hemisphere of the sphere, to make it look like an egg. 
 
-### 6.1 Relva
+### 5.2 Hive Modelation
 
-### 6.2 Shaders
+The hive is composed by:
+- Main structure (parallelogram)
+- Bottom entrance (difference between two parallelogram)
+- Top entrance (difference between two parallelogram)
+- Roof (smaller parallelogram on top of the main structure)
 
-## 7. Desenvolvimentos adicionais
+### Screenshots
 
+![Bee up](screenshots/project-t07g3-6_1.png)
+![Bee picking up pollen](screenshots/project-t07g3-6_2.png)
+![Bee transporting pollen](screenshots/project-t07g3-6_3.png)
+![Bee delivering pollen](screenshots/project-t07g3-6_4.png)
+![After delivering pollen](screenshots/project-t07g3-6_5.png)
+
+## 6. Shaders and animation
+
+### 6.1 Grass
+
+The grass is a stack of trapezoid, with the top being a triangle. We added randomness on the x and z axis to make the grass look more natural. The grass is also animated, so it looks like it is waving.
+
+### 6.2 Waving the Grass
+
+The waving was done with shaders. We used a sin function to make the grass wave. We also have wave random speed and wave stregth so that it looks more natural to each single grass.
+
+### Screenshots
+
+![Grass](screenshots/project-t07g3-7_1.png)
+![Grass](screenshots/project-t07g3-7_2.png)
+
+## 7. Additional developments
+
+We choose to make the parabolic movement of the bee when going to a flower and traveling to the hive
+
+![Final Scene](screenshots/project-t07g3-8_1.png)
