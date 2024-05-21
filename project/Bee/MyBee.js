@@ -53,10 +53,10 @@ export class MyBee extends CGFobject{
         this.legMaterial.setTexture(this.scene.beeLegTexture);
 
         this.wingMaterial = new CGFappearance(this.scene);
-        this.wingMaterial.setAmbient(0.3, 0.3, 0.3, 0.2);
-        this.wingMaterial.setDiffuse(0.7, 0.7, 0.7, 0.2);
-        this.wingMaterial.setSpecular(0.9, 0.9, 0.9, 0.2);
-        this.wingMaterial.setEmission(0.1, 0.1, 0.1, 0.2);
+        this.wingMaterial.setAmbient(0.3, 0.3, 0.3, 0.1);
+        this.wingMaterial.setDiffuse(0.7, 0.7, 0.7, 0.1);
+        this.wingMaterial.setSpecular(0.9, 0.9, 0.9, 0.1);
+        this.wingMaterial.setEmission(0.1, 0.1, 0.1, 0.1);
         this.wingMaterial.setTextureWrap('REPEAT', 'REPEAT');
         this.wingMaterial.setTexture(this.scene.beeWingTexture);
 
@@ -84,8 +84,14 @@ export class MyBee extends CGFobject{
     
     accelerate(v){
  
+        let speedLimit = 1;
         this.speed[0] += v * Math.sin(this.orientation);
         this.speed[2] += v * Math.cos(this.orientation);
+
+        if (this.speed[0] > speedLimit) this.speed[0] = speedLimit;
+        if (this.speed[0] < -speedLimit) this.speed[0] = -speedLimit;
+        if (this.speed[2] > speedLimit) this.speed[2] = speedLimit;
+        if (this.speed[2] < -speedLimit) this.speed[2] = -speedLimit;
 
         //if the dot product between the direction vector and the speed vector is negative,
         //then the angle between the two vectors is greater than 90 degrees

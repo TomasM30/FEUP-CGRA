@@ -96,6 +96,7 @@ export class MyScene extends CGFscene {
     this.lights[2].setDiffuse(1.0, 1.0, 1.0, 1.0);
     this.lights[2].enable();
     this.lights[2].update();
+ 
   }
 
   initCameras() {
@@ -327,7 +328,6 @@ export class MyScene extends CGFscene {
       this.popMatrix();
 
     }
-
 
 
     if (this.displayBee) {
