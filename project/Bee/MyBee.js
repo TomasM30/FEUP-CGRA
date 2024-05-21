@@ -1,4 +1,4 @@
-import {CGFobject, CGFappearance} from '../../lib/CGF.js';
+import { CGFobject, CGFappearance } from '../../lib/CGF.js';
 import { MyHead } from './MyHead.js';
 import { MyTorax } from './MyTorax.js';
 import { MyAbdomen } from './MyAbdomen.js';
@@ -15,7 +15,9 @@ export class MyBee extends CGFobject{
         this.position = position;
         this.orientation = orientation;
         this.speed = speed;
+        this.descendingSpeed = speed;
         this.state = "controlled";
+        this.ascendSpeed = [0, 0, 0];
         this.pollen = null;
 
         this.initMaterials();
@@ -39,7 +41,6 @@ export class MyBee extends CGFobject{
         for (let i = 0; i < 2; i++) {
             this.antennaes.push(new MyAntennae(this.scene));
         }
-
 
     }
 
@@ -122,7 +123,7 @@ export class MyBee extends CGFobject{
                 break;
 
             case "descending":
-                
+
                 if (this.checkFlowerCollision()){
                     this.state = "stopped";
                 }
@@ -130,46 +131,69 @@ export class MyBee extends CGFobject{
                     this.state = "stopped";
                 }
                 else {
-                    this.position[1] -= 0.1;
+                    let previousSpeedX = this.descendingSpeed;
+                    let previousSpeedZ = this.descendingSpeed;
+                    this.descendingSpeed[0] -= this.speed[0] * 0.05;
+                    this.descendingSpeed[2] -= this.speed[2] * 0.05;
+                    if (previousSpeedX * this.descendingSpeed[0] < 0) this.descendingSpeed[0] = 0;
+                    if (previousSpeedZ * this.descendingSpeed[2] < 0) this.descendingSpeed[2] = 0;
+                    this.position[0] += this.descendingSpeed[0];
+                    this.position[1] += this.descendingSpeed[1];
+                    this.position[2] += this.descendingSpeed[2];
+
                 }
                 break;
             
             case "ascending":
 
-                this.position[1] += 0.1;
+                this.ascendSpeed[0] += this.speed[0] * 0.05;
+                this.ascendSpeed[2] += this.speed[2] * 0.05;
+            
+                if (Math.abs(this.ascendSpeed[0]) > Math.abs(this.speed[0])) this.ascendSpeed[0] = this.speed[0];
+                if (Math.abs(this.ascendSpeed[2]) > Math.abs(this.speed[2])) this.ascendSpeed[2] = this.speed[2];
+
+                this.position[0] += this.ascendSpeed[0];
+                this.position[1] += this.ascendSpeed[1];
+                this.position[2] += this.ascendSpeed[2];
+
                 if(this.position[1] >= 3){
                     this.state = "controlled";
                 }
                 break;
 
-                case "pollenDrop":
-                    let destination = this.scene.hiveCoords;
-                    let dx = destination[0] - this.position[0];
-                    let dy = destination[1] - this.position[1];
-                    let dz = 0.5+destination[2] - this.position[2];
-                    let distance = Math.sqrt(dx*dx + dy*dy + dz*dz);
-                    
-                    if (distance < 0.5) {
-                        if (this.pollen != null) {
-                            this.scene.rockSet.hive.addPollen(this.pollen);
-                            this.dropPollen();
-                            this.state = "ascending";
-                        }
-                    } else {
-                        let targetOrientation = Math.atan2(dx, dz);
-                        this.orientation = targetOrientation;
-                    
-                        this.accelerate((distance - 0.1) * 0.0009);
-                    
-                        let t = timeSinceAppStart / (timeSinceAppStart + 1);
-                        let startValue = 4 + Math.sin(timeSinceAppStart * Math.PI * 2);
-                        let endValue = destination[1];
-                        this.position[1] = startValue + t * (endValue - startValue);
-                    
-                        this.position[0] += this.speed[0];
-                        this.position[2] += this.speed[2];
+            case "pollenDrop":
+
+                let destination = this.scene.hiveCoords;
+                let dx = destination[0] - this.position[0];
+                let dy = destination[1] - this.position[1];
+                let dz = 0.5+destination[2] - this.position[2];
+                let distance = Math.sqrt(dx*dx + dy*dy + dz*dz);
+                
+                if (distance < 0.5) {
+                    if (this.pollen != null) {
+                        this.scene.rockSet.hive.addPollen(this.pollen);
+                        this.dropPollen();
+
+                        this.ascendSpeed = [0,0.2,0];
+                        this.state = "ascending";
                     }
-                    break;
+                } else {
+                    let targetOrientation = Math.atan2(dx, dz);
+                    this.orientation = targetOrientation;
+                
+                    var norm = Math.sqrt( Math.pow(this.speed[0], 2) + Math.pow(this.speed[2], 2), 2);
+                    if (norm < 0.2) norm = 0.2;
+                    this.speed[0] = norm * Math.sin(this.orientation);
+                    this.speed[2] = norm * Math.cos(this.orientation);
+                
+                    this.position[0] += this.speed[0];
+                    this.position[2] += this.speed[2];
+                    
+                    this.position[1] += (dy*0.2);
+                    
+
+                }
+                break;
 
             case "stopped":
                 break;

@@ -38,12 +38,12 @@ export class MyScene extends CGFscene {
     this.displayPanorama = true;
     this.selectedPanoramaTexture = 0;
     this.FOV = 1.7;
-    this.displayGarden = false;
+    this.displayGarden = true;
     this.gardenRows = 5;
     this.gardenColumns = 5;
-    this.displayRockSet = false;
+    this.displayRockSet = true;
     this.base_size = 4;
-    this.displayBee = false;
+    this.displayBee = true;
     this.beeSpeedFactor = 0.1;
     this.scaleFactor = 0.5;
     this.displayFlowerBed = true;
@@ -240,6 +240,8 @@ export class MyScene extends CGFscene {
       if (this.gui.isKeyPressed("KeyF") && this.displayGarden) {
         text += " F ";
         keysPressed = true;
+        console.log(this.bee.speed);
+        this.bee.descendingSpeed = [this.bee.speed[0], -0.2, this.bee.speed[2]];
         this.bee.state = "descending"
       }
 
@@ -261,6 +263,7 @@ export class MyScene extends CGFscene {
       if (this.gui.isKeyPressed("KeyP")  && this.displayGarden) {
         text += " P ";
         keysPressed = true;
+        this.bee.ascendSpeed = [0,0.2,0];
         this.bee.state = "ascending"
       }
     }
